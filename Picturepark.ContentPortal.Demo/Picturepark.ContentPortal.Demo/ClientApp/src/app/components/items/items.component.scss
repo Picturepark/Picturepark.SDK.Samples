@@ -1,0 +1,61 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  a:visited {
+    color: inherit;
+  }
+}
+
+.divider {
+  height: 36px;
+  margin: 0 16px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.content {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+}
+
+.item {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  overflow: auto;
+}
+
+.content-browser {
+  flex-grow: 1;
+}
+
+.content-panel {
+  background-color: whitesmoke;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-color: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.basket-count {
+  padding-right: 5px;
+}

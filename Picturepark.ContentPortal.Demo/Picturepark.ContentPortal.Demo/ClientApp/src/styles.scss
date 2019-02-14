@@ -1,0 +1,25 @@
+@import "~normalize.css";
+
+@import '~@angular/material/theming';
+
+$picturepark-app-primary: mat-palette($mat-red, 600, 400, 900);
+$picturepark-app-accent: mat-palette($mat-amber, 400,200,700);
+// The warn palette is optional (defaults to red).
+$picturepark-app-warn : mat-palette($mat-red);
+$picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);
+
+
+@include mat-core();
+
+@include angular-material-theme($picturepark-app-theme);
+
+
+.content .mat-tab-label {
+  height: 64px;
+}
+
+.mat-expansion-panel-body,
+.mat-expansion-panel-header.mat-expanded,
+.mat-expansion-panel-header.mat-expanded:hover {
+  background: whitesmoke !important;
+}

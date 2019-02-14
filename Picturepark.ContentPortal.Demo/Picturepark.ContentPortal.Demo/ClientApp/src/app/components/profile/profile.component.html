@@ -1,0 +1,12 @@
+<button *ngIf="!authService.isAuthenticated; else elseBlock" mat-button (click)="login()">Login</button>
+
+<ng-template #elseBlock>
+  <button mat-button [matMenuTriggerFor]="menu">Profile</button>
+</ng-template>
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item [href]="identityUrl" target="_blank">Manage account</a>
+  <a mat-menu-item [href]="apiUrl" target="_blank">Manage content</a>
+  <a mat-menu-item [href]="'mailto:' + email">Contact admin</a>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
