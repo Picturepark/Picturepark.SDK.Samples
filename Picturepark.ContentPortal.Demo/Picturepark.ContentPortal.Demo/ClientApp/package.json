@@ -39,7 +39,7 @@
     "@angular/language-service": "^7.2.4",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.5.2",
-    "codelyzer": "^4.4.2",
+    "codelyzer": "^4.5.0",
     "ts-node": "^7.0.0",
     "tslint": "^5.11.0",
     "typescript": "3.2.4"
