@@ -2,7 +2,7 @@
 
 @import '~@angular/material/theming';
 
-$picturepark-app-primary: mat-palette($mat-red, 600, 400, 900);
+$picturepark-app-primary: mat-palette($mat-blue-grey, 600, 400, 900);
 $picturepark-app-accent: mat-palette($mat-amber, 400,200,700);
 // The warn palette is optional (defaults to red).
 $picturepark-app-warn : mat-palette($mat-red);
@@ -22,4 +22,8 @@ $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-a
 .mat-expansion-panel-header.mat-expanded,
 .mat-expansion-panel-header.mat-expanded:hover {
   background: whitesmoke !important;
+}
+
+.content-item--selected {
+  box-shadow: 0 0 0 2px #6f6f6f;
 }

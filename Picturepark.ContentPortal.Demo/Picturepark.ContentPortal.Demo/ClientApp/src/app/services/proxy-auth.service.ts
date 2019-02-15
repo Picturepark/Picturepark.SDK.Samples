@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { AuthService } from '@picturepark/sdk-v1-angular';
 import { ConfigService } from './config.service';
-import { UserManager, User } from 'oidc-client';
+import { UserManager, User, UserManagerSettings } from 'oidc-client';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -66,18 +66,20 @@ export class ProxyAuthService extends AuthService {
   }
 
   private createOidcManager(): UserManager {
-    const oidcSettings = {
-      client_id: this.configService.oidcConfig.clientId,
-      scope: this.configService.oidcConfig.scope,
-      authority: this.configService.oidcConfig.identityServer,
+    const config = this.configService.oidcConfig;
+    const oidcSettings: UserManagerSettings = {
+      client_id: config.clientId,
+      scope: config.scope,
+      authority: config.identityServer,
       response_type: 'id_token token',
       filterProtocolClaims: true,
       loadUserInfo: true,
-      redirect_uri: this.configService.oidcConfig.redirectUrl,
+      redirect_uri: config.redirectUrl,
       post_logout_redirect_uri: window.location.origin,
+      automaticSilentRenew: true,
       acr_values: 'tenant:{"id":"' +
-        this.configService.oidcConfig.customerId + '","alias":"' +
-        this.configService.oidcConfig.customerAlias + '"}'
+        config.customerId + '","alias":"' +
+        config.customerAlias + '"}'
     };
 
     return new UserManager(oidcSettings);

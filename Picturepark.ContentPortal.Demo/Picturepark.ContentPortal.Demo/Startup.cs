@@ -1,13 +1,12 @@
-using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Picturepark.ContentPortal.Demo.Contract;
 using ProxyKit;
+using System.Net.Http.Headers;
 
 namespace Picturepark.ContentPortal.Demo
 {
@@ -66,7 +65,7 @@ namespace Picturepark.ContentPortal.Demo
                 {
                     forwardContext.UpstreamRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", serverConfiguration.AccessToken);
                 }
-                return forwardContext.Execute();
+                return forwardContext.Send();
             });
 
             app.UseMvc(routes =>

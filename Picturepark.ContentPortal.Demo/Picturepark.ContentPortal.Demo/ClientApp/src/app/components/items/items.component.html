@@ -3,8 +3,8 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a routerLink="/dashboard">Bystronic</a>
-    <mat-divider [vertical]=" true " class="divider" *ngIf="!mobileQuery.matches">
+    <a routerLink="/dashboard">Picturepark Demo</a>
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
     <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
       *ngIf="!mobileQuery.matches"></pp-channel-picker>
