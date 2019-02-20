@@ -1,4 +1,4 @@
-import { AuthService } from '@picturepark/sdk-v1-angular';
+import { AuthService, AccessTokenAuthService,  PICTUREPARK_API_URL } from '@picturepark/sdk-v1-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,12 +21,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { ProxyAuthService } from './services/proxy-auth.service';
 import { ConfigService, configFactory } from './services/config.service';
 
 @NgModule({
@@ -35,8 +33,7 @@ import { ConfigService, configFactory } from './services/config.service';
     ItemsComponent,
     ItemDetailsComponent,
     ProfileComponent,
-    DashboardComponent,
-    AuthCallbackComponent
+    DashboardComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,14 +57,14 @@ import { ConfigService, configFactory } from './services/config.service';
   ],
   providers: [
     ConfigService,
-    ProxyAuthService,
     {
       provide: APP_INITIALIZER,
       useFactory: configFactory,
       deps: [ConfigService],
       multi: true
-    }
-    , { provide: AuthService, useClass: ProxyAuthService },
+    },
+    { provide: PICTUREPARK_API_URL, useValue: '/api'},
+    { provide: AuthService, useClass: AccessTokenAuthService },
   ],
   bootstrap: [AppComponent]
 })

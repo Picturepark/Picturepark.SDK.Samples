@@ -38,7 +38,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private basketService: BasketService,
-    private contentService: ContentService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
 
@@ -114,8 +113,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   public changeAggregationFilters(aggregationFilters: AggregationFilter[]) {
-    this.aggregationFilters = aggregationFilters;
-    const filtersQuery = this.aggregationFilters.map(filter => JSON.stringify(filter.toJSON()));
+    const filtersQuery = aggregationFilters.map(filter => JSON.stringify(filter.toJSON()));
 
     const queryParams = this.QueryParams;
 

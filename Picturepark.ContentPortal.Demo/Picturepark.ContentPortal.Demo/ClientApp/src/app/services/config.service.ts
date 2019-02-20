@@ -7,7 +7,7 @@ import { ClientConfiguration } from '../models/client-configuration.model';
 @Injectable()
 export class ConfigService {
 
-  public oidcConfig: ClientConfiguration;
+  public config: ClientConfiguration;
 
   constructor(private http: HttpClient) {
   }
@@ -16,7 +16,7 @@ export class ConfigService {
     return this.http.get<ClientConfiguration>('/configuration/client')
       .pipe(
         map(result => {
-          this.oidcConfig = result;
+          this.config = result;
           return true;
         })).toPromise();
   }

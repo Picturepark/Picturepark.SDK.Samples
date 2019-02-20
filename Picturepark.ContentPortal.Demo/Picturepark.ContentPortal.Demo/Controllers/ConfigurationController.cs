@@ -17,9 +17,15 @@ namespace Picturepark.ContentPortal.Demo.Controllers
         [HttpGet("client")]
         public IActionResult GetClientConfiguration()
         {
-            var clientConfiguration = _configuration.GetSection("ClientConfiguration").Get<ClientConfiguration>();
+            var config = _configuration.GetSection("PictureparkConfiguration").Get<PictureparkConfiguration>();
 
-            return Ok(clientConfiguration);
+            return Ok(new ClientConfiguration
+            {
+                ContactEmail = config.ContactEmail,
+                IdentityServer = config.IdentityServer,
+                FrontendUrl = config.FrontendBaseUrl,
+                IsAuthenticated = HttpContext.User.Identity.IsAuthenticated
+            });
         }
     }
 }

@@ -1,3 +1,4 @@
+﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Picturepark.ContentPortal.Demo.Contract;
 using ProxyKit;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.IdentityModel.Tokens;
+using Picturepark.ContentPortal.Demo.Controllers;
+using Picturepark.SDK.V1;
+using Picturepark.SDK.V1.Authentication;
+using Picturepark.SDK.V1.Contract;
 
 namespace Picturepark.ContentPortal.Demo
 {
@@ -15,17 +24,68 @@ namespace Picturepark.ContentPortal.Demo
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            PictureparkConfiguration = Configuration.GetSection("PictureparkConfiguration").Get<PictureparkConfiguration>();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
+        public PictureparkConfiguration PictureparkConfiguration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton(PictureparkConfiguration);
+            services.AddSingleton<IPictureparkService, PictureparkService>();
+            services.AddSingleton<IPictureparkServiceSettings>(new PictureparkServiceSettings(
+                new AccessTokenAuthClient(PictureparkConfiguration.ApiServer, PictureparkConfiguration.UserRegistrationAccessToken, PictureparkConfiguration.CustomerAlias)
+            ));
+
+            // Configure authentication
+            services.AddAuthentication("Cookies")
+                .AddCookie("Cookies", options =>
+                {
+                    options.LoginPath = AccountController.LoginPath;
+                    options.AccessDeniedPath = "/account/denied";
+                })
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.SignInScheme = "Cookies";
+
+                    options.Authority = PictureparkConfiguration.IdentityServer;
+                    options.ClientId = PictureparkConfiguration.ClientId;
+                    options.ClientSecret = PictureparkConfiguration.ClientSecret;
+                    options.ResponseType = "code id_token";
+
+                    // Development only setting
+                    options.RequireHttpsMetadata = false;
+
+                    options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+
+                    options.EventsType = typeof(OidcEvents);
+
+                    options.Scope.Clear();
+                    foreach (var scope in PictureparkConfiguration.Scopes)
+                    {
+                        options.Scope.Add(scope);
+                    }
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = "name",
+                        RoleClaimType = "role"
+                    };
+                });
 
             services.AddResponseCompression();
             services.AddProxy();
+
+            services.AddTransient<OidcEvents>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -44,28 +104,31 @@ namespace Picturepark.ContentPortal.Demo
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseAuthentication();
+
             app.UseResponseCompression();
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             // Proxy requests from "/api" to Picturepark API Server. If user is not logged in, use access token stored in config
-            var clientConfiguration = Configuration.GetSection("ClientConfiguration").Get<ClientConfiguration>();
-            var serverConfiguration = Configuration.GetSection("ServerConfiguration").Get<ServerConfiguration>();
-
-            app.RunProxy("/api", context =>
+            app.RunProxy("/api", async context =>
             {
-                var forwardContext = context.ForwardTo(clientConfiguration.ApiServer);
-                forwardContext.UpstreamRequest.Headers.Add("Picturepark-CustomerAlias", clientConfiguration.CustomerAlias);
-                if (forwardContext.UpstreamRequest.Headers.Authorization == null)
-                {
-                    forwardContext.UpstreamRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", serverConfiguration.AccessToken);
-                }
-                return forwardContext.Send();
+                var forwardContext = context.ForwardTo(PictureparkConfiguration.ApiServer);
+                forwardContext.UpstreamRequest.Headers.Add("Picturepark-CustomerAlias", PictureparkConfiguration.CustomerAlias);
+
+                var accessToken = await context.GetTokenAsync("access_token");
+                forwardContext.UpstreamRequest.Headers.Authorization = string.IsNullOrEmpty(accessToken) ? 
+                    new AuthenticationHeaderValue("Bearer", PictureparkConfiguration.AccessToken) :
+                    new AuthenticationHeaderValue("Bearer", accessToken);
+
+                return await forwardContext.Send();
             });
 
             app.UseMvc(routes =>

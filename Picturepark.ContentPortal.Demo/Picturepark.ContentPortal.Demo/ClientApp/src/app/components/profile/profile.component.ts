@@ -1,27 +1,31 @@
-import { Component } from '@angular/core';
-import { ProxyAuthService } from '../../services/proxy-auth.service';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
+import { ProfileService, UserProfile } from '@picturepark/sdk-v1-angular';
+import { Observable } from 'rxjs';
+import { ClientConfiguration } from '../../models/client-configuration.model';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html'
 })
-export class ProfileComponent {
-  public identityUrl: string;
-  public apiUrl: string;
-  public email: string;
+export class ProfileComponent implements OnInit {
+  public config: ClientConfiguration;
 
-  constructor(public authService: ProxyAuthService, private configService: ConfigService) {
-    this.identityUrl = this.configService.oidcConfig.identityServer;
-    this.apiUrl = this.configService.oidcConfig.apiServer;
-    this.email = this.configService.oidcConfig.contactEmail;
+  public profile$: Observable<UserProfile>;
+
+  constructor(private configService: ConfigService, private profileService: ProfileService) {
+    this.config = this.configService.config;
+  }
+
+  ngOnInit(): void {
+    this.profile$ = this.profileService.get();
   }
 
   public login() {
-    this.authService.startAuthentication();
+    window.location.replace('/account/login');
   }
 
   public logout() {
-    this.authService.startSignout();
+    window.location.replace('/account/logout');
   }
 }
