@@ -26,6 +26,7 @@ import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ConfigService, configFactory } from './services/config.service';
+import { LayerPanelsComponent } from './components/layer-panels/layer-panels.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ConfigService, configFactory } from './services/config.service';
     ItemsComponent,
     ItemDetailsComponent,
     ProfileComponent,
-    DashboardComponent
+    DashboardComponent,
+    LayerPanelsComponent
   ],
   imports: [
     BrowserAnimationsModule,

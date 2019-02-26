@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import {
   ContentService, ContentDetail, ContentResolveBehavior,
-  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, DownloadLink
+  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, DownloadLink, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
 import * as lodash from 'lodash';
 import { SafeUrl, DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -29,9 +29,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   public outputFormats: string[];
 
+  public schemas: SchemaDetail[];
+
   private subscription: Subscription = new Subscription();
 
-  constructor(private contentService: ContentService, private sanitizer: DomSanitizer) {
+  constructor(
+    private contentService: ContentService,
+    private schemaService: SchemaService,
+    private sanitizer: DomSanitizer) {
   }
 
   public openContent() {
@@ -84,12 +89,13 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const contentSubscription = this.contentService.get(this.itemId,
       [ContentResolveBehavior.Metadata,
       ContentResolveBehavior.LinkedListItems,
-      ContentResolveBehavior.Outputs]).subscribe(content => {
+      ContentResolveBehavior.Outputs,
+      ContentResolveBehavior.InnerDisplayValueName]).subscribe(content => {
         this.content = content;
         this.item = this.processContent(content);
 
         if (this.content.contentType === ContentType.ContentItem) {
-          this.virtualItemHtml = this.sanitizer.bypassSecurityTrustHtml(this.content.displayValues['detail']);
+          this.virtualItemHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.content.displayValues['detail']);
         } else {
           this.contentService.download(this.itemId, 'Preview', undefined, undefined, null).subscribe((fileResult) => {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(fileResult.data));
@@ -98,6 +104,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
         this.outputFormats = content.outputs && content.outputs.map(o => o.outputFormatId);
 
+        this.schemaService.getMany(this.content.layerSchemaIds).toPromise().then(t => {
+          this.schemas = t;
+        });
         this.loading = false;
       });
 
@@ -111,30 +120,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   private processContent(content: ContentDetail): Item {
-    const themes = lodash.get(content, 'metadata.generalInformation.theme') || [];
-    const details = lodash.get(content, 'metadata.generalInformation.details') || [];
-    const mediaTypes = lodash.get(content, 'metadata.generalInformation.mediaTypes') || [];
-    const copyrights = lodash.get(content, 'metadata.generalInformation.copyright') || [];
-
-
     return {
-      name: lodash.get(content, 'displayValues.name'),
-      themes: themes.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      title: lodash.get(content, 'metadata.generalInformation.title.x-default'),
-      details: details.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      mediaTypes: mediaTypes.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      copyrights: copyrights.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      source: lodash.get(content, 'metadata.generalInformation.source.x-default'),
-      referenceId: lodash.get(content, 'metadata.migrationLayer.referenceId'),
-      isPatched: lodash.get(content, 'metadata.migrationLayer.isPatched'),
+      name: lodash.get(content, 'displayValues.name')
     };
   }
 }

@@ -1,0 +1,16 @@
+<div *ngFor="let layer of layers">
+  <mat-card>
+    <mat-card-title>
+      {{layer.layer}}
+    </mat-card-title>
+    <mat-card-content>
+      <ul>
+        <li *ngFor="let item of layer.items">
+          <strong>{{item.field}}:&nbsp;</strong>
+          {{item.value}}
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+  <br />
+</div>

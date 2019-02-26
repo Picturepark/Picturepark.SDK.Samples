@@ -17,49 +17,9 @@
       </ng-template>
     </mat-card>
 
-    <mat-card *ngIf="virtualItemHtml === null">
-      <mat-card-title>
-        Metadata
-      </mat-card-title>
-      <mat-card-content>
-        <h3> General Information </h3>
-        <ul>
-          <li *ngIf="item.themes.length > 0">
-            <strong>Theme:&nbsp;</strong> {{ item.themes.join(', ')}}
-          </li>
+    <app-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas">
 
-          <li *ngIf="item.title">
-            <strong>Title:&nbsp;</strong> {{ item.title }}
-          </li>
+    </app-layer-panels>
 
-          <li *ngIf="item.details.length > 0">
-            <strong>Details:&nbsp;</strong> {{ item.details.join(', ')}}
-          </li>
-
-          <li *ngIf="item.mediaTypes.length > 0">
-            <strong>Media types:&nbsp;</strong> {{ item.mediaTypes.join(', ')}}
-          </li>
-
-          <li *ngIf="item.copyrights.length > 0">
-            <strong>Copyright:&nbsp;</strong> {{ item.copyrights.join(', ')}}
-          </li>
-
-          <li *ngIf="item.source">
-            <strong>Source:&nbsp;</strong> {{ item.source}}
-          </li>
-        </ul>
-
-        <h3>Migration</h3>
-        <ul>
-          <li *ngIf="item.referenceId">
-            <strong>Reference Id:&nbsp;</strong> {{ item.referenceId}}
-          </li>
-          <li *ngIf="item.isPatched">
-            <strong>Is patched:&nbsp;</strong>
-            <mat-checkbox class="checkbox" [checked]="item.isPatched" [disabled]="true"></mat-checkbox>
-          </li>
-        </ul>
-      </mat-card-content>
-    </mat-card>
   </div>
 </div>
