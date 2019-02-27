@@ -9,7 +9,7 @@
 
     <mat-card>
       <div *ngIf="virtualItemHtml === null; else virtualContent">
-        <img [src]="imageUrl" (click)="openContent()" />
+        <img *ngIf="imageUrl" [src]="imageUrl" (click)="openContent()" />
       </div>
 
       <ng-template #virtualContent>

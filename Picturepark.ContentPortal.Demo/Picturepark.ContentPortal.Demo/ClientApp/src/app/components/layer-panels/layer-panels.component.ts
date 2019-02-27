@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {
-  SchemaDetail,
-  ContentDetail, FieldMultiTagbox, FieldSingleTagbox, FieldString, FieldTranslatedString, FieldBoolean } from '@picturepark/sdk-v1-angular';
+  SchemaDetail, ContentDetail, FieldMultiTagbox, FieldSingleTagbox, FieldString, FieldTranslatedString, FieldBoolean
+} from '@picturepark/sdk-v1-angular';
 
 @Component({
   selector: 'app-layer-panels',
