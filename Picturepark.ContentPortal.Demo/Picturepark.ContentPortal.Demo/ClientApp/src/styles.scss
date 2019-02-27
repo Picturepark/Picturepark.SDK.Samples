@@ -27,6 +27,13 @@ $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-a
   background: whitesmoke !important;
 }
 
+.form {
+  background: rgba(0,0,0,.24) !important;
+}
+.form:focus-within {
+  background: rgba(255,255,255,.24) !important;
+}
+
 .content-item--selected {
   box-shadow: 0 0 0 2px #6f6f6f;
 }
