@@ -13,6 +13,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as lodash from 'lodash';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-items',
@@ -30,6 +31,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   private channelId: string;
   public basketItems: string[] = [];
   public isInBasket = true;
+  @ViewChild('snav') public sideNav: MatSidenav;
 
   private _mobileQueryListener: () => void;
   private subscription: Subscription = new Subscription();
@@ -76,7 +78,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
-
 
   public addToBasket() {
     if (this.isInBasket) {
@@ -147,6 +148,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   private updateRoute(queryParams: Params) {
+    if (this.mobileQuery.matches) {
+      if (this.sideNav.opened) {
+        this.sideNav.toggle();
+      }
+    }
+
     this.router.navigate(['/items', this.channelId, this.itemId], { queryParams });
   }
 
