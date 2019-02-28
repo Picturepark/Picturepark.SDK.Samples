@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import {
   SchemaDetail, ContentDetail, FieldMultiTagbox, FieldSingleTagbox, FieldString, FieldTranslatedString, FieldBoolean
 } from '@picturepark/sdk-v1-angular';
+import { FieldDetailInfoDialogComponent } from './field-detail-info-dialog/field-detail-info-dialog.component';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-layer-panels',
@@ -20,15 +23,26 @@ export class LayerPanelsComponent implements OnInit {
     layer: string;
     items: {
       field: string;
-      value: string;
+      value?: string;
+      values?: {
+        value: string,
+        tooltip: string
+      }[]
     }[]
   }[];
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     this.layers = [];
-    this.schemas.forEach(schema => {
+    const contentSchema = this.schemas.find(i => i.id === this.content.contentSchemaId);
+
+    contentSchema.layerSchemaIds.forEach(layerSchemaId => {
+      if (this.content.layerSchemaIds.indexOf(layerSchemaId) === -1) {
+        return;
+      }
+
+      const schema = this.schemas.find(i => i.id === layerSchemaId);
       const schemaMetadata = this.content.metadata[this.toLowerCamel(schema.id)];
 
       const layer = {
@@ -38,33 +52,50 @@ export class LayerPanelsComponent implements OnInit {
       schema.fields.forEach(field => {
         if (schemaMetadata[field.id]) {
           let value = '';
+          let values = [];
+          const fieldValue = schemaMetadata[field.id];
 
           switch (field.constructor) {
             case FieldMultiTagbox:
-              value = schemaMetadata[field.id].map(i => i.displayValue.list).join(', ');
+              values = fieldValue.map(i => {
+                return { value: i.displayValue.name, tooltip: i.displayValue.thumbnail };
+              });
               break;
             case FieldSingleTagbox:
-              value = schemaMetadata[field.id].displayValue.name;
+              values = [{
+                value: fieldValue.displayValue.name,
+                tooltip: fieldValue.displayValue.thumbnail
+              }];
               break;
             case FieldBoolean:
-              value = schemaMetadata[field.id] ? 'Yes' : 'No';
+              value = fieldValue ? 'Yes' : 'No';
               break;
             case FieldString:
-              value = schemaMetadata[field.id];
+              value = fieldValue;
               break;
             case FieldTranslatedString:
-              value = schemaMetadata[field.id]['x-default'];
+              value = fieldValue['x-default'];
               break;
           }
 
           layer.items.push({
             field: field.names['x-default'],
-            value: value
+            value: value,
+            values: values
           });
         }
       });
       this.layers.push(layer);
     });
+  }
+
+  showItem(item: any, event: any) {
+    let dialogRef: MatDialogRef<FieldDetailInfoDialogComponent>;
+    dialogRef = this.dialog.open(FieldDetailInfoDialogComponent, {
+      width: '450px'
+    });
+    dialogRef.componentInstance.title = item.value;
+    dialogRef.componentInstance.message = item.tooltip;
   }
 
   toLowerCamel(value: string): string {

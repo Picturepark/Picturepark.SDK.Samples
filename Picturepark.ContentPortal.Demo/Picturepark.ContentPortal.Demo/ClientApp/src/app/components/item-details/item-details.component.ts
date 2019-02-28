@@ -90,7 +90,9 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       [ContentResolveBehavior.Metadata,
       ContentResolveBehavior.LinkedListItems,
       ContentResolveBehavior.Outputs,
-      ContentResolveBehavior.InnerDisplayValueName]).subscribe(content => {
+      ContentResolveBehavior.InnerDisplayValueName,
+      ContentResolveBehavior.InnerDisplayValueList,
+      ContentResolveBehavior.InnerDisplayValueThumbnail]).subscribe(content => {
         this.content = content;
         this.item = this.processContent(content);
 
@@ -104,7 +106,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
         this.outputFormats = content.outputs && content.outputs.map(o => o.outputFormatId);
 
-        this.schemaService.getMany(this.content.layerSchemaIds).toPromise().then(t => {
+        this.schemaService.getMany(this.content.layerSchemaIds.concat(this.content.contentSchemaId)).toPromise().then(t => {
           this.schemas = t;
         });
         this.loading = false;

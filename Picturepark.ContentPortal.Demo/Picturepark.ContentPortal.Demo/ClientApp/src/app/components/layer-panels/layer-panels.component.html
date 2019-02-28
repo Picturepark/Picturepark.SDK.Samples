@@ -7,8 +7,16 @@
       <table>
         <tr *ngFor="let item of layer.items">
             <td class="label">{{item.field}}</td>
-            <td>{{item.value}}</td>
-        </tr>
+            <td *ngIf="item.value">
+              {{item.value}}
+            </td>
+            <td *ngIf="item.values">
+                <span *ngFor="let value of item.values; let last = last;">
+                  <a href="javascript:" (click)="showItem(value, $event)"> {{value.value}}</a>
+                  <span *ngIf="!last">, </span>
+                </span>
+              </td>
+          </tr>
       </table>
     </mat-card-content>
   </mat-card>
