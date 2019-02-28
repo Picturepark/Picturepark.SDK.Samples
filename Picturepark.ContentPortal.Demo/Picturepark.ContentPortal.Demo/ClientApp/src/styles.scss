@@ -50,3 +50,17 @@ body {
     @include mat-elevation(2, mat-color($picturepark-app-primary), 2);
   }
 }
+
+.logo {
+  height: 80px;
+  width: 160px;
+  background-image: url(assets/images/logo-fofa.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+a {
+  color: #2c6836;
+  text-decoration: none;
+}

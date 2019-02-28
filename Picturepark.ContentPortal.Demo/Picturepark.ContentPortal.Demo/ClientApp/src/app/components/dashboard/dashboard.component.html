@@ -1,17 +1,26 @@
 <mat-toolbar color="primary" class="header">
-  <a routerLink="/dashboard">Bystronic</a>
+    <div class="logo" routerLink="/items"></div>
 
   <div class="spacer"></div>
 
   <app-profile></app-profile>
 </mat-toolbar>
 
-<div class="content">
-  <div class="container">
-    <mat-card *ngFor="let item of items; let idx = index; trackBy: trackByItem" (click)="navigate(item.path)">
-      <img [src]="images[idx]" mat-card-image>
-      <mat-card-title>{{item.title}}</mat-card-title>
-      <mat-card-content>{{item.description}}</mat-card-content>
-    </mat-card>
+<div class="content-wrap">
+  <div class="content">
+    <p>&nbsp;</p>
+    <h3>Welcome to the FOFA member portal!</h3>
+
+  <p>Our association is all about sharing knowledge, logistics, and resources for making organic farming a more popular movement - among farmers and the public. This is why you as valued members can access carefully researched and approved content for reuse via this content portal. Select content is also showcased to the public.</p>
+
+    <div class="container">
+      <mat-card *ngFor="let item of items; let idx = index; trackBy: trackByItem" (click)="navigate(item.path)" class="custom-shadow">
+        <img *ngIf="images[idx]" [src]="images[idx]" mat-card-image>
+        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-content>{{item.description}}</mat-card-content>
+      </mat-card>
+    </div>
+
+  <p>If you would like to contribute your ideas, please <a href="mailto:marketing@picturepark.com">contact us</a>.</p>
   </div>
 </div>
