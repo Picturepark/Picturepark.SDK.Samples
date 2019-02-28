@@ -1,6 +1,5 @@
 import {
-  Channel, FilterBase, AggregationFilter,
-  ContentDownloadLinkCreateRequest, ContentService, OrFilter, AndFilter
+  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter
 } from '@picturepark/sdk-v1-angular';
 
 import {
@@ -14,6 +13,8 @@ import * as lodash from 'lodash';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material';
+import { DemoInfoDialogComponent } from '../demo-info-dialog/demo-info-dialog.component';
 
 @Component({
   selector: 'app-items',
@@ -41,7 +42,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     private router: Router,
     private basketService: BasketService,
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher) {
+    media: MediaMatcher,
+    private dialog: MatDialog) {
 
     const basketChangeSubscription = this.basketService.basketChange.subscribe(items => {
       this.basketItems = items;
@@ -145,6 +147,17 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
 
     this.updateRoute(queryParams);
+  }
+
+  openDialog(event): void {
+    this.dialog.open(DemoInfoDialogComponent, {
+      width: '450px',
+      backdropClass: this.mobileQuery.matches ? undefined : 'none',
+      position: this.mobileQuery.matches ? null : {
+        top: event.y + 'px',
+        left: (event.x - 450) + 'px'
+      }
+    });
   }
 
   private updateRoute(queryParams: Params) {

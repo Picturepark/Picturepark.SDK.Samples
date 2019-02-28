@@ -1,13 +1,13 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <div class="item-container">
   <div *ngIf="!loading" class="item mat-typography">
-    <mat-card>
+    <mat-card class="custom-shadow">
       <mat-card-title>
         {{ item.name }}
       </mat-card-title>
     </mat-card>
 
-    <mat-card>
+    <mat-card class="custom-shadow">
       <div *ngIf="virtualItemHtml === null; else virtualContent">
         <img *ngIf="imageUrl" [src]="imageUrl" (click)="openContent()" />
       </div>

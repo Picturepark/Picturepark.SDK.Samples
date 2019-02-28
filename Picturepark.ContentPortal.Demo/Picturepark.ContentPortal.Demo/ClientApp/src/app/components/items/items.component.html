@@ -11,9 +11,12 @@
     <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
       *ngIf="!mobileQuery.matches"></pp-channel-picker>
     <div class="spacer"></div>
+
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">Picturepark Microsite Demo</button>
+    &nbsp;
     <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
-    <mat-divider [vertical]=" true " class="divider" *ngIf="!mobileQuery.matches">
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
     <app-profile></app-profile>
   </mat-toolbar-row>
@@ -36,6 +39,9 @@
   <mat-sidenav-container style="width:100%">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
       [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
+      <mat-toolbar-row *ngIf="mobileQuery.matches">
+        <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">Picturepark Microsite Demo</button>
+      </mat-toolbar-row>
       <mat-toolbar-row *ngIf="mobileQuery.matches">
         <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>
       </mat-toolbar-row>

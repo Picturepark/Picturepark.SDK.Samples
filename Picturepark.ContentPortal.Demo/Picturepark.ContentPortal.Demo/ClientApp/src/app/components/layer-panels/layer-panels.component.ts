@@ -41,7 +41,7 @@ export class LayerPanelsComponent implements OnInit {
 
           switch (field.constructor) {
             case FieldMultiTagbox:
-              value = schemaMetadata[field.id].map(i => i.displayValue.name).join(', ');
+              value = schemaMetadata[field.id].map(i => i.displayValue.list).join(', ');
               break;
             case FieldSingleTagbox:
               value = schemaMetadata[field.id].displayValue.name;

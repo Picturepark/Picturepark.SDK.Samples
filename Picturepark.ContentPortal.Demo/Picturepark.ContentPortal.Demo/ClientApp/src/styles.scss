@@ -15,6 +15,9 @@ $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-a
 
 @include angular-material-theme($picturepark-app-theme);
 
+body {
+  font-family: Roboto;
+}
 
 .content .mat-tab-label {
   height: 64px;
@@ -40,4 +43,10 @@ $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-a
 
 .content-browser__header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-card {
+  &.custom-shadow {
+    @include mat-elevation(2, mat-color($picturepark-app-primary), 2);
+  }
 }
