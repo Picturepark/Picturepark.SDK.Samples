@@ -40,6 +40,7 @@ export class DashboardComponent implements OnDestroy {
       lifeCycleFilter: LifeCycleFilter.ActiveOnly,
       brokenDependenciesFilter: BrokenDependenciesFilter.All,
       searchType: ContentSearchType.Metadata,
+      channelId: 'virtualItems',
       debugMode: false,
       filter: new TermFilter ({
         field: 'contentSchemaId',
@@ -50,7 +51,7 @@ export class DashboardComponent implements OnDestroy {
     const details = await this.contentService.getMany(
       contents.results.map(i => i.id),
       [ContentResolveBehavior.Content]
-      ).toPromise();
+    ).toPromise();
 
     details.forEach(i => {
       this.items.push({

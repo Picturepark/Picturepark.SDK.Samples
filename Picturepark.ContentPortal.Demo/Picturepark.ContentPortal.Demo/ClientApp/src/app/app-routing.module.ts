@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'items/',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -26,8 +26,7 @@ const routes: Routes = [
     path: 'items/:channelId/:itemId',
     component: ItemsComponent,
     pathMatch: 'full'
-  },
-  // { path: '**', component: PageNotFoundComponent }
+  }
 ];
 
 @NgModule({

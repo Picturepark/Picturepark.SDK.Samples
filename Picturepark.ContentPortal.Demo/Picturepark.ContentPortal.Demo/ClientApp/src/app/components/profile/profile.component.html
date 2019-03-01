@@ -6,7 +6,6 @@
 
 <mat-menu #menu="matMenu">
   <a mat-menu-item [href]="config.identityServer" target="_blank">Manage account</a>
-  <a mat-menu-item [href]="config.frontendUrl" target="_blank">Manage content</a>
   <a mat-menu-item [href]="'mailto:' + config.contactEmail">Contact admin</a>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>
