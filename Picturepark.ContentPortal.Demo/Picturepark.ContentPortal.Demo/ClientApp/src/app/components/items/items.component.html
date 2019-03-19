@@ -12,7 +12,7 @@
       *ngIf="!mobileQuery.matches"></pp-channel-picker>
     <div class="spacer"></div>
 
-    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">Picturepark Microsite Demo</button>
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
     &nbsp;
     <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 

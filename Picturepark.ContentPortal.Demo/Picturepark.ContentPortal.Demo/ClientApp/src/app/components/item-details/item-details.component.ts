@@ -62,13 +62,13 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       ]
     });
 
-    const linkSubscription = this.contentService.createDownloadLink(request).subscribe((response: DownloadLink) => {
+    const linkSubscription = this.contentService.createDownloadLink(request).subscribe(response => {
       const item = {
         id: this.itemId,
         isPdf: isPdf,
         isImage: isImage,
         isMovie: isMovie,
-        isBinary: false,
+        isBinary: this.content.contentType !== ContentType.ContentItem,
         displayValues: {},
         previewUrl: isImage ? response.downloadUrl : this.imageUrl,
         originalUrl: response.downloadUrl,

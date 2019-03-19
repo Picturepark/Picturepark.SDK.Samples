@@ -11,7 +11,9 @@ import {
   LifeCycleFilter,
   ContentSearchType,
   ContentResolveBehavior,
-  BrokenDependenciesFilter
+  BrokenDependenciesFilter,
+  SortInfo,
+  SortDirection
 } from '@picturepark/sdk-v1-angular';
 import { Subscription } from 'rxjs';
 
@@ -40,12 +42,15 @@ export class DashboardComponent implements OnDestroy {
       lifeCycleFilter: LifeCycleFilter.ActiveOnly,
       brokenDependenciesFilter: BrokenDependenciesFilter.All,
       searchType: ContentSearchType.Metadata,
-      channelId: 'virtualItems',
+      channelId: 'rootChannel',
       debugMode: false,
       filter: new TermFilter ({
         field: 'contentSchemaId',
         term: 'FeaturedContent'
-      })
+      }),
+      sort: [
+        new SortInfo({ field: 'featuredContent.headline', direction: SortDirection.Asc })
+      ]
     })).toPromise();
 
     const details = await this.contentService.getMany(

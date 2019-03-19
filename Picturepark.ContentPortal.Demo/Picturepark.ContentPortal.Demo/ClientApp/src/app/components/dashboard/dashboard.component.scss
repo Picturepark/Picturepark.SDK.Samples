@@ -31,11 +31,12 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 }
 
 mat-card {
   margin: 5px;
-  margin-top: 15px;
+  margin-top: 20px;
   width: 350px;
   cursor: pointer;
 }
