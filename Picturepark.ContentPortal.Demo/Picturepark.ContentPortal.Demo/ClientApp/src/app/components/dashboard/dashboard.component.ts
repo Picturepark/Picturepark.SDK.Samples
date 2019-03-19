@@ -26,6 +26,7 @@ export class DashboardComponent implements OnDestroy {
   public items: DashboardItem[] = [];
   public images: SafeUrl[] = [];
   private subscription: Subscription = new Subscription();
+  public searchQuery: string = null;
 
   constructor(
     private contentService: ContentService,
@@ -77,6 +78,15 @@ export class DashboardComponent implements OnDestroy {
 
       this.subscription.add(downloadSubscription);
     });
+  }
+
+  public changeSearchQuery(query: string) {
+    if (!query) {
+      return;
+    }
+
+    this.searchQuery = query;
+    this.router.navigate(['/items', 'rootChannel'], { queryParams: { search: this.searchQuery } });
   }
 
   public navigate(url: string) {

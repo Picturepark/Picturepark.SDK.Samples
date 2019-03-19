@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="header">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu">
+    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
       <mat-icon>menu</mat-icon>
     </button>
 
@@ -40,7 +40,7 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
       [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
       <mat-toolbar-row *ngIf="mobileQuery.matches">
-        <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">Picturepark Microsite Demo</button>
+        <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
       </mat-toolbar-row>
       <mat-toolbar-row *ngIf="mobileQuery.matches">
         <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>

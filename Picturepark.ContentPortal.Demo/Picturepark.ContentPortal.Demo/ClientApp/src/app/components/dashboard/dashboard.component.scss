@@ -23,8 +23,16 @@
 }
 
 .content {
-  width: 800px;
+  @media screen and (min-width: 600px) {
+    width: 800px;
+  }
   margin: auto;
+}
+
+@media screen and (max-width: 600px) {
+  h3 {
+    font-size: 12px;
+  }
 }
 
 .container {
@@ -48,4 +56,18 @@ a {
 
 a:visited {
   color: inherit;
+}
+
+.search-box-wrap {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.profile-wrap {
+  width: 160px;
+  text-align: right;
+}
+
+.mat-toolbar.mat-primary {
+  color: black;
 }
