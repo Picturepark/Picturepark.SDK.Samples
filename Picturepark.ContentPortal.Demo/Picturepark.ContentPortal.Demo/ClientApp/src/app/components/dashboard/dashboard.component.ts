@@ -1,5 +1,5 @@
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DashboardItem } from './../../models/dashboard-item.model';
@@ -16,13 +16,16 @@ import {
   SortDirection
 } from '@picturepark/sdk-v1-angular';
 import { Subscription } from 'rxjs';
+import { PageBase } from '../page-base';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent extends PageBase implements OnDestroy {
   public items: DashboardItem[] = [];
   public images: SafeUrl[] = [];
   private subscription: Subscription = new Subscription();
@@ -31,7 +34,11 @@ export class DashboardComponent implements OnDestroy {
   constructor(
     private contentService: ContentService,
     private sanitizer: DomSanitizer,
-    private router: Router) {
+    private router: Router,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    dialog: MatDialog) {
+    super(media, changeDetectorRef, dialog);
     this.items = [];
     this.load();
   }
@@ -94,6 +101,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

@@ -16,9 +16,11 @@
     &nbsp;
     <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
-    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
-    </mat-divider>
-    <app-profile></app-profile>
+    <!--
+      <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
+      </mat-divider>
+      <app-profile></app-profile>
+    -->
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -37,7 +39,7 @@
 
 <div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
   <mat-sidenav-container style="width:100%">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" disableClose="true" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
       [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
       <mat-toolbar-row *ngIf="mobileQuery.matches">
         <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>

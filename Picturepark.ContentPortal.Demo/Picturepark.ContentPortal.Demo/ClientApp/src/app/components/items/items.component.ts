@@ -14,16 +14,15 @@ import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material';
-import { DemoInfoDialogComponent } from '../demo-info-dialog/demo-info-dialog.component';
+import { PageBase } from '../page-base';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
-export class ItemsComponent implements OnInit, OnDestroy {
+export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
-  public mobileQuery: MediaQueryList;
   public channel: Channel = null;
   public searchQuery: string = null;
   public filter: FilterBase = null;
@@ -34,7 +33,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
   public isInBasket = true;
   @ViewChild('snav') public sideNav: MatSidenav;
 
-  private _mobileQueryListener: () => void;
   private subscription: Subscription = new Subscription();
 
   public constructor(
@@ -43,7 +41,9 @@ export class ItemsComponent implements OnInit, OnDestroy {
     private basketService: BasketService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    private dialog: MatDialog) {
+    dialog: MatDialog) {
+
+    super(media, changeDetectorRef, dialog);
 
     const basketChangeSubscription = this.basketService.basketChange.subscribe(items => {
       this.basketItems = items;
@@ -51,10 +51,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
     });
 
     this.subscription.add(basketChangeSubscription);
-
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   public ngOnInit() {
@@ -74,7 +70,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    super.ngOnDestroy();
 
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -147,17 +143,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
 
     this.updateRoute(queryParams);
-  }
-
-  openDialog(event): void {
-    this.dialog.open(DemoInfoDialogComponent, {
-      width: '450px',
-      backdropClass: this.mobileQuery.matches ? undefined : 'none',
-      position: this.mobileQuery.matches ? null : {
-        top: event.y + 'px',
-        left: (event.x - 450) + 'px'
-      }
-    });
   }
 
   private updateRoute(queryParams: Params) {
