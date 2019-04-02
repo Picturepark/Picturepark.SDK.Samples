@@ -45,7 +45,6 @@ export class DashboardComponent extends PageBase implements OnDestroy {
 
   public async load(): Promise<void> {
     const contents = await this.contentService.search(new ContentSearchRequest({
-      start: 0,
       limit: 20,
       lifeCycleFilter: LifeCycleFilter.ActiveOnly,
       brokenDependenciesFilter: BrokenDependenciesFilter.All,
