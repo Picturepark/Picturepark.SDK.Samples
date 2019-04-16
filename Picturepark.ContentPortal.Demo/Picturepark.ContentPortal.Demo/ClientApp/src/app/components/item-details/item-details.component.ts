@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import {
   ContentService, ContentDetail, ContentResolveBehavior,
-  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, DownloadLink, SchemaService, SchemaDetail
+  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
 import { SafeUrl, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Item } from '../../models/item.model';
 import { Subscription } from 'rxjs';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-item-details',
@@ -26,7 +27,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   public virtualItemHtml: SafeHtml | null = null;
 
-  public outputFormats: string[];
+  public outputFormats: {
+    outputFormatId: string;
+    name: string;
+  }[];
 
   public schemas: SchemaDetail[];
 
@@ -35,6 +39,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private contentService: ContentService,
     private schemaService: SchemaService,
+    private translationService: TranslationService,
     private sanitizer: DomSanitizer) {
   }
 
@@ -103,7 +108,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
           });
         }
 
-        this.outputFormats = content.outputs && content.outputs.map(o => o.outputFormatId);
+        this.translationService.getOutputFormatTranslations().then(translations =>
+          this.outputFormats = content.outputs && content.outputs.map(o => {
+            return {
+              outputFormatId: o.outputFormatId,
+              name: translations[o.outputFormatId]
+            };
+          })
+        );
 
         this.schemaService.getMany(this.content.layerSchemaIds.concat(this.content.contentSchemaId)).toPromise().then(t => {
           this.schemas = t;
