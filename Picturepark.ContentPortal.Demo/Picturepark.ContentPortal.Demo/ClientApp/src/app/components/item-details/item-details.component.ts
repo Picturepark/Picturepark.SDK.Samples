@@ -3,7 +3,6 @@ import {
   ContentService, ContentDetail, ContentResolveBehavior,
   ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, DownloadLink, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
-import * as lodash from 'lodash';
 import { SafeUrl, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Item } from '../../models/item.model';
 import { Subscription } from 'rxjs';
@@ -123,7 +122,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   private processContent(content: ContentDetail): Item {
     return {
-      name: lodash.get(content, 'displayValues.name')
+      name: content.displayValues.name
     };
   }
 }
