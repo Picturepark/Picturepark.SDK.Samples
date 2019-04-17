@@ -1,29 +1,26 @@
 <mat-toolbar color="primary" class="header">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="snav.toggle()">
+    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
       <mat-icon>menu</mat-icon>
     </button>
 
-    <div class="logo" onclick="location.href='/dashboard'"></div>
+    <div class="logo" routerLink="/dashboard"></div>
 
     <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
     <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
       *ngIf="!mobileQuery.matches"></pp-channel-picker>
     <div class="spacer"></div>
+
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
+    &nbsp;
     <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
-    <mat-divider [vertical]=" true " class="divider" *ngIf="!mobileQuery.matches">
-    </mat-divider>
-    <app-profile></app-profile>
-  </mat-toolbar-row>
-
-  <mat-toolbar-row *ngIf="mobileQuery.matches">
-    <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>
-  </mat-toolbar-row>
-
-  <mat-toolbar-row *ngIf="mobileQuery.matches">
-    <pp-search-box style="width: 100%; font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)"></pp-search-box>
+    <!--
+      <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
+      </mat-divider>
+      <app-profile></app-profile>
+    -->
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -40,10 +37,21 @@
   </button>
 </mat-toolbar>
 
-<div class="content" [style.top.px]="mobileQuery.matches ? 168 : 64">
+<div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
   <mat-sidenav-container style="width:100%">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="168"
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" disableClose="true" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
       [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
+      <mat-toolbar-row *ngIf="mobileQuery.matches">
+        <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
+      </mat-toolbar-row>
+      <mat-toolbar-row *ngIf="mobileQuery.matches">
+        <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>
+      </mat-toolbar-row>
+    
+      <mat-toolbar-row *ngIf="mobileQuery.matches">
+        <pp-search-box style="width: 100%; font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)"></pp-search-box>
+      </mat-toolbar-row>
+
       <mat-tab-group class="content-panel">
         <mat-tab label="Filters">
           <pp-content-aggregation-list [channelId]="channel?.id" [aggregators]="channel?.aggregations" [aggregationFilters]="aggregationFilters"
@@ -67,6 +75,6 @@
 
 </div>
 
-<div class="item" *ngIf="itemId !== ''" [style.top.px]="mobileQuery.matches ? 56 : 64">
+<div class="item" *ngIf="itemId !== ''" [style.top.px]="mobileQuery.matches ? 56 : 80">
   <app-item-details [itemId]="itemId"></app-item-details>
 </div>

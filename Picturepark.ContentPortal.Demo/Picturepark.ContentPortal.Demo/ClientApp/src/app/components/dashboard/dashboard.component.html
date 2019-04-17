@@ -1,17 +1,36 @@
 <mat-toolbar color="primary" class="header">
-  <a routerLink="/dashboard">Bystronic</a>
+  <div class="logo" routerLink="/items"></div>
 
   <div class="spacer"></div>
 
-  <app-profile></app-profile>
+  <h3>Welcome to the FOFA Content Portal!</h3>
+
+  <div class="spacer"></div>
+
+  <div class="profile-wrap">
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
+    <!--<app-profile></app-profile>-->
+  </div>
 </mat-toolbar>
 
-<div class="content">
-  <div class="container">
-    <mat-card *ngFor="let item of items; let idx = index; trackBy: trackByItem" (click)="navigate(item.path)">
-      <img [src]="images[idx]" mat-card-image>
-      <mat-card-title>{{item.title}}</mat-card-title>
-      <mat-card-content>{{item.description}}</mat-card-content>
-    </mat-card>
+<div class="content-wrap">
+  <div class="content">
+    <p>&nbsp;</p>
+
+    <p>Our association is all about sharing knowledge, logistics and resources to promote organic farming - to both farmers and the public. As a valued member of our organization, you can access carefully researched and approved content for reuse via this Content Portal.</p>
+
+    <div class="search-box-wrap">
+      <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)"></pp-search-box>
+    </div>
+
+    <div class="container">
+      <mat-card *ngFor="let item of items; let idx = index; trackBy: trackByItem" (click)="navigate(item.path)" class="custom-shadow">
+        <img *ngIf="images[idx]" [src]="images[idx]" mat-card-image>
+        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-content>{{item.description}}</mat-card-content>
+      </mat-card>
+    </div>
+
+    <p>If you would like to contribute your ideas, please <a href="mailto:marketing@picturepark.com">contact us</a>.</p>
   </div>
 </div>

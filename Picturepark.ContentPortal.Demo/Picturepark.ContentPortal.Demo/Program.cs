@@ -15,10 +15,6 @@ namespace Picturepark.ContentPortal.Demo
             WebHost.CreateDefaultBuilder(args)
                 .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .ReadFrom.Configuration(hostingContext.Configuration)
-                    .Enrich.FromLogContext()
-                    .Enrich.WithMachineName()
-                    .Enrich.WithProcessName()
-                    .WriteTo.Console()
                 ).UseStartup<Startup>();
     }
 }

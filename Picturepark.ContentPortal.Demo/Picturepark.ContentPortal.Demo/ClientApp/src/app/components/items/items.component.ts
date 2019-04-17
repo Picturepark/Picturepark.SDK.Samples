@@ -1,6 +1,5 @@
 import {
-  Channel, FilterBase, AggregationFilter,
-  ContentDownloadLinkCreateRequest, ContentService, OrFilter, AndFilter
+  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter
 } from '@picturepark/sdk-v1-angular';
 
 import {
@@ -13,15 +12,17 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import * as lodash from 'lodash';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatDialog } from '@angular/material';
+import { PageBase } from '../page-base';
 
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
-export class ItemsComponent implements OnInit, OnDestroy {
+export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
-  public mobileQuery: MediaQueryList;
   public channel: Channel = null;
   public searchQuery: string = null;
   public filter: FilterBase = null;
@@ -30,8 +31,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
   private channelId: string;
   public basketItems: string[] = [];
   public isInBasket = true;
+  @ViewChild('snav') public sideNav: MatSidenav;
 
-  private _mobileQueryListener: () => void;
   private subscription: Subscription = new Subscription();
 
   public constructor(
@@ -39,7 +40,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
     private router: Router,
     private basketService: BasketService,
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher) {
+    media: MediaMatcher,
+    dialog: MatDialog) {
+
+    super(media, changeDetectorRef, dialog);
 
     const basketChangeSubscription = this.basketService.basketChange.subscribe(items => {
       this.basketItems = items;
@@ -47,10 +51,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
     });
 
     this.subscription.add(basketChangeSubscription);
-
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   public ngOnInit() {
@@ -70,13 +70,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+    super.ngOnDestroy();
 
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-
 
   public addToBasket() {
     if (this.isInBasket) {
@@ -147,6 +146,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   private updateRoute(queryParams: Params) {
+    if (this.mobileQuery.matches) {
+      if (this.sideNav.opened) {
+        this.sideNav.toggle();
+      }
+    }
+
     this.router.navigate(['/items', this.channelId, this.itemId], { queryParams });
   }
 

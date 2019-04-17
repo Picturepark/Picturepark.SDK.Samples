@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, SecurityContext } from '@angular/core';
 import {
   ContentService, ContentDetail, ContentResolveBehavior,
-  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, DownloadLink
+  ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
-import * as lodash from 'lodash';
 import { SafeUrl, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Item } from '../../models/item.model';
 import { Subscription } from 'rxjs';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-item-details',
@@ -27,11 +27,20 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   public virtualItemHtml: SafeHtml | null = null;
 
-  public outputFormats: string[];
+  public outputFormats: {
+    outputFormatId: string;
+    name: string;
+  }[];
+
+  public schemas: SchemaDetail[];
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private contentService: ContentService, private sanitizer: DomSanitizer) {
+  constructor(
+    private contentService: ContentService,
+    private schemaService: SchemaService,
+    private translationService: TranslationService,
+    private sanitizer: DomSanitizer) {
   }
 
   public openContent() {
@@ -57,13 +66,13 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       ]
     });
 
-    const linkSubscription = this.contentService.createDownloadLink(request).subscribe((response: DownloadLink) => {
+    const linkSubscription = this.contentService.createDownloadLink(request).subscribe(response => {
       const item = {
         id: this.itemId,
         isPdf: isPdf,
         isImage: isImage,
         isMovie: isMovie,
-        isBinary: false,
+        isBinary: this.content.contentType !== ContentType.ContentItem,
         displayValues: {},
         previewUrl: isImage ? response.downloadUrl : this.imageUrl,
         originalUrl: response.downloadUrl,
@@ -84,20 +93,33 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     const contentSubscription = this.contentService.get(this.itemId,
       [ContentResolveBehavior.Metadata,
       ContentResolveBehavior.LinkedListItems,
-      ContentResolveBehavior.Outputs]).subscribe(content => {
+      ContentResolveBehavior.Outputs,
+      ContentResolveBehavior.InnerDisplayValueName,
+      ContentResolveBehavior.InnerDisplayValueList,
+      ContentResolveBehavior.InnerDisplayValueThumbnail]).subscribe(content => {
         this.content = content;
         this.item = this.processContent(content);
 
         if (this.content.contentType === ContentType.ContentItem) {
-          this.virtualItemHtml = this.sanitizer.bypassSecurityTrustHtml(this.content.displayValues['detail']);
+          this.virtualItemHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.content.displayValues['detail']);
         } else {
           this.contentService.download(this.itemId, 'Preview', undefined, undefined, null).subscribe((fileResult) => {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(fileResult.data));
           });
         }
 
-        this.outputFormats = content.outputs && content.outputs.map(o => o.outputFormatId);
+        this.translationService.getOutputFormatTranslations().then(translations =>
+          this.outputFormats = content.outputs && content.outputs.map(o => {
+            return {
+              outputFormatId: o.outputFormatId,
+              name: translations[o.outputFormatId]
+            };
+          })
+        );
 
+        this.schemaService.getMany(this.content.layerSchemaIds.concat(this.content.contentSchemaId)).toPromise().then(t => {
+          this.schemas = t;
+        });
         this.loading = false;
       });
 
@@ -111,30 +133,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   private processContent(content: ContentDetail): Item {
-    const themes = lodash.get(content, 'metadata.generalInformation.theme') || [];
-    const details = lodash.get(content, 'metadata.generalInformation.details') || [];
-    const mediaTypes = lodash.get(content, 'metadata.generalInformation.mediaTypes') || [];
-    const copyrights = lodash.get(content, 'metadata.generalInformation.copyright') || [];
-
-
     return {
-      name: lodash.get(content, 'displayValues.name'),
-      themes: themes.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      title: lodash.get(content, 'metadata.generalInformation.title.x-default'),
-      details: details.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      mediaTypes: mediaTypes.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      copyrights: copyrights.map(theme => {
-        return lodash.get(theme, 'name.x-default');
-      }),
-      source: lodash.get(content, 'metadata.generalInformation.source.x-default'),
-      referenceId: lodash.get(content, 'metadata.migrationLayer.referenceId'),
-      isPatched: lodash.get(content, 'metadata.migrationLayer.isPatched'),
+      name: content.displayValues.name
     };
   }
 }

@@ -1,0 +1,261 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Authorization
+
+@inject IAuthorizationService AuthorizationService
+@inject IViewLocalizer Localizer
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var route = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en-US"
+      itemscope
+      itemtype="http://schema.org/Article"
+      prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/" />
+    <title>FOFA Press Portal</title>
+    <link rel="shortcut icon" href="~/resources/media/images/FaviconFOFA.png" />
+
+    <link rel="stylesheet" id="parent-style-css" href="~/resources/themes/divi/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" id="divi-style-css" href="~/resources/themes/picturepark-divi/style.css" type="text/css" media="all" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+
+    <link rel="https://api.w.org/" href="https://picturepark.com/wp-json/" />
+    <link rel="alternate" type="application/json+oembed" href="https://picturepark.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpicturepark.com%2Fsolutions%2F" />
+    <link rel="alternate" type="text/xml+oembed" href="https://picturepark.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpicturepark.com%2Fsolutions%2F&amp;format=xml" />
+    <script async src="https://static.addtoany.com/menu/page.js"></script> <!--add to any plugin (social media share)-->
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://picturepark.com/xmlrpc.php?rsd" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <link href="~/resources/styles/defaultStyles.css" rel="stylesheet" />
+    <link href="~/resources/styles/customStyles.css" rel="stylesheet" />
+    <script src="~/resources/functions/functions.js"></script>
+
+    <!--change tab color on mobile devices-->
+    <meta name="theme-color" content="#78be31" />
+    <meta name="msapplication-navbutton-color" content="#78be31">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#78be31">
+
+    <!--OG sharing tags-->
+    <meta class="ogTags" property="og:title" content="FOFA Press Portal Demo" />
+    <meta class="ogTags" property="og:description" content="This is a slightly customized microsite of the Picturepark SDK - part of our online demo. Explore other components of this demo: https://picturepark.com/demo/finefoods" />
+    <meta class="ogTags" property="og:image" content="~/resources/media/images/header-background.jpg" />
+    <meta class="ogTags" property="og:type" content="website" />
+    <meta class="ogTags" property="og:site_name" content="FOFA Press Portal" />
+    <meta class="ogTags" property="og:url" content="https://cp-pressportal.preview-picturepark.com/" />
+</head>
+<body class="page-template page-template-page-headerless page-template-page-headerless-php page page-parent archive category category-content-management-blog en et_button_no_icon et_pb_button_helper_class et_transparent_nav et_fullwidth_nav et_fixed_nav et_show_nav et_cover_background et_pb_gutter windows et_pb_gutters3 et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_pb_footer_columns1 et_header_style_left et_pb_svg_logo et_pb_pagebuilder_layout et_right_sidebar et_divi_theme unknown">
+    <div id="page-container">
+        <header id="main-header" data-height-onload="120">
+            <div class="container clearfix et_menu_container">
+                <div class="logo_container">
+                    <span class="logo_helper"></span>
+                    <a href="/"><div id="logo" class="style-svg"></div></a>
+                </div>
+
+                <div id="et-top-navigation" data-height="120" data-fixed-height="36">
+                    <div href="mailto:info@picturepark.com" id="moreInfo" onclick="moreInfoOpen()">
+                        <p>@Localizer.GetString("More info about this demo")</p>
+                        <div id="moreInfoTooltip">
+                            @Localizer.GetString("This is a slightly customized microsite of the Picturepark SDK - part of our online demo.")<br /><br />
+                            @Localizer.GetString("You can play around with your limited read-only access which simulates access of FOFA members.")<br /><br />
+                            <a href="https://picturepark.com/demo/finefoods" target="_blank">@Localizer.GetString("Explore other components of this demo.")</a>
+                        </div>
+                    </div>
+                    <nav id="top-menu-nav">
+                        <ul id="top-menu" class="nav et_disable_top_tier">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page page_item @(route == "Home" ? "current_page_item": "") "><a asp-controller="Home" asp-action="Overview">News</a></li>
+                            @if (User.Identity.IsAuthenticated)    /*check login function*/
+            {
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page @(route == "Account" ? "current_page_item": "")"><a asp-controller="Account" asp-action="Info">@User.Identity.Name</a></li>
+                            }
+                            else
+                            {
+                                <li class="menu-item menu-item-type-post_type menu-item-object-page"><a asp-controller="Account" asp-action="Login">Login</a></li>
+                            }
+
+                            <!-- Language selection -->
+                            <li id="menu-item-wpml-ls-364-en"
+                                class="menu-item-language @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "en" ? "menu-item-language-current wpml-ls-current-language" : "") menu-item wpml-ls-slot-364 wpml-ls-item wpml-ls-item-en wpml-ls-menu-item wpml-ls-first-item menu-item-wpml-ls-364-en">
+                                <a title="En" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="en"><span class="wpml-ls-native">En</span></a>
+
+                            </li>
+                            <li id="menu-item-wpml-ls-364-de"
+                                class="menu-item-language @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "de" ? "menu-item-language-current wpml-ls-current-language" : "") menu-item wpml-ls-slot-364 wpml-ls-item wpml-ls-item-de wpml-ls-menu-item wpml-ls-last-item menu-item-wpml-ls-364-de">
+                                <a title="De" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="de"><span class="wpml-ls-native">De</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div id="et_top_search">
+                        <span id="et_search_icon"></span>
+                    </div>
+
+                    <div id="et_mobile_nav_menu">
+                        <div class="mobile_nav closed">
+                            <span class="select_page">Select Page</span>
+                            <span class="mobile_menu_bar mobile_menu_bar_toggle">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div id="mobileNavItems" class="mobileNavSleeping">
+                        <div id="mobileNavHeader"></div>
+                    </div>
+                </div> <!-- #et-top-navigation -->
+            </div> <!-- .container -->
+
+            <div class="et_search_outer">
+                <div class="container et_search_form_container et_pb_search_visible et_pb_no_animation">
+                    <form role="search" method="get" class="et-search-form" asp-controller="Search" asp-action="Index">
+                        <input type="search" class="et-search-field"  value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")"/>
+                    </form>
+                    <span class="et_close_search_field"></span>
+                </div>
+            </div>
+        </header> <!-- #main-header -->
+
+
+        <div id="et-main-area">
+            <div id="main-content">
+                <article class="page type-page status-publish has-post-thumbnail hentry">
+                    <div class="entry-content">
+                        <!--INTRO TEXT-->
+                        <div class="et_pb_section L1header et_pb_section_0 et_pb_with_background et_section_regular">
+                            <div class=" et_pb_row et_pb_row_0 et_pb_row_fullwidth">
+                                <div class="et_pb_column et_pb_column_2_3  et_pb_column_0">
+                                    <div class="et_pb_module et_pb_post_title   et_pb_post_title_0 et_pb_bg_layout_light">
+                                        <div class="et_pb_title_container">
+                                            <h1 class="entry-title">@Localizer.GetString("You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
+                                        </div>
+                                    </div>
+                                    <div class="et_pb_text et_pb_module et_pb_bg_layout_dark et_pb_text_align_left L1tag et_pb_text_0">
+                                        <div class="et_pb_text_inner">
+                                            <p>@Localizer.GetString("Other samples are available -")
+                                                <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
+                                            </p>
+                                        </div>
+                                    </div> <!-- .et_pb_text -->
+                                </div> <!-- .et_pb_column -->
+
+                                <div class="et_pb_column et_pb_column_1_3  et_pb_column_1">
+                                    <div class="et_pb_module et_pb_space et_pb_divider_hidden et_pb_divider_0 et-hide-mobile">
+                                        <div class="et_pb_divider_internal"></div>
+                                    </div>
+                                </div> <!-- .et_pb_column -->
+                            </div> <!-- .et_pb_row -->
+
+
+                            <div class="photo-credit et_pb_row et_pb_row_1">
+                                <div class="et_pb_column et_pb_column_4_4  et_pb_column_2">
+                                    <div class="et_pb_code et_pb_module  et_pb_code_0">
+                                        <a href="http://unsplash.com/@@r2d2?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Photo courtesy of Unsplash Photographer Romain Dupraz" class="creditLink"><span class="creditName">Romain Dupraz</span></a>
+                                    </div> <!-- .et_pb_code -->
+                                </div> <!-- .et_pb_column -->
+                            </div> <!-- .et_pb_row -->
+
+                        </div> <!-- .et_pb_section -->
+
+
+                        <div class="et_pb_section blurbsIcon et_pb_section_1 et_section_regular">
+                            @RenderBody()
+                        </div> <!-- .et_pb_section -->
+
+
+                    </div> <!-- .entry-content -->
+
+                </article> <!-- .et_pb_post -->
+
+            </div> <!-- #main-content -->
+
+            <span class="et_pb_scroll_top et-pb-icon"></span>
+
+            <footer id="main-footer">
+                <div id="footerTopSection"></div>
+
+                <div id="footerMiddleSection">
+                    <div class="et_pb_section siteFooter et_pb_section_11 et_pb_with_background et_section_regular">
+                        <div class=" et_pb_row et_pb_row_12">
+                            <div class="et_pb_column et_pb_column_1_4  et_pb_column_23">
+                                <div class="et_pb_module et-waypoint et_pb_image et_pb_animation_off et_pb_image_0 et_always_center_on_mobile">
+
+                                    <a href="/"><div id="footerImg"></div></a>
+
+                                </div>
+                            </div> <!-- .et_pb_column -->
+                            <div class="et_pb_column et_pb_column_3_4  et_pb_column_24">
+                                <div class="et_pb_code et_pb_module  et_pb_code_7">
+                                    <div id="et-info"><a href="mailto:info@picturepark.com"><span id="et-info-email"> info@picturepark.com </span></a></div><ul class="et-social-icons">
+                                        <li class="et-social-icon et-social-twitter">
+                                            <a href="https://www.twitter.com/Picturepark" class="icon" target="_blank">
+                                                <span>Twitter</span>
+                                            </a>
+                                        </li>
+                                        <li class="et-social-icon et-social-facebook">
+                                            <a href="https://www.facebook.com/Picturepark" class="icon" target="_blank">
+                                                <span>Facebook</span>
+                                            </a>
+                                        </li>
+                                        <li class="et-social-icon et-social-linkedin">
+                                            <a href="http://www.linkedin.com/company/picturepark-digital-asset-management" class="icon" target="_blank">
+                                                <span>LinkedIn</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div> <!-- .et_pb_code -->
+                            </div> <!-- .et_pb_column -->
+                        </div> <!-- .et_pb_row -->
+
+                    </div> <!-- .et_pb_section -->
+                </div>
+
+
+                <div id="et-footer-nav">
+                    <DIV class="container">
+                        <ul id="menu-footer-menu" class="bottom-nav">
+                            <li id="menu-item-8647" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8647"><a target="_blank" href="https://picturepark.com">picturepark.com</a></li>
+                            <li id="menu-item-6731" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6731"><a target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
+                            <li id="menu-item-6723" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6723"><a href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
+                        </ul>
+                    </DIV>
+                </div> <!-- #et-footer-nav -->
+
+                <div id="footer-bottom">
+                    <div class="container clearfix">
+                        &copy; @DateTime.Now.Year Vision Information Transaction AG
+                        <span>|</span>
+                        <a id="privacyLink" target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
+                        <span>|</span>
+                        <a id="termsOfUseLink" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                    </div>	<!-- .container -->
+                </div>
+            </footer> <!-- #main-footer -->
+        </div> <!-- #et-main-area -->
+
+    </div> <!-- #page-container -->
+
+
+    <!--add to any plugin-->
+    <div class="a2a_kit a2a_kit_size_48 a2a_default_style a2a_floating_style a2a_vertical_style">
+        <a class="a2a_button_facebook"></a>
+        <a class="a2a_button_twitter"></a>
+        <a class="a2a_button_email"></a>
+        <a class="a2a_button_google_gmail"></a>
+        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+    </div>
+
+    
+</body>
+</html>
