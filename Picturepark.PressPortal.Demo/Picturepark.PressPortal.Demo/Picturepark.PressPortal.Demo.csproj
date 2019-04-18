@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
 		<TargetFramework>netcoreapp2.2</TargetFramework>
+		<TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="log\**" />
@@ -11,6 +12,9 @@
 	  <EmbeddedResource Remove="Media\**" />
 	  <None Remove="log\**" />
 	  <None Remove="Media\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Remove="wwwroot\resources\functions\functions.ts" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -28,6 +32,9 @@
 	<ItemGroup>
 		<DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
 		<DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
+	</ItemGroup>
+	<ItemGroup>
+	  <TypeScriptCompile Include="wwwroot\resources\functions\functions.ts" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Views\Home\Overview.de.resx">
