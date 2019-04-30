@@ -18,7 +18,7 @@
 .secondary-color-bckgr, *::selection {
     background-color: #78be31;
 }
-*::selection{
+*::selection, .footer-bottom, .footer-bottom a, .footer-bottom li {
     color: #fff;
 }
 
@@ -37,8 +37,8 @@
 
 /*Images and media*/
 #logo {
-    width: 150px;
-    height: 100px;
+    width: 200px;
+    height: 95px;
     background-image: url('../media/images/logo-fofa.png');
 }
 
@@ -48,4 +48,11 @@
 
 .footer-img {
     background-image: url('../media/images/logo-fofa.png');
+}
+
+/*style solely for FOFA*/
+#more-info-btn {
+    padding: 10px 20px;
+    line-height: 22px;
+    font-size: 17px;
 }

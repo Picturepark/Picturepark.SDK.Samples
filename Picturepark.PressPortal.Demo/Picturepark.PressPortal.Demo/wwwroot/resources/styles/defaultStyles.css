@@ -27,13 +27,14 @@ h1,h2,h3,h4{
 }
 
 .col-3{
-    width: 33%;
+    width: 27%;
+    margin: 0 3%;
     text-align: center;
 }
 
 .col-el {
     float: left;
-    margin: 0 15px;
+    margin: 0 25px;
 }
 
 .col-last {
@@ -48,17 +49,13 @@ h1,h2,h3,h4{
 header {
     height: 25em;
 }
-    header .material-icons {
-        font-size: 28px;
-    }
 
 .header-first-row {
     height: 100px;
-    padding-top: 10px;
 }
 
 #logo {
-    padding-left: 10px;
+    margin-left: 20px;
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -73,12 +70,16 @@ header {
     display: none;
 }
 
+.header-nav{
+    padding-top: 40px;
+}
+
 nav ul {
     list-style-type: none;
 }
 
 nav li {
-    display: inline;
+    display: inline-block;
     text-transform: uppercase;
 }
 
@@ -94,28 +95,53 @@ nav a:hover{
     border-bottom: 2px solid #000;
 }
 
-.left-nav{
-    margin-right: 15px;
+.left-nav {
+    margin-right: 50px;
 }
 
 .current_page_item {
-    padding: 5px 0;
+    padding: 15px 0 5px 0;
     border-bottom: 2px solid #000;
 }
 
 .menu-item-language-current {
-    padding: 5px 0;
+    padding: 15px 0 5px 0;
     border-bottom: 2px solid #000;
+}
+
+#searchWrapper {
+    margin-right: 45px;
+}
+
+#searchWrapper .material-icons{
+    cursor: pointer;
+    font-size: 32px;
+    line-height: 40px;
 }
 
 #search-form{
     display: none;
 }
+
+.header-second-row{
+    max-width: 35%;
+    padding: 75px 0 0 30px;
+}
+
+.header-entry-title{
+    font-size: 28px;
+    line-height: 35px;
+}
+
+.header-entry-subtitle{
+    margin-top: 50px;
+    font-size: 18px;
+}
 /*Header end*/
 
 
 /*Body start*/
-.article-wrap{
+.article-wrap {
     width: 66%;
     margin: 150px auto;
 }
@@ -125,9 +151,10 @@ nav a:hover{
     display: inline-block;
     width: 27%;
     height: 520px;
-    margin: 0 5% 100px 0;
+    margin: 0 3% 100px 3%;
     box-shadow: 0 1px 6px rgba(0,0,0,0.18);
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .article-img{
@@ -137,7 +164,7 @@ nav a:hover{
 }
 
 .article-head-info {
-    padding: 0 20px;
+    padding: 0px 25px;
     box-sizing: border-box;
 }
     .article-head-info a, .article-head-info a:hover {
@@ -191,38 +218,126 @@ nav a:hover{
 
 /*Footer start*/
 .footer-row {
-    width: 75%;
+    width: 66%;
     min-height: 175px;
     margin: auto;
     padding: 15px;
     box-sizing: border-box;
 }
 
-.footer-row-el{
-    display: inline-block;
-}
-
-.footer-img {
-    height: 100px;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.contact-info{
-
-}
-
-.social-media-info ul{
+.footer-row ul {
+    position: absolute;
+    right:0;
+    bottom: 20px;
     list-style-type: none;
+    cursor: pointer;
 }
-.social-media-info li {
+
+.footer-row li {
     display: inline;
 }
 
-.footer-bottom {
+.footer-row-el {
+    display: inline-block;
+    position: relative;
+    height: 100px;
 }
 
+.footer-img {
+    height: 175px;
+    background-repeat: no-repeat;
+    background-size: auto 100px;
+    background-position: bottom left;
+}
+
+.contact-info a {
+    position: absolute;
+    bottom: 20px;
+    left: 18%;
+}
+
+.contact-info a, .contact-info span {
+    font-size: 17px;
+    line-height: 25px;
+    text-decoration: none;
+    vertical-align: bottom;
+}
+
+.contact-info a .material-icons{
+    font-size: 21px;
+    line-height: 25px;
+    vertical-align: bottom;
+}
+
+.social-media-info a{
+    text-decoration: none;
+}
+
+.social-media-info img {
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+}
+
+.footer-bottom{
+    position: relative;
+    padding-top: 100px;
+}
+
+.footer-bottom .footer-row-el {
+    position: initial;
+}
+
+.footer-bottom .footer-row{
+    position: relative;
+}
+
+.footer-bottom .footer-row-el {
+    right: initial;
+}
+
+.footer-bottom, .footer-bottom a{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.footer-bottom a {
+    text-decoration: none;
+}
+
+.footer-bottom a:hover{
+    text-decoration: underline;
+}
+
+.footer-bottom ul {
+    height: 50px;
+    padding: 0 35px;
+    line-height: 50px;
+}
+
+#links-footer {
+    height: 50px;
+    min-height: initial;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    padding: 0;
+}
+
+#terms-footer{
+    height: 50px;
+    min-height: initial;
+    margin-top: 100px;
+}
+
+#terms-footer .footer-row-el{
+    height: 20px;
+}
+
+#terms-footer span {
+    margin: 0 15px;
+}
 /*Footer end*/
+
 
 /*AddToAny start*/
 .a2a_vertical_style {

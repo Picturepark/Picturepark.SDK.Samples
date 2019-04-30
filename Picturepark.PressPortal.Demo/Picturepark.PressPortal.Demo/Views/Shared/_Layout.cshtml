@@ -51,8 +51,8 @@
                         </a>
                     </div>
 
-                    <div class="col-2 col-last">
-                        <div class="button col-el gradient-bckgr gradient-shadow">
+                    <div class="col-2 col-last header-nav">
+                        <div id="more-info-btn" class="button col-el gradient-bckgr gradient-shadow">
                             @Localizer.GetString("More info about this demo")
                             <div class="hidden-content">
                                 @Localizer.GetString("This is a slightly customized microsite of the Picturepark SDK - part of our online demo.")<br /><br />
@@ -98,8 +98,8 @@
                 <div class="header-second-row primary-color">
                     <article>
                         <!--INTRO TEXT-->
-                        <h1>@Localizer.GetString("You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
-                        <p>
+                        <h1 class="header-entry-title">@Localizer.GetString("You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
+                        <p class="header-entry-subtitle">
                             @Localizer.GetString("Other samples are available -")
                         <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
                         </p>
@@ -127,17 +127,17 @@
                     <ul>
                         <li>
                             <a href="https://www.twitter.com/Picturepark" target="_blank">
-                                <span>Twitter</span>
+                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-twitter.png" />
                             </a>
                         </li>
                         <li>
                             <a href="https://www.facebook.com/Picturepark" target="_blank">
-                                <span>Facebook</span>
+                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-facebook.png" />
                             </a>
                         </li>
                         <li>
                             <a href="http://www.linkedin.com/company/picturepark-digital-asset-management" target="_blank">
-                                <span>LinkedIn</span>
+                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-linkedin.png" />
                             </a>
                         </li>
                     </ul>
@@ -145,20 +145,24 @@
             </div>
             
             <div class="footer-bottom gradient-bckgr gradient-shadow">
-                <div class="footer-row">
+                <div id="links-footer" class="footer-row">
                     <ul class="footer-row-el">
                         <li><a target="_blank" href="https://picturepark.com">picturepark.com</a></li>
+                        <li>|</li>
                         <li><a target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
+                        <li>|</li>
                         <li><a href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
                     </ul>
                 </div>
 
-                <div class="footer-row">
-                    &copy; @DateTime.Now.Year Vision Information Transaction AG
-                    <span>|</span>
-                    <a target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
-                    <span>|</span>
-                    <a target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                <div id="terms-footer" class="footer-row">
+                    <div class="footer-row-el">
+                        &copy; @DateTime.Now.Year Vision Information Transaction AG
+                        <span>|</span>
+                        <a target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
+                        <span>|</span>
+                        <a target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                    </div>
                 </div>
             </div>
         </footer>

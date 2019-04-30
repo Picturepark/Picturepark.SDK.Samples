@@ -17,7 +17,9 @@
     });
 </script>*@
 
-<a asp-controller="Home" asp-action="Overview"><span>#</span> @Localizer.GetString("Back to Overview")</a>
+<a asp-controller="Home" asp-action="Overview">
+    <i class="material-icons">keyboard_backspace</i> @Localizer.GetString("Back to Overview")
+</a>
 
 <article>
     <h1>@Model.Content.Headline.GetTranslation()</h1>
