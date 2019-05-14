@@ -5,13 +5,24 @@
 }
 
 /*General styling*/
-p, li, a{
+p, li, a {
     font-size: 16px;
     font-weight: 400;
-    color: #000;
+    color: #212529;
 }
-h1,h2,h3,h4{
+h1,h2,h3,h4, h5{
     font-weight: 400;
+}
+
+h4 {
+    font-size: 24px;
+    margin-top: 20px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+h5{
+    font-size: 20px;
 }
 
 .button {
@@ -137,10 +148,27 @@ nav a:hover{
     margin-top: 50px;
     font-size: 18px;
 }
+
+#more-info-btn .btn-content {
+    position: absolute;
+    display: none;
+    width: 450px;
+    margin-top: 20px;
+    margin-left: -20px;
+    padding: 20px;
+}
+
+.header-scroll-position {
+    position: fixed;
+    width: 100%;
+    height: 110px;
+    background-color: #fff;
+    z-index: 100;
+}
 /*Header end*/
 
 
-/*Body start*/
+/*Body overview start*/
 .article-wrap {
     width: 66%;
     margin: 150px auto;
@@ -214,7 +242,158 @@ nav a:hover{
         text-align: center;
         font-size: 20px;
     }
-/*Body end*/
+/*Body overview end*/
+
+/*Body detail view start*/
+.breadcrumb {
+    position: absolute;
+    left: 0;
+    text-align: initial;
+}
+
+.breadcrumb .material-icons{
+    font-size: 15px;
+}
+
+.breadcrumb a {
+    font-weight: 300;
+}
+
+.breadcrumb a, .article-detail-about a{
+    text-decoration: none;
+}
+
+.breadcrumb a:hover, .article-detail-about a:hover{
+    text-decoration: underline;
+}
+
+.article-detail{
+    width: 60%;
+    margin: auto;
+    text-align: initial;
+}
+
+.article-detail-title{
+    font-size: 40px;
+}
+
+.article-detail-about{
+    height: 75px;
+    margin-top: 50px;
+}
+
+.article-detail-about a, .article-detail-about span  {
+    font-size: 17px;
+}
+
+.article-detail-lead{
+    font-size: 18px;
+    font-family: "Roboto Slab";
+    font-weight: 300;
+    line-height: 30px;
+}
+
+.detail-hero-image{
+    margin-bottom: 50px;
+}
+
+.detail-body-text p {
+    font-size: 17px;
+    line-height: 30px;
+    margin-bottom: 30px;
+}
+
+.download-item {
+    display: inline-block;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.download-item:hover {
+    cursor: pointer;
+    background-color: rgba(50,50,50, .1);
+    transition: background-color 500ms, box-shadow 250ms;
+    box-shadow: 4px 5px 4px -2px rgba(75,75,75, .7);
+}
+
+.download-item a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+}
+
+.download-item:hover a{
+    text-decoration: underline;
+}
+
+.download-item .material-icons {
+    opacity: 0;
+    position: absolute;
+    margin-top: 35px;
+    margin-left: 35px;
+    font-size: 80px;
+}
+
+.download-item:hover .material-icons{
+    opacity: 1;
+    transition: opacity 500ms;
+}
+
+.download-item img {
+    width: 150px;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.download-item p {
+    display: inline-block;
+    margin-left: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+/*Body detail view end*/
+
+
+/*Body search results start*/
+.search-results{
+    max-width: 1080px;
+    margin: auto;
+}
+
+.search-result-item {
+    height: 100px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+}
+
+.search-result-item h5 {
+    margin-bottom: 20px;
+}
+
+.search-result-item a {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 24px;
+    text-decoration: none;
+}
+
+.search-result-item a:hover{
+    text-decoration: underline;
+}
+
+.no-results {
+    padding-bottom: 25px;
+}
+.no-results a{
+    text-decoration: none;
+}
+.no-results a:hover{
+    text-decoration: underline;
+}
+/*Body search results end*/
+
 
 /*Footer start*/
 .footer-row {
@@ -277,6 +456,10 @@ nav a:hover{
     height: 25px;
     width: 25px;
     margin-right: 10px;
+}
+
+.social-media-info img:hover{
+    background-color: #000;
 }
 
 .footer-bottom{

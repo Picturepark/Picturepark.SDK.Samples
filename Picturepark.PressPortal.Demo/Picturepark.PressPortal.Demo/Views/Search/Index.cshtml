@@ -3,20 +3,26 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 
-<h4>@Localizer.GetString("Search results for") "@Model.SearchString"</h4>
-<br /><br />
+<div class="search-results">
+    <h4>@Localizer.GetString("Search results for") "@Model.SearchString"</h4>
+    <br /><br />
 
-@foreach (var result in Model.SearchResults)
-{
-    <h5><a asp-controller="Home" asp-action="Detail" asp-route-id="@result.Id">@result.Title</a></h5>
-    <p>@result.Description</p>
-}
+    @foreach (var result in Model.SearchResults)
+    {
+        <div class="search-result-item gradient-shadow-bottom">
+            <h5><a class="primary-color" asp-controller="Home" asp-action="Detail" asp-route-id="@result.Id">@result.Title</a></h5>
+            <p>@result.Description</p>
+        </div>
+    }
 
-@if (!Model.SearchResults.Any())
-{
-    <p>@Localizer.GetString("No search results")
-        <br />
-        <a href='/'>@Localizer.GetString("Back to Overview")</a>
+    @if (!Model.SearchResults.Any())
+    {
+        <p class="no-results gradient-shadow-bottom">
+            @Localizer.GetString("No search results")
+        <br /><br />
+        <a class="primary-color" href='/'>@Localizer.GetString("Back to Overview")</a>
     </p>
 }
+
+</div>
 
