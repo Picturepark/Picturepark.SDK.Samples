@@ -16,11 +16,12 @@ var ScrollPosition = /** @class */ (function () {
 }());
 var ArticleHandler = /** @class */ (function () {
     function ArticleHandler(data) {
-        this.counter = data.counter;
-        this.para1 = data.para1;
-        this.para2 = data.para2;
+        this.articleCount = data.articleCount;
+        this.pageCount = data.pageCount;
         this.article = data.article;
-        this.page = data.page;
+        this.pageId = data.pageId;
+        this.pageName = data.pageName;
+        this.currentPage = data.currentPage;
     }
     return ArticleHandler;
 }());
@@ -28,20 +29,41 @@ var ArticleHandler = /** @class */ (function () {
 loadElement();
 function overflowHanlder() {
     var articleHandler = new ArticleHandler({
-        counter: document.getElementsByClassName("article-box").length,
-        para1: 0,
-        para2: 9,
+        articleCount: document.getElementsByClassName("article-box").length,
+        pageCount: Math.ceil(document.getElementsByClassName("article-box").length / 9),
         article: document.getElementsByClassName("article-box"),
-        page: [1, 2]
+        pageId: [],
+        pageName: [],
+        currentPage: 1
     });
-    console.log("article counter = " + articleHandler.counter);
-    console.log("para1 = " + articleHandler.para1);
-    console.log("para2 = " + articleHandler.para2);
-    console.log("article = " + articleHandler.article);
-    console.log("page = " + articleHandler.page);
-    console.log(document.getElementsByClassName("article-box"));
+    if (articleHandler.articleCount > 9) {
+        for (var i = 0; i < articleHandler.pageCount; i++) { //fill array with pages
+            articleHandler.pageId.push(i + 1);
+            articleHandler.pageName.push("pageNr" + (i + 1));
+        }
+        //assign articles to pages
+        var para1 = 0;
+        var para2 = 9;
+        for (var i = 0; i < articleHandler.articleCount; i++) {
+            if (i < para2) {
+                articleHandler.article[i].classList.add(articleHandler.pageName[para1]);
+            }
+            else {
+                para1 = para1 + 1;
+                para2 = para2 + 9;
+                articleHandler.article[i].classList.add(articleHandler.pageName[para1]);
+            }
+            if (!articleHandler.article[i].classList.contains("pageNr1")) { //initial hide articles
+                articleHandler.article[i].classList.add("hide-element");
+            }
+        }
+        document.getElementsByClassName("last-page")[0].classList.add("hide-element");
+    }
+    else {
+        document.getElementsByClassName("next-page")[0].classList.add("hide-element");
+        document.getElementsByClassName("last-page")[0].classList.add("hide-element");
+    }
 }
-//load element function
 function loadElement() {
     if (document.getElementsByClassName("article-box").length == 0) {
         window.requestAnimationFrame(loadElement);

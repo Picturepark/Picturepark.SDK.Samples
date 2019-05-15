@@ -242,6 +242,10 @@ nav a:hover{
         text-align: center;
         font-size: 20px;
     }
+
+.hide-element{
+    display: none;
+}
 /*Body overview end*/
 
 /*Body detail view start*/
