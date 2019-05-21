@@ -35,6 +35,18 @@
 
 <!--only displayed if more than 9 articles-->
     <div class="page-nav">
-        <div class="last-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Last page")</div>
-        <div class="next-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Next page")</div>
+        <div class="page-list">
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr3">3</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr4">4</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr5">5</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr6">6</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr7">7</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr8">8</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr9">9</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr10">10</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr11">11</div>
+            <div onclick="changePage(this.id)" class="page-number" id="page-nav-nr12">12</div>
+        </div>
+        <div onclick="changePage('lastPageBtn')" class="last-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Last page")</div>
+        <div onclick="changePage('nextPageBtn')" class="next-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Next page")</div>
     </div>

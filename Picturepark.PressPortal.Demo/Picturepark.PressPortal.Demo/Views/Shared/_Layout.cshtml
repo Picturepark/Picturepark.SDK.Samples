@@ -54,7 +54,7 @@
                     <div class="col-2 col-last header-nav">
                         <div id="more-info-btn" class="button col-el gradient-bckgr gradient-shadow" onclick="clickOpenBtn(this, this.getElementsByClassName('btn-content')[0])">
                             @Localizer.GetString("More info about this demo")
-                            <div class="btn-content gradient-shadow">
+                            <div class="btn-content gradient-shadow hide-element">
                                 @Localizer.GetString("This is a slightly customized microsite of the Picturepark SDK - part of our online demo.")<br /><br />
                                 @Localizer.GetString("You can play around with your limited read-only access which simulates access of FOFA members.")<br /><br />
                                 <a href="https://picturepark.com/demo/finefoods" target="_blank">@Localizer.GetString("Explore other components of this demo.")</a>
@@ -87,9 +87,9 @@
                             </ul>
                         </nav>
 
-                        <div id="searchWrapper" class="col-el" onclick="clickOpenBtn(this, this.getElementsByClassName('btn-content')[0])">
+                        <div id="searchWrapper" class="col-el" onclick="search(this, this.getElementsByClassName('btn-content')[0])">
                             <i class="material-icons">search</i>
-                            <form id="search-form" class="col-el btn-content" role="search" method="get" asp-controller="Search" asp-action="Index">
+                            <form id="search-form" class="col-el btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
                                 <input type="search" value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")" />
                             </form>
                         </div>

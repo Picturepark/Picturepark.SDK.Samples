@@ -130,10 +130,6 @@ nav a:hover{
     line-height: 40px;
 }
 
-#search-form{
-    display: none;
-}
-
 .header-second-row{
     max-width: 35%;
     padding: 75px 0 0 30px;
@@ -151,7 +147,6 @@ nav a:hover{
 
 #more-info-btn .btn-content {
     position: absolute;
-    display: none;
     width: 450px;
     margin-top: 20px;
     margin-left: -20px;
@@ -235,13 +230,26 @@ nav a:hover{
     width: 175px;
     margin: auto;
 }
-    .page-nav .button {
-        margin-bottom: 25px;
-        padding: 18px 20px;
-        box-sizing: border-box;
-        text-align: center;
-        font-size: 20px;
-    }
+
+.page-list {
+    width: 100%;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.page-number {
+    position: relative;
+    display: inline-block;
+    padding: 0 15px;
+}
+
+.page-nav .button {
+    margin-bottom: 25px;
+    padding: 18px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 20px;
+}
 
 .hide-element{
     display: none;
