@@ -30,6 +30,31 @@ var ArticleHandler = /** @class */ (function () {
     }
     return ArticleHandler;
 }());
+var MobileElements = /** @class */ (function () {
+    function MobileElements(data) {
+        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0];
+        this.mobileSearch = document.getElementsByClassName("mobile-search")[0];
+        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0];
+        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0];
+        this.searchWrapper = document.getElementById("searchWrapper");
+        this.moreInfo = document.getElementById("more-info-btn");
+        this.navLinks = document.getElementsByClassName("nav-links")[0];
+    }
+    return MobileElements;
+}());
+//viewport and mobile support
+function mobileNav() {
+    var mobileElements = new MobileElements({});
+    mobileElements.mobileSearch.append(mobileElements.searchWrapper);
+    mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
+    mobileElements.mobileNavLinks.append(mobileElements.navLinks);
+    if (mobileElements.mobileInnerNav.classList.contains("hide-element")) {
+        mobileElements.mobileInnerNav.classList.remove("hide-element");
+    }
+    else {
+        mobileElements.mobileInnerNav.classList.add("hide-element");
+    }
+}
 //article overflow handler
 loadElement();
 function overflowHanlder() {
@@ -46,7 +71,6 @@ function overflowHanlder() {
             node.innerHTML = (i + 1).toString();
             articleHandler.pageList.append(node);
         }
-        articleHandler.pageCount = 12;
         if (articleHandler.pageCount > 4) { //only display so many page numbers
             for (var i = 4; i < articleHandler.pageCount; i++) {
                 document.getElementsByClassName("page-number")[i].classList.add("hide-element");
@@ -58,7 +82,7 @@ function overflowHanlder() {
             node.innerHTML = "...";
             articleHandler.pageList.append(node);
         }
-        //give current page class "active" or skomething like that
+        document.getElementById("page-nav-nr1").classList.add("active-page", "gradient-bckgr", "gradient-shadow"); //hardcoded: give current page class "active" or skomething like that
         //assign articles to pages
         var para1 = 0;
         var para2 = 9;
@@ -103,6 +127,17 @@ function changePage(clickedPage) {
             articleHandler.article[i].classList.add("hide-element");
         }
     }
+    for (var i = 1; i <= articleHandler.pageCount; i++) {
+        console.log(articleHandler.currentPage);
+        if (i == articleHandler.currentPage) {
+            document.getElementById("page-nav-nr" + articleHandler.currentPage).classList.add("active-page", "gradient-bckgr", "gradient-shadow");
+        }
+        else {
+            if (document.getElementsByClassName("page-number")[i - 1].classList.contains("active-page")) {
+                document.getElementsByClassName("page-number")[i - 1].classList.remove("active-page", "gradient-bckgr", "gradient-shadow");
+            }
+        }
+    }
     window.scroll({ top: 0, behavior: 'smooth' });
     switch (articleHandler.currentPage) { //hide and display page nav btns
         case 1:
@@ -142,17 +177,23 @@ function clickOpenBtn(btnEl, childEl) {
     });
 }
 window.addEventListener("scroll", function () {
-    var scrollPosition = new ScrollPosition({
-        posY: window.scrollY,
-        element: document.getElementsByClassName("header-first-row")[0]
-    });
-    if (scrollPosition.posY > 500) {
-        scrollPosition.element.classList.add("gradient-shadow");
-        scrollPosition.element.classList.add("header-scroll-position");
-    }
-    else {
-        scrollPosition.element.classList.remove("gradient-shadow");
-        scrollPosition.element.classList.remove("header-scroll-position");
+    var timeout;
+    if (!timeout) {
+        timeout = setTimeout(function () {
+            timeout = null; //reset timeout
+            var scrollPosition = new ScrollPosition({
+                posY: window.scrollY,
+                element: document.getElementsByClassName("header-first-row")[0]
+            });
+            if (scrollPosition.posY > 500) {
+                scrollPosition.element.classList.add("gradient-shadow");
+                scrollPosition.element.classList.add("header-scroll-position");
+            }
+            else {
+                scrollPosition.element.classList.remove("gradient-shadow");
+                scrollPosition.element.classList.remove("header-scroll-position");
+            }
+        }, 100);
     }
 });
 //toggle mobile navigation

@@ -47,6 +47,43 @@ class ArticleHandler {
     }
 }
 
+class MobileElements {
+    mobileInnerNav: HTMLElement;
+    mobileSearch: HTMLElement;
+    mobileMoreInfo: HTMLElement;
+    mobileNavLinks: HTMLElement;
+    searchWrapper: HTMLElement;
+    moreInfo: HTMLElement;
+    navLinks: HTMLElement;
+
+    constructor(data?: any) {
+        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0] as HTMLElement;
+        this.mobileSearch = document.getElementsByClassName("mobile-search")[0] as HTMLElement;
+        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0] as HTMLElement;
+        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0] as HTMLElement;
+        this.searchWrapper = document.getElementById("searchWrapper") as HTMLElement;
+        this.moreInfo = document.getElementById("more-info-btn") as HTMLElement;
+        this.navLinks = document.getElementsByClassName("nav-links")[0] as HTMLElement;
+    }
+}
+
+//viewport and mobile support
+function mobileNav() {
+    const mobileElements = new MobileElements({});
+
+    mobileElements.mobileSearch.append(mobileElements.searchWrapper);
+    mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
+    mobileElements.mobileNavLinks.append(mobileElements.navLinks);
+
+    if (mobileElements.mobileInnerNav.classList.contains("hide-element")){
+        mobileElements.mobileInnerNav.classList.remove("hide-element");
+    }
+    else {
+        mobileElements.mobileInnerNav.classList.add("hide-element");
+    }
+}
+
+
 //article overflow handler
 loadElement();
 
@@ -67,8 +104,6 @@ function overflowHanlder() {
             articleHandler.pageList.append(node);
         }
 
-
-        articleHandler.pageCount = 12;
         if (articleHandler.pageCount > 4) { //only display so many page numbers
             for (let i = 4; i < articleHandler.pageCount; i++) {
                 document.getElementsByClassName("page-number")[i].classList.add("hide-element");
@@ -81,8 +116,8 @@ function overflowHanlder() {
             node.innerHTML = "...";
             articleHandler.pageList.append(node);
         }
-        //give current page class "active" or skomething like that
 
+        document.getElementById("page-nav-nr1").classList.add("active-page", "gradient-bckgr", "gradient-shadow"); //hardcoded: give current page class "active" or skomething like that
 
         //assign articles to pages
         let para1: number = 0;
@@ -133,6 +168,18 @@ function changePage(clickedPage) { //page navigation
         }
     }
 
+    for (let i = 1; i <= articleHandler.pageCount; i++) {
+        console.log(articleHandler.currentPage);
+        if (i == articleHandler.currentPage) {
+            document.getElementById("page-nav-nr" + articleHandler.currentPage).classList.add("active-page", "gradient-bckgr", "gradient-shadow");
+        }
+        else {
+            if (document.getElementsByClassName("page-number")[i-1].classList.contains("active-page")){
+                document.getElementsByClassName("page-number")[i-1].classList.remove("active-page", "gradient-bckgr", "gradient-shadow");
+            }
+        }
+    }
+
     window.scroll({top: 0, behavior: 'smooth'});
 
     switch (articleHandler.currentPage) { //hide and display page nav btns
@@ -178,18 +225,24 @@ function clickOpenBtn(btnEl, childEl) { //button function
 }
 
 window.addEventListener("scroll", function () { //header white on scroll
-    const scrollPosition = new ScrollPosition({
-        posY: window.scrollY,
-        element: document.getElementsByClassName("header-first-row")[0] as HTMLElement
-    });
+    let timeout: number;
+    if (!timeout) {
+        timeout = setTimeout(function () {
+            timeout = null; //reset timeout
+            const scrollPosition = new ScrollPosition({
+                posY: window.scrollY,
+                element: document.getElementsByClassName("header-first-row")[0] as HTMLElement
+            });
 
-    if (scrollPosition.posY > 500) {
-        scrollPosition.element.classList.add("gradient-shadow");
-        scrollPosition.element.classList.add("header-scroll-position");
-    }
-    else {
-        scrollPosition.element.classList.remove("gradient-shadow");
-        scrollPosition.element.classList.remove("header-scroll-position");
+            if (scrollPosition.posY > 500) {
+                scrollPosition.element.classList.add("gradient-shadow");
+                scrollPosition.element.classList.add("header-scroll-position");
+            }
+            else {
+                scrollPosition.element.classList.remove("gradient-shadow");
+                scrollPosition.element.classList.remove("header-scroll-position");
+            }
+        }, 100)
     }
 });
 

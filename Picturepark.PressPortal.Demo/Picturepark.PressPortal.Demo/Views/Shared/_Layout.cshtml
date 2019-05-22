@@ -61,20 +61,18 @@
                             </div>
                         </div>
 
-
-
-                        <nav class="col-el">
+                        <nav class="col-el nav-links">
                             <ul>
                                 <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a asp-controller="Home" asp-action="Overview">News</a></li>
                                 <!--Login currently disabled-->
                                 @*@if (User.Identity.IsAuthenticated)    /*check login function*/
-                                {
-                                    <li class="@(route == "Account" ? "current_page_item": "")"><a asp-controller="Account" asp-action="Info">@User.Identity.Name</a></li>
-                                }
-                                else
-                                {
-                                    <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-                                }*@
+                    {
+                        <li class="@(route == "Account" ? "current_page_item": "")"><a asp-controller="Account" asp-action="Info">@User.Identity.Name</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                    }*@
 
                                 <!-- Language selection -->
                                 <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "en" ? "menu-item-language-current wpml-ls-current-language" : "") ">
@@ -94,14 +92,23 @@
                             </form>
                         </div>
                     </div>
+                    <div onclick="mobileNav()" class="mobile-nav">
+                        <i class="material-icons secondary-color-bckgr gradient-shadow no-select">menu</i>
+                        <div class="mobile-inner-nav hide-element">
+                            <div class="mobile-search"></div>
+                            <div class="mobile-more-info"></div>
+                            <div class="mobile-nav-links"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="header-second-row primary-color">
+                    <div class="mobile-header-banner"></div>
                     <article>
                         <!--INTRO TEXT-->
                         <h1 class="header-entry-title">@Localizer.GetString("You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
                         <p class="header-entry-subtitle">
                             @Localizer.GetString("Other samples are available -")
-                        <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
+                            <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
                         </p>
                     </article>
                 </div>

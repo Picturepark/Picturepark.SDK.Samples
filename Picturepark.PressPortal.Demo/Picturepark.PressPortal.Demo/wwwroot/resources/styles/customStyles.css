@@ -22,8 +22,6 @@
 #more-info-btn .btn-content a:hover{
     text-decoration: underline;
 }
-
-
 .primary-color-bckgr {
     background-color: #2c6836;
 }
@@ -32,7 +30,7 @@
 .secondary-color-bckgr, *::selection {
     background-color: #78be31;
 }
-*::selection, .footer-bottom, .footer-bottom a, .footer-bottom li {
+*::selection, .footer-bottom, .footer-bottom a, .footer-bottom li, .active-page {
     color: #fff;
 }
 

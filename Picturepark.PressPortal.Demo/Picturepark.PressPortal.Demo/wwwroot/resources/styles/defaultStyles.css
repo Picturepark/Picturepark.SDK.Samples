@@ -56,6 +56,14 @@ h5{
     align-content: center;
 }
 
+.no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
 /*Header start*/
 header {
     height: 25em;
@@ -131,7 +139,7 @@ nav a:hover{
 }
 
 .header-second-row{
-    max-width: 35%;
+    max-width: 700px;
     padding: 75px 0 0 30px;
 }
 
@@ -160,6 +168,19 @@ nav a:hover{
     background-color: #fff;
     z-index: 100;
 }
+.mobile-nav {
+    display: none;
+    float: right;
+    margin: 30px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+    .mobile-nav .material-icons {
+        border-radius: 3px;
+        padding: 2px;
+        font-size: 40px;
+        color: #fff;
+    }
 /*Header end*/
 
 
@@ -240,7 +261,9 @@ nav a:hover{
 .page-number {
     position: relative;
     display: inline-block;
-    padding: 0 15px;
+    margin: 0 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .page-nav .button {
@@ -249,6 +272,10 @@ nav a:hover{
     box-sizing: border-box;
     text-align: center;
     font-size: 20px;
+}
+
+.active-page {
+    color: #fff;
 }
 
 .hide-element{
@@ -533,6 +560,63 @@ nav a:hover{
 }
 /*Footer end*/
 
+/*Responsive start*/
+@media(max-width: 1600px){
+    .article-wrap {
+        width: 75%;
+    }
+}
+
+@media(max-width: 1300px){
+    .header-second-row{
+        max-width: 400px;
+    }
+    .header-entry-subtitle{
+        margin-top: 0;
+    }
+    .mobile-header-banner {
+        position: absolute;
+        width: 100%;
+        height: 255px;
+        left: 0;
+        margin-top: -30px;
+        background: rgba(255,255,255,.4);
+        box-shadow: 2px -5px 5px -3px rgba(255,255,255,.4);
+        z-index: 50;
+    }
+    .header-second-row article {
+        position: relative;
+        z-index: 100;
+    }
+    .article-wrap {
+        width: 85%;
+    }
+    .article-box{
+        width: 40%;
+    }
+}
+
+@media(max-width: 850px){
+    .header-nav{
+        display: none;
+    }
+    .mobile-nav{
+        display: inline-block;
+    }
+    .article-wrap {
+        width: 50%;
+    }
+    .article-box{
+        width: 100%;
+    }
+}
+
+@media(max-width: 650px){
+    .article-wrap{
+        width: 70%;
+    }
+}
+/*Responsive end*/
 
 /*AddToAny start*/
 .a2a_vertical_style {
