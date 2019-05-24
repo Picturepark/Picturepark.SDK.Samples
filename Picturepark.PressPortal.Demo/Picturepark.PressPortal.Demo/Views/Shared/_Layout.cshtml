@@ -92,12 +92,14 @@
                             </form>
                         </div>
                     </div>
-                    <div onclick="mobileNav()" class="mobile-nav">
-                        <i class="material-icons secondary-color-bckgr gradient-shadow no-select">menu</i>
-                        <div class="mobile-inner-nav hide-element">
-                            <div class="mobile-search"></div>
-                            <div class="mobile-more-info"></div>
+                    <div class="mobile-nav">
+                        <i onclick="mobileNavOpen()" class="material-icons secondary-color-bckgr gradient-shadow no-select menu-icon">menu</i>
+                        <i onclick="mobileNavClose()" class="material-icons no-select hide-element close-icon">close</i>
+                        <div class="mobile-inner-nav gradient-shadow hide-element">
+                            <div class="mobile-search gradient-shadow-bottom"></div>
                             <div class="mobile-nav-links"></div>
+                            <div class="mobile-more-info"></div>
+                            <div onclick="mobileNavClose()" class="mobile-nav-right-bar"></div>
                         </div>
                     </div>
                 </div>

@@ -8,9 +8,9 @@ var Button = /** @class */ (function () {
 }());
 var ScrollPosition = /** @class */ (function () {
     function ScrollPosition(data) {
-        this.element = data.element;
-        this.posY = data.posY;
-        this.posX = data.posX;
+        this.element = document.getElementsByClassName("header-first-row")[0],
+            this.posY = window.scrollY,
+            this.posX = data.posX;
     }
     return ScrollPosition;
 }());
@@ -36,6 +36,8 @@ var MobileElements = /** @class */ (function () {
         this.mobileSearch = document.getElementsByClassName("mobile-search")[0];
         this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0];
         this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0];
+        this.mobileMenu = document.getElementsByClassName("menu-icon")[0];
+        this.mobileClose = document.getElementsByClassName("close-icon")[0];
         this.searchWrapper = document.getElementById("searchWrapper");
         this.moreInfo = document.getElementById("more-info-btn");
         this.navLinks = document.getElementsByClassName("nav-links")[0];
@@ -43,16 +45,27 @@ var MobileElements = /** @class */ (function () {
     return MobileElements;
 }());
 //viewport and mobile support
-function mobileNav() {
+function mobileNavOpen() {
     var mobileElements = new MobileElements({});
+    var scrollPosition = new ScrollPosition({});
     mobileElements.mobileSearch.append(mobileElements.searchWrapper);
     mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
     mobileElements.mobileNavLinks.append(mobileElements.navLinks);
-    if (mobileElements.mobileInnerNav.classList.contains("hide-element")) {
-        mobileElements.mobileInnerNav.classList.remove("hide-element");
-    }
-    else {
-        mobileElements.mobileInnerNav.classList.add("hide-element");
+    mobileElements.mobileInnerNav.classList.remove("hide-element");
+    mobileElements.mobileClose.classList.remove("hide-element");
+    mobileElements.mobileMenu.classList.add("hide-element");
+    scrollPosition.element.classList.add("gradient-shadow");
+    scrollPosition.element.classList.add("header-scroll-position");
+}
+function mobileNavClose() {
+    var mobileElements = new MobileElements({});
+    var scrollPosition = new ScrollPosition({});
+    mobileElements.mobileInnerNav.classList.add("hide-element");
+    mobileElements.mobileClose.classList.add("hide-element");
+    mobileElements.mobileMenu.classList.remove("hide-element");
+    if (scrollPosition.posY < 500) {
+        scrollPosition.element.classList.remove("gradient-shadow");
+        scrollPosition.element.classList.remove("header-scroll-position");
     }
 }
 //article overflow handler
@@ -181,17 +194,19 @@ window.addEventListener("scroll", function () {
     if (!timeout) {
         timeout = setTimeout(function () {
             timeout = null; //reset timeout
-            var scrollPosition = new ScrollPosition({
-                posY: window.scrollY,
-                element: document.getElementsByClassName("header-first-row")[0]
-            });
+            var scrollPosition = new ScrollPosition({});
             if (scrollPosition.posY > 500) {
                 scrollPosition.element.classList.add("gradient-shadow");
                 scrollPosition.element.classList.add("header-scroll-position");
             }
             else {
-                scrollPosition.element.classList.remove("gradient-shadow");
-                scrollPosition.element.classList.remove("header-scroll-position");
+                if (!document.getElementsByClassName("mobile-inner-nav")[0].classList.contains("hide-element")) {
+                    return;
+                }
+                else {
+                    scrollPosition.element.classList.remove("gradient-shadow");
+                    scrollPosition.element.classList.remove("header-scroll-position");
+                }
             }
         }, 100);
     }

@@ -175,12 +175,71 @@ nav a:hover{
     box-sizing: border-box;
     cursor: pointer;
 }
-    .mobile-nav .material-icons {
-        border-radius: 3px;
-        padding: 2px;
-        font-size: 40px;
-        color: #fff;
-    }
+.mobile-nav .material-icons {
+    border-radius: 3px;
+    padding: 2px;
+    font-size: 40px;
+    
+}
+.mobile-nav .menu-icon {
+    color: #fff;
+}
+
+.mobile-nav .close-icon{
+    color: #000;
+}
+
+.mobile-inner-nav {
+    position: fixed;
+    float: left;
+    width: 75%;
+    height: 100vh;
+    top: 110px;
+    left: 0;
+    padding: 50px 5% 0 5%;
+    box-sizing: border-box;
+    background-color: #fff;
+    z-index: 100;
+}
+.mobile-nav-right-bar {
+    position: fixed;
+    width: 25%;
+    height: 100vh;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    cursor: initial;
+}
+.mobile-search {
+    display: block;
+    width: 90%;
+    height: 50px;
+    vertical-align: bottom;
+    margin-bottom: 20px;
+}
+.mobile-search #searchWrapper {
+    margin: 0;
+    height: inherit;
+}
+.mobile-search #searchWrapper .material-icons {
+    line-height: 50px;
+    vertical-align: bottom;
+}
+.mobile-nav-links {
+    height: 100px;
+    margin-bottom: 20px;
+}
+.mobile-nav-links .nav-links {
+    margin: 0;
+    width: 90%;
+}
+.mobile-nav-links .left-nav {
+    display: block;
+    margin-bottom: 15px;
+}
+.mobile-more-info #more-info-btn {
+    margin: 70px 0 0 0;
+}
 /*Header end*/
 
 
@@ -286,7 +345,8 @@ nav a:hover{
 /*Body detail view start*/
 .breadcrumb {
     position: absolute;
-    left: 0;
+    width: 150px;
+    left: 70px;
     text-align: initial;
 }
 
@@ -333,6 +393,7 @@ nav a:hover{
 }
 
 .detail-hero-image{
+    max-width: 100%;
     margin-bottom: 50px;
 }
 
@@ -586,13 +647,32 @@ nav a:hover{
     }
     .header-second-row article {
         position: relative;
-        z-index: 100;
+        z-index: 90;
     }
     .article-wrap {
         width: 85%;
     }
     .article-box{
         width: 40%;
+    }
+    .breadcrumb {
+        left: 30px;
+    }
+    .footer-row{
+        width: 100%;
+    }
+    #links-footer, #terms-footer {
+        width: 66%;
+    }
+}
+
+@media(max-width: 1100px){
+    .breadcrumb{
+        left: 75px;
+        margin: -100px 0 0 0;
+    }
+    .article-detail{
+        width: 80%;
     }
 }
 
@@ -604,16 +684,44 @@ nav a:hover{
         display: inline-block;
     }
     .article-wrap {
-        width: 50%;
+        width: 100%;
     }
     .article-box{
+        display: block;
+        width: 50%;
+        margin: 50px auto;
+    }
+    .footer-row-el {
+        display: block;
+        margin: auto;
+    }
+    .footer-img, .contact-info, .social-media-info{
+        width: 250px;
+    }
+    .footer-img{
+        left: 20px;
+    }
+    .footer-row-el a, .social-media-info ul{
+        left: 0;
+        right: 0;
+    }
+    #terms-footer{
         width: 100%;
     }
 }
 
 @media(max-width: 650px){
-    .article-wrap{
+    .article-box {
         width: 70%;
+    }
+    .breadcrumb{
+        left: 30px;
+    }
+    .footer-bottom ul{
+        padding: 0;
+    }
+    #terms-footer span {
+        margin: 0;
     }
 }
 /*Responsive end*/

@@ -16,8 +16,8 @@ class ScrollPosition {
     posX: number;
 
     constructor(data?: any) {
-        this.element = data.element as HTMLElement;
-        this.posY = data.posY;
+        this.element = document.getElementsByClassName("header-first-row")[0] as HTMLElement,
+        this.posY = window.scrollY,
         this.posX = data.posX;
     }
 }
@@ -52,6 +52,8 @@ class MobileElements {
     mobileSearch: HTMLElement;
     mobileMoreInfo: HTMLElement;
     mobileNavLinks: HTMLElement;
+    mobileMenu: HTMLElement;
+    mobileClose: HTMLElement;
     searchWrapper: HTMLElement;
     moreInfo: HTMLElement;
     navLinks: HTMLElement;
@@ -61,6 +63,8 @@ class MobileElements {
         this.mobileSearch = document.getElementsByClassName("mobile-search")[0] as HTMLElement;
         this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0] as HTMLElement;
         this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0] as HTMLElement;
+        this.mobileMenu = document.getElementsByClassName("menu-icon")[0] as HTMLElement;
+        this.mobileClose = document.getElementsByClassName("close-icon")[0] as HTMLElement;
         this.searchWrapper = document.getElementById("searchWrapper") as HTMLElement;
         this.moreInfo = document.getElementById("more-info-btn") as HTMLElement;
         this.navLinks = document.getElementsByClassName("nav-links")[0] as HTMLElement;
@@ -68,18 +72,30 @@ class MobileElements {
 }
 
 //viewport and mobile support
-function mobileNav() {
+function mobileNavOpen() {
     const mobileElements = new MobileElements({});
+    const scrollPosition = new ScrollPosition({});
 
     mobileElements.mobileSearch.append(mobileElements.searchWrapper);
     mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
     mobileElements.mobileNavLinks.append(mobileElements.navLinks);
+    mobileElements.mobileInnerNav.classList.remove("hide-element");
+    mobileElements.mobileClose.classList.remove("hide-element");
+    mobileElements.mobileMenu.classList.add("hide-element");
+    scrollPosition.element.classList.add("gradient-shadow");
+    scrollPosition.element.classList.add("header-scroll-position");
+}
 
-    if (mobileElements.mobileInnerNav.classList.contains("hide-element")){
-        mobileElements.mobileInnerNav.classList.remove("hide-element");
-    }
-    else {
-        mobileElements.mobileInnerNav.classList.add("hide-element");
+function mobileNavClose() {
+    const mobileElements = new MobileElements({});
+    const scrollPosition = new ScrollPosition({});
+
+    mobileElements.mobileInnerNav.classList.add("hide-element");
+    mobileElements.mobileClose.classList.add("hide-element");
+    mobileElements.mobileMenu.classList.remove("hide-element");
+    if (scrollPosition.posY < 500) {
+        scrollPosition.element.classList.remove("gradient-shadow");
+        scrollPosition.element.classList.remove("header-scroll-position");
     }
 }
 
@@ -229,18 +245,20 @@ window.addEventListener("scroll", function () { //header white on scroll
     if (!timeout) {
         timeout = setTimeout(function () {
             timeout = null; //reset timeout
-            const scrollPosition = new ScrollPosition({
-                posY: window.scrollY,
-                element: document.getElementsByClassName("header-first-row")[0] as HTMLElement
-            });
+            const scrollPosition = new ScrollPosition({});
 
             if (scrollPosition.posY > 500) {
                 scrollPosition.element.classList.add("gradient-shadow");
                 scrollPosition.element.classList.add("header-scroll-position");
             }
             else {
-                scrollPosition.element.classList.remove("gradient-shadow");
-                scrollPosition.element.classList.remove("header-scroll-position");
+                if (!document.getElementsByClassName("mobile-inner-nav")[0].classList.contains("hide-element")) {
+                    return;
+                }
+                else {
+                    scrollPosition.element.classList.remove("gradient-shadow");
+                    scrollPosition.element.classList.remove("header-scroll-position");
+                }
             }
         }, 100)
     }
