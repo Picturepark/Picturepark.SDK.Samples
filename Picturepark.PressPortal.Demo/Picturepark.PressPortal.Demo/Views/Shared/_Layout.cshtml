@@ -51,7 +51,7 @@
                         </a>
                     </div>
 
-                    <div class="col-2 col-last header-nav">
+                    <div class="col-2 col-last header-nav fade">
                         <div id="more-info-btn" class="button col-el gradient-bckgr gradient-shadow" onclick="clickOpenBtn(this, this.getElementsByClassName('btn-content')[0])">
                             @Localizer.GetString("More info about this demo")
                             <div class="btn-content gradient-shadow hide-element">
@@ -87,7 +87,7 @@
 
                         <div id="searchWrapper" class="col-el" onclick="search(this, this.getElementsByClassName('btn-content')[0])">
                             <i class="material-icons">search</i>
-                            <form id="search-form" class="col-el btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
+                            <form id="search-form" class="btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
                                 <input type="search" value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")" />
                             </form>
                         </div>

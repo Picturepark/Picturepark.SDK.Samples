@@ -229,15 +229,47 @@ function clickOpenBtn(btnEl, childEl) { //button function
         content: childEl as HTMLElement
     });
 
-    button.content.classList.remove("hide-element");
-
-    document.addEventListener("click", function () {
-        button.content.classList.add("hide-element");
-    });
-    button.id.addEventListener("click", function (ev) {
+    setTimeout(function () {
+        button.content.classList.remove("visually-hidden");
         button.content.classList.remove("hide-element");
-        ev.stopPropagation();
+
+        document.addEventListener("click", function () {
+            button.content.classList.add("visually-hidden");
+            setTimeout(function () {
+                button.content.classList.add("hide-element");
+            }, 500);
+        });
+        button.id.addEventListener("click", function (ev) {
+            button.content.classList.remove("visually-hidden");
+            button.content.classList.remove("hide-element");
+            ev.stopPropagation();
+        });
+    }, 10);
+}
+
+function search(btnEl, childEl) {
+    const button = new Button({
+        id: btnEl as HTMLElement,
+        content: childEl as HTMLElement
     });
+
+    setTimeout(function () {
+        button.id.classList.add("gradient-shadow", "search-active");
+        button.content.classList.remove("visually-hidden", "hide-element");
+
+        document.addEventListener("click", function () {
+            button.content.classList.add("visually-hidden");
+            setTimeout(function () {
+                button.id.classList.remove("gradient-shadow", "search-active");
+                button.content.classList.add("hide-element");
+            }, 500);
+        });
+        button.id.addEventListener("click", function (ev) {
+            button.id.classList.add("gradient-shadow", "search-active");
+            button.content.classList.remove("visually-hidden", "hide-element");
+            ev.stopPropagation();
+        });
+    }, 10);
 }
 
 window.addEventListener("scroll", function () { //header white on scroll
@@ -250,6 +282,7 @@ window.addEventListener("scroll", function () { //header white on scroll
             if (scrollPosition.posY > 500) {
                 scrollPosition.element.classList.add("gradient-shadow");
                 scrollPosition.element.classList.add("header-scroll-position");
+                scrollPosition.element.classList.add("active");
             }
             else {
                 if (!document.getElementsByClassName("mobile-inner-nav")[0].classList.contains("hide-element")) {
@@ -258,6 +291,7 @@ window.addEventListener("scroll", function () { //header white on scroll
                 else {
                     scrollPosition.element.classList.remove("gradient-shadow");
                     scrollPosition.element.classList.remove("header-scroll-position");
+                    scrollPosition.element.classList.remove("active");
                 }
             }
         }, 100)

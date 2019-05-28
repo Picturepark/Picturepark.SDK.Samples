@@ -15,22 +15,20 @@
 {
     articleCounter = articleCounter + 1;
 
-    <div id="articleNr@(articleCounter.ToString())" class="article-box">
+    <a id="articleNr@(articleCounter.ToString())" class="article-box" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
         <article>
-            <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
                 <img class="article-img" src="/Home/ImageResized/@portal.Content.HeroImage.TargetId?width=400&height=400"/>
-            </a>
             <div class="article-head-info">
                 <h2 class="article-title">
-                    <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">@portal.Content.Headline.GetTranslation()</a>
+                    @portal.Content.Headline.GetTranslation()
                 </h2>
                 <p class="article-lead">@portal.Content.Lead?.GetTranslation()</p>
-                <a class="read-more primary-color" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
+                <div class="read-more primary-color">
                     @Localizer.GetString("Read more")<i class="material-icons primary-color">keyboard_arrow_right</i>
-                </a>
+                </div>
             </div>
         </article>
-    </div>
+    </a>
 }
 
 <!--only displayed if more than 9 articles-->

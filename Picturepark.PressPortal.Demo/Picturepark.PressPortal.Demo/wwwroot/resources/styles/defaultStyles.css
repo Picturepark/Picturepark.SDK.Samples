@@ -71,7 +71,10 @@ header {
 
 .header-first-row {
     height: 100px;
+    animation-duration: 500ms;
+    animation-name: fade;
 }
+
 
 #logo {
     margin-left: 20px;
@@ -89,7 +92,7 @@ header {
     display: none;
 }
 
-.header-nav{
+.header-nav {
     padding-top: 40px;
 }
 
@@ -132,16 +135,55 @@ nav a:hover{
     margin-right: 45px;
 }
 
-#searchWrapper .material-icons{
+#searchWrapper form{
+    float: left;
+    margin-left: 25px;
+}
+
+#searchWrapper .material-icons {
     cursor: pointer;
     font-size: 32px;
     line-height: 40px;
 }
 
-.header-second-row{
+#search-form input {
+    height: 45px;
+    width: 250px;
+    border: none;
+    font-size: 16px;
+    color: #000;
+    animation-duration: 500ms;
+    animation-name: searchIn;
+}
+    #search-form input::-webkit-input-placeholder {
+        color: #000;
+    }
+
+    #search-form input::-moz-placeholder {
+        color: #000;
+    }
+    #search-form input:focus{
+        outline: none;
+    }
+
+.search-active {
+    border: none;
+    border-radius: 5px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+#search-form.visually-hidden{
+    animation-duration: 500ms !important;
+    animation-name: searchOut !important;
+}
+
+.header-second-row {
     max-width: 700px;
     padding: 75px 0 0 30px;
 }
+
 
 .header-entry-title{
     font-size: 28px;
@@ -159,6 +201,9 @@ nav a:hover{
     margin-top: 20px;
     margin-left: -20px;
     padding: 20px;
+
+    animation-duration: 500ms;
+    animation-name: slidein;
 }
 
 .header-scroll-position {
@@ -258,7 +303,14 @@ nav a:hover{
     box-shadow: 0 1px 6px rgba(0,0,0,0.18);
     box-sizing: border-box;
     overflow: hidden;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
+    .article-box:hover {
+        transform: scale(1.03, 1.03);
+        box-shadow: 0 1px 10px rgba(0,0,0,0.7);
+    }
 
 .article-img{
     width: 100%;
@@ -339,6 +391,15 @@ nav a:hover{
 
 .hide-element{
     display: none;
+}
+.visually-hidden{
+    opacity: 0;
+    animation-duration: 500ms !important;
+    animation-name: slideout !important;
+}
+.active {
+    animation-duration: 500ms;
+    animation-name: slidein;
 }
 /*Body overview end*/
 
@@ -620,6 +681,65 @@ nav a:hover{
     margin: 0 15px;
 }
 /*Footer end*/
+
+/*Keyframes start*/
+@keyframes slidein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slideout{
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes fade {
+    from {
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+    }
+
+    to {
+        position: relative;
+        width: initial;
+        height: 100px;
+        background-color: transparent;
+        z-index: initial;
+    }
+}
+
+@keyframes searchIn {
+    from {
+        opacity: 0;
+        width: 0;
+    }
+
+    to {
+        opacity: 1;
+        width: 250px;
+    }
+}
+
+@keyframes searchOut {
+    from {
+        width: 250px;
+        opacity: 1;
+    }
+
+    to {
+        width: 0;
+        opacity: 0;
+    }
+}
+/*Keyframes end*/
 
 /*Responsive start*/
 @media(max-width: 1600px){
