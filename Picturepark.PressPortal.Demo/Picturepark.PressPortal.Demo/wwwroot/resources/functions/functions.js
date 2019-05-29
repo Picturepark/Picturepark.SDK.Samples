@@ -1,18 +1,37 @@
 //classes
+//import { ArticleHandler } from "../tsClassesAndModules/articleHandler.model";
+//import { Button } from "../tsClassesAndModules/button.model";
+//import { MobileElements } from "../tsClassesAndModules/mobileElements.model";
+//import { ScrollPosition } from "../tsClassesAndModules/scrollPositions.model";
+var ScrollPosition = /** @class */ (function () {
+    function ScrollPosition(data) {
+        this.element = document.getElementsByClassName("header-top-row")[0],
+            this.posY = window.scrollY,
+            this.posX = data.posX;
+    }
+    return ScrollPosition;
+}());
+var MobileElements = /** @class */ (function () {
+    function MobileElements(data) {
+        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0];
+        this.mobileSearch = document.getElementsByClassName("mobile-search")[0];
+        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0];
+        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0];
+        this.mobileMenu = document.getElementsByClassName("menu-icon")[0];
+        this.mobileClose = document.getElementsByClassName("mobile-nav")[0].getElementsByClassName("close-icon")[0];
+        this.mobileBanner = document.getElementsByClassName("mobile-header-banner")[0];
+        this.searchWrapper = document.getElementsByClassName("searchWrapper")[0];
+        this.moreInfo = document.getElementsByClassName("more-info-btn")[0];
+        this.navLinks = document.getElementsByClassName("nav-links")[0];
+    }
+    return MobileElements;
+}());
 var Button = /** @class */ (function () {
     function Button(data) {
         this.id = data.id;
         this.content = data.content;
     }
     return Button;
-}());
-var ScrollPosition = /** @class */ (function () {
-    function ScrollPosition(data) {
-        this.element = document.getElementsByClassName("header-first-row")[0],
-            this.posY = window.scrollY,
-            this.posX = data.posX;
-    }
-    return ScrollPosition;
 }());
 var ArticleHandler = /** @class */ (function () {
     function ArticleHandler(data) {
@@ -30,42 +49,35 @@ var ArticleHandler = /** @class */ (function () {
     }
     return ArticleHandler;
 }());
-var MobileElements = /** @class */ (function () {
-    function MobileElements(data) {
-        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0];
-        this.mobileSearch = document.getElementsByClassName("mobile-search")[0];
-        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0];
-        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0];
-        this.mobileMenu = document.getElementsByClassName("menu-icon")[0];
-        this.mobileClose = document.getElementsByClassName("close-icon")[0];
-        this.searchWrapper = document.getElementById("searchWrapper");
-        this.moreInfo = document.getElementById("more-info-btn");
-        this.navLinks = document.getElementsByClassName("nav-links")[0];
-    }
-    return MobileElements;
-}());
 //viewport and mobile support
 function mobileNavOpen() {
     var mobileElements = new MobileElements({});
     var scrollPosition = new ScrollPosition({});
+    mobileElements.mobileBanner.style.marginTop = "70px";
+    mobileElements.mobileInnerNav.style.animationName = "navIn";
+    scrollPosition.element.style.animationName = "searchHeaderIn";
     mobileElements.mobileSearch.append(mobileElements.searchWrapper);
     mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
     mobileElements.mobileNavLinks.append(mobileElements.navLinks);
     mobileElements.mobileInnerNav.classList.remove("hide-element");
     mobileElements.mobileClose.classList.remove("hide-element");
     mobileElements.mobileMenu.classList.add("hide-element");
-    scrollPosition.element.classList.add("gradient-shadow");
-    scrollPosition.element.classList.add("header-scroll-position");
+    scrollPosition.element.classList.add("gradient-shadow", "header-scroll-position");
 }
 function mobileNavClose() {
     var mobileElements = new MobileElements({});
     var scrollPosition = new ScrollPosition({});
-    mobileElements.mobileInnerNav.classList.add("hide-element");
-    mobileElements.mobileClose.classList.add("hide-element");
-    mobileElements.mobileMenu.classList.remove("hide-element");
+    mobileElements.mobileInnerNav.style.animationName = "navOut";
+    setTimeout(function () {
+        mobileElements.mobileInnerNav.classList.add("hide-element");
+        mobileElements.mobileClose.classList.add("hide-element");
+        mobileElements.mobileMenu.classList.remove("hide-element");
+        scrollPosition.element.style.animationName = "searchHeaderOut";
+        mobileElements.mobileBanner.style.marginTop = "-30px";
+        scrollPosition.element.style.animationName = "fade";
+    }, 450);
     if (scrollPosition.posY < 500) {
-        scrollPosition.element.classList.remove("gradient-shadow");
-        scrollPosition.element.classList.remove("header-scroll-position");
+        scrollPosition.element.classList.remove("gradient-shadow", "header-scroll-position");
     }
 }
 //article overflow handler
@@ -87,7 +99,6 @@ function overflowHanlder() {
         if (articleHandler.pageCount > 4) { //only display so many page numbers
             for (var i = 4; i < articleHandler.pageCount; i++) {
                 document.getElementsByClassName("page-number")[i].classList.add("hide-element");
-                console.log(i);
             }
             //make this function dynamic
             var node = document.createElement("div");
@@ -141,7 +152,6 @@ function changePage(clickedPage) {
         }
     }
     for (var i = 1; i <= articleHandler.pageCount; i++) {
-        console.log(articleHandler.currentPage);
         if (i == articleHandler.currentPage) {
             document.getElementById("page-nav-nr" + articleHandler.currentPage).classList.add("active-page", "gradient-bckgr", "gradient-shadow");
         }
@@ -181,22 +191,32 @@ function clickOpenBtn(btnEl, childEl) {
         content: childEl
     });
     setTimeout(function () {
-        button.content.classList.remove("visually-hidden");
-        button.content.classList.remove("hide-element");
-        document.addEventListener("click", function () {
-            button.content.classList.add("visually-hidden");
-            setTimeout(function () {
-                button.content.classList.add("hide-element");
-            }, 500);
+        openItem();
+        document.addEventListener("click", function (ev) {
+            closeItem();
+            ev.stopPropagation();
+        });
+        button.content.getElementsByClassName("close-icon")[0].addEventListener("click", function (ev) {
+            closeItem();
+            ev.stopPropagation();
         });
         button.id.addEventListener("click", function (ev) {
-            button.content.classList.remove("visually-hidden");
-            button.content.classList.remove("hide-element");
+            openItem();
             ev.stopPropagation();
         });
     }, 10);
+    function closeItem() {
+        button.content.classList.add("visually-hidden");
+        setTimeout(function () {
+            button.content.classList.add("hide-element");
+        }, 500);
+    }
+    function openItem() {
+        button.content.classList.remove("visually-hidden");
+        button.content.classList.remove("hide-element");
+    }
 }
-function search(btnEl, childEl) {
+function search(btnEl, childEl, inputEl) {
     var button = new Button({
         id: btnEl,
         content: childEl
@@ -204,6 +224,7 @@ function search(btnEl, childEl) {
     setTimeout(function () {
         button.id.classList.add("gradient-shadow", "search-active");
         button.content.classList.remove("visually-hidden", "hide-element");
+        inputEl.focus();
         document.addEventListener("click", function () {
             button.content.classList.add("visually-hidden");
             setTimeout(function () {
@@ -214,7 +235,11 @@ function search(btnEl, childEl) {
         button.id.addEventListener("click", function (ev) {
             button.id.classList.add("gradient-shadow", "search-active");
             button.content.classList.remove("visually-hidden", "hide-element");
+            inputEl.focus();
             ev.stopPropagation();
+        });
+        document.getElementsByClassName("clear-search")[0].addEventListener("click", function () {
+            inputEl.value = "";
         });
     }, 10);
 }
@@ -242,5 +267,4 @@ window.addEventListener("scroll", function () {
         }, 100);
     }
 });
-//toggle mobile navigation
 //# sourceMappingURL=functions.js.map

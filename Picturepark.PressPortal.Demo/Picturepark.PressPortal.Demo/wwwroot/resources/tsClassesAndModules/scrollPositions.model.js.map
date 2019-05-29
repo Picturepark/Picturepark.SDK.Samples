@@ -1,0 +1,1 @@
+{"version":3,"file":"scrollPositions.model.js","sourceRoot":"","sources":["scrollPositions.model.ts"],"names":[],"mappings":";;AAAA;IAKI,wBAAY,IAAU;QAClB,IAAI,CAAC,OAAO,GAAG,QAAQ,CAAC,sBAAsB,CAAC,gBAAgB,CAAC,CAAC,CAAC,CAAgB;YAC9E,IAAI,CAAC,IAAI,GAAG,MAAM,CAAC,OAAO;YAC1B,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC,IAAI,CAAC;IAC9B,CAAC;IACL,qBAAC;AAAD,CAAC,AAVD,IAUC;AAVY,wCAAc"}

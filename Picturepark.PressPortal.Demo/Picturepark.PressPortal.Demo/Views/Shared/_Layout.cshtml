@@ -13,177 +13,236 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Dev FOFA Press Portal</title>
-        <link rel="shortcut icon" href="~/resources/media/images/FaviconFOFA.png" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
-        <link href="~/resources/styles/defaultStyles.css" rel="stylesheet" />
-        <link href="~/resources/styles/customStyles.css" rel="stylesheet" />
-
-        <script async src="https://static.addtoany.com/menu/page.js"></script> <!--addtoany plugin (social media share)-->
-        <script src="~/resources/functions/functions.js"></script>
+<!--
 
 
-        <!--change tab color on mobile devices-->
-        <meta name="theme-color" content="#78be31" />
-        <meta name="msapplication-navbutton-color" content="#78be31">
-        <meta name="apple-mobile-web-app-status-bar-style" content="#78be31">
+              ###
+            #######
+          ####   ####
+         ####      ####
+       ####         ####
+     ####             ####
+   ####        #        ####
+ ####        #####        ####
+###        #### ####       ###
+###      ####     ####     ####               PPPPPPPPPPP       III         CCCCCCCCCC     TTTTTTTTTTTTT     UUU        UUU        RRRRRRRRRRR          EEEEEEEEEEE         PPPPPPPPPPP          AAAAA            RRRRRRRRRRR         KKK     KKK
+###    ####         #      ###                PPP      PPP      III        CCC       CC         TTT          UUU        UUU        RRR      RRR         EEE                 PPP      PPP        AAA AAA           RRR      RRR        KKK    KKK
+#    ####                 ####                PPP      PPP      III       CCC                   TTT          UUU        UUU        RRR       RRR        EEE                 PPP      PPP       AAA   AAA          RRR      RRR        KKK  KKK
+   ####       #          ####                 PPP     PPP       III      CCC                    TTT          UUU        UUU        RRR     RRRR         EEEEEEEEEEE         PPP     PPPP      AAA     AAA         RRR     RRRR        KKKKKKK
+ ####        ######   #######                 PPPPPPPPPP        III       CCC                   TTT          UUU        UUU        RRRRRRRRR            EEE                 PPPPPPPPP         AAA     AAA         RRRRRRRRR           KKKK KKK
+####             #######   ###                PPP               III        CCC                  TTT           UUU      UUU         RRR    RRR           EEE                 PPP              AAAAAAAAAAAAA        RRR   RRRR          KKK   KKK
+###                        ###                PPP               III         CCC    CCC          TTT            UUUU  UUUU          RRR     RRR          EEE                 PPP             AAAA       AAAA       RRR    RRRR         KKK     KKK
+###     ###                ###                PPP               III           CCCCCC            TTT              UUUUUU            RRR      RRR         EEEEEEEEEEE         PPP            AAAA         AAAA      RRR     RRRR        KKK      KKK
+###   #######              ###
+### ####   ####           ###
+######       ####       ####
+####           ###########
 
-        <!--OG sharing tags-->
-        <meta class="ogTags" property="og:title" content="FOFA Press Portal Demo" />
-        <meta class="ogTags" property="og:description" content="This is a slightly customized microsite of the Picturepark SDK - part of our online demo. Explore other components of this demo: https://picturepark.com/demo/finefoods" />
-        <meta class="ogTags" property="og:image" content="~/resources/media/images/header-background.jpg" />
-        <meta class="ogTags" property="og:type" content="website" />
-        <meta class="ogTags" property="og:site_name" content="FOFA Press Portal" />
-        <meta class="ogTags" property="og:url" content="https://cp-pressportal.preview-picturepark.com/" />
-    </head>
 
-    <body>
-        <header>
-            <div class="welcome-img">
-                <div class="header-first-row row">
-                    <div id="logoWrapper" class="col-2">
-                        <a href="/">
-                            <div id="logo"></div>
-                        </a>
-                    </div>
 
-                    <div class="col-2 col-last header-nav fade">
-                        <div id="more-info-btn" class="button col-el gradient-bckgr gradient-shadow" onclick="clickOpenBtn(this, this.getElementsByClassName('btn-content')[0])">
-                            @Localizer.GetString("More info about this demo")
-                            <div class="btn-content gradient-shadow hide-element">
-                                @Localizer.GetString("This is a slightly customized microsite of the Picturepark SDK - part of our online demo.")<br /><br />
-                                @Localizer.GetString("You can play around with your limited read-only access which simulates access of FOFA members.")<br /><br />
-                                <a href="https://picturepark.com/demo/finefoods" target="_blank">@Localizer.GetString("Explore other components of this demo.")</a>
-                            </div>
-                        </div>
+-->
 
-                        <nav class="col-el nav-links">
-                            <ul>
-                                <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a asp-controller="Home" asp-action="Overview">News</a></li>
-                                <!--Login currently disabled-->
-                                @*@if (User.Identity.IsAuthenticated)    /*check login function*/
-                    {
-                        <li class="@(route == "Account" ? "current_page_item": "")"><a asp-controller="Account" asp-action="Info">@User.Identity.Name</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-                    }*@
 
-                                <!-- Language selection -->
-                                <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "en" ? "menu-item-language-current wpml-ls-current-language" : "") ">
-                                    <a title="En" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="en"><span>En</span></a>
-                                </li>
-                                <li>/</li>
-                                <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "de" ? "menu-item-language-current wpml-ls-current-language" : "") ">
-                                    <a title="De" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="de"><span>De</span></a>
-                                </li>
-                            </ul>
-                        </nav>
 
-                        <div id="searchWrapper" class="col-el" onclick="search(this, this.getElementsByClassName('btn-content')[0])">
-                            <i class="material-icons">search</i>
-                            <form id="search-form" class="btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
-                                <input type="search" value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")" />
-                            </form>
-                        </div>
-                    </div>
-                    <div class="mobile-nav">
-                        <i onclick="mobileNavOpen()" class="material-icons secondary-color-bckgr gradient-shadow no-select menu-icon">menu</i>
-                        <i onclick="mobileNavClose()" class="material-icons no-select hide-element close-icon">close</i>
-                        <div class="mobile-inner-nav gradient-shadow hide-element">
-                            <div class="mobile-search gradient-shadow-bottom"></div>
-                            <div class="mobile-nav-links"></div>
-                            <div class="mobile-more-info"></div>
-                            <div onclick="mobileNavClose()" class="mobile-nav-right-bar"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header-second-row primary-color">
-                    <div class="mobile-header-banner"></div>
-                    <article>
-                        <!--INTRO TEXT-->
-                        <h1 class="header-entry-title">@Localizer.GetString("You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
-                        <p class="header-entry-subtitle">
-                            @Localizer.GetString("Other samples are available -")
-                            <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </header>
+<head>
+    <meta charset="UTF-8" />
 
-        <article>
-            <div class="article-wrap">
-                @RenderBody()
-            </div>
-        </article>
+    <!--------------------CUSTOM ADJUSTMETNS-------------------->
+    <title>Dev FOFA Press Portal</title>
+    <link rel="shortcut icon" href="~/resources/media/images/FaviconFOFA.png" />
+    <!--change tab color on mobile devices-->
+    <meta name="theme-color" content="#78be31" />
+    <meta name="msapplication-navbutton-color" content="#78be31">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#78be31">
+    <!--OG sharing tags-->
+    <meta class="ogTags" property="og:title" content="FOFA Press Portal Demo" />
+    <meta class="ogTags" property="og:description" content="This is a slightly customized microsite of the Picturepark SDK - part of our online demo. Explore other components of this demo: https://picturepark.com/demo/finefoods" />
+    <meta class="ogTags" property="og:image" content="~/resources/media/images/header-background.jpg" />
+    <meta class="ogTags" property="og:type" content="website" />
+    <meta class="ogTags" property="og:site_name" content="FOFA Press Portal" />
+    <meta class="ogTags" property="og:url" content="https://cp-pressportal.preview-picturepark.com/" />
 
-        <footer>
-            <div class="footer-row">
-                <div class="footer-img footer-row-el col-3"></div>
-                <div class="contact-info footer-row-el col-3 primary-color">
-                    <a href="mailto:info@picturepark.com">
-                        <i class="material-icons">email</i>
-                        <span>info@picturepark.com</span>
+
+    <!--------------------ALMOST ALWAYS USED, DON'T CHANGE-------------------->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <link href="~/resources/styles/defaultStyles.css" rel="stylesheet" />
+    <link href="~/resources/styles/customStyles.css" rel="stylesheet" />
+    <script async src="https://static.addtoany.com/menu/page.js"></script> <!--addtoany plugin (social media share)-->
+    <script src="~/resources/functions/functions.js"></script>
+
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-5433622-12"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-5433622-12');
+    </script>
+
+    <!-- Hotjar Tracking Code for www.picturepark.com -->
+    <script>
+        (function (h, o, t, j, a, r) {
+            h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+            h._hjSettings = { hjid: 1293612, hjsv: 6 };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script'); r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+</head>
+
+<body>
+    <header>
+        <div id="welcome-img">
+            <div class="header-top-row">
+                <div id="logoWrapper">
+                    <a href="/">
+                        <div id="logo"></div>
                     </a>
                 </div>
-                <div class="social-media-info footer-row-el col-3">
-                    <ul>
-                        <li>
-                            <a href="https://www.twitter.com/Picturepark" target="_blank">
-                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-twitter.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/Picturepark" target="_blank">
-                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-facebook.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://www.linkedin.com/company/picturepark-digital-asset-management" target="_blank">
-                                <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-linkedin.png" />
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom gradient-bckgr gradient-shadow">
-                <div id="links-footer" class="footer-row">
-                    <ul class="footer-row-el">
-                        <li><a target="_blank" href="https://picturepark.com">picturepark.com</a></li>
-                        <li>|</li>
-                        <li><a target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
-                        <li>|</li>
-                        <li><a href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
-                    </ul>
-                </div>
 
-                <div id="terms-footer" class="footer-row">
-                    <div class="footer-row-el">
-                        &copy; @DateTime.Now.Year Vision Information Transaction AG
-                        <span>|</span>
-                        <a target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
-                        <span>|</span>
-                        <a target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                <div class="header-nav fade">
+                    <div class="more-info-btn button gradient-bckgr gradient-shadow" onclick="clickOpenBtn(this, this.getElementsByClassName('btn-content')[0])">
+                        @Localizer.GetString("More info about this demo")
+                        <div class="btn-content gradient-shadow hide-element">
+                            <i class="material-icons no-select close-icon">close</i>
+                            @Localizer.GetString("This is a slightly customized microsite of the Picturepark SDK - part of our online demo.")<br /><br />
+                            @Localizer.GetString("You can play around with your limited read-only access which simulates access of media representatives who can access all content without signup and login.")<br /><br />
+                            <a href="https://picturepark.com/demo/finefoods" target="_blank">@Localizer.GetString("Explore other components of this demo.")</a>
+                        </div>
+                    </div>
+
+                    <nav class="nav-links">
+                        <ul>
+                            <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a asp-controller="Home" asp-action="Overview">News</a></li>
+                            <!--Login currently disabled-->
+                            @*@if (User.Identity.IsAuthenticated)    /*check login function*/
+                                {
+                                    <li class="@(route == "Account" ? "current_page_item": "")"><a asp-controller="Account" asp-action="Info">@User.Identity.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                                }*@
+
+                            <!-- Language selection -->
+                            <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "en" ? "menu-item-language-current wpml-ls-current-language" : "") ">
+                                <a title="En" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="en"><span>En</span></a>
+                            </li>
+                            <li>/</li>
+                            <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "de" ? "menu-item-language-current wpml-ls-current-language" : "") ">
+                                <a title="De" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="de"><span>De</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="searchWrapper" onclick="search(this, this.getElementsByClassName('btn-content')[0], this.getElementsByTagName('input')[0])">
+                        <i class="material-icons">search</i>
+                        <form class="search-form btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
+                            <input type="search" value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")" />
+                            <i class="material-icons no-select close-icon clear-search">close</i>
+                        </form>
+                    </div>
+                </div>
+                <div class="mobile-nav">
+                    <i onclick="mobileNavOpen()" class="material-icons secondary-color-bckgr gradient-shadow no-select menu-icon">menu</i>
+                    <i onclick="mobileNavClose()" class="material-icons no-select hide-element close-icon">close</i>
+                    <div class="mobile-inner-nav gradient-shadow hide-element">
+                        <div class="mobile-search gradient-shadow-bottom"></div>
+                        <div class="mobile-nav-links"></div>
+                        <div class="mobile-more-info"></div>
+                        <div onclick="mobileNavClose()" class="mobile-nav-right-bar"></div>
                     </div>
                 </div>
             </div>
-        </footer>
+            <div class="header-second-row primary-color">
+                <div class="mobile-header-banner"></div>
+                <article>
+                    <!--INTRO TEXT-->
+                    <h1 class="header-entry-title">@Localizer.GetString("You are using a sample demo of a Press Kits microsite of the Picturepark Content Platform.")</h1>
+                    <p class="header-entry-subtitle">
+                        @Localizer.GetString("Other samples are available -")
+                        <a target='_blank' href='https://picturepark.com/try-picturepark-now/finefoods/'>@Localizer.GetString("please click here.")</a>
+                    </p>
+                </article>
+            </div>
+        </div>
+    </header>
 
-        <!--add to any plugin-->
-        <div class="a2a_kit a2a_kit_size_48 a2a_default_style a2a_floating_style a2a_vertical_style">
-            <a class="a2a_button_facebook"></a>
-            <a class="a2a_button_twitter"></a>
-            <a class="a2a_button_email"></a>
-            <a class="a2a_button_google_gmail"></a>
-            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+    <article>
+        <div class="article-wrap">
+            @RenderBody()
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-row">
+            <div class="footer-img footer-row-el"></div>
+            <div class="contact-info footer-row-el primary-color">
+                <a href="mailto:info@picturepark.com">
+                    <i class="material-icons">email</i>
+                    <span>info@picturepark.com</span>
+                </a>
+            </div>
+            <div class="social-media-info footer-row-el">
+                <ul>
+                    <li>
+                        <a href="https://www.twitter.com/Picturepark" target="_blank">
+                            <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-twitter.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/Picturepark" target="_blank">
+                            <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-facebook.png" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/picturepark" target="_blank">
+                            <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-linkedin.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-    </body>
+        <div class="footer-bottom gradient-bckgr gradient-shadow">
+            <div id="links-footer" class="footer-row">
+                <ul class="footer-row-el">
+                    <li><a target="_blank" href="https://picturepark.com">picturepark.com</a></li>
+                    <li>|</li>
+                    <li><a target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
+                    <li>|</li>
+                    <li><a href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
+                </ul>
+            </div>
+
+            <div id="terms-footer" class="footer-row">
+                <div class="footer-row-el">
+                    &copy; @DateTime.Now.Year Vision Information Transaction AG
+                    <span>|</span>
+                    <a target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
+                    <span>|</span>
+                    <a target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--add to any plugin-->
+    <div class="a2a_kit a2a_kit_size_48 a2a_default_style a2a_floating_style a2a_vertical_style">
+        <a class="a2a_button_facebook"></a>
+        <a class="a2a_button_twitter"></a>
+        <a class="a2a_button_email"></a>
+        <a class="a2a_button_google_gmail"></a>
+        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+    </div>
+
+</body>
 </html>

@@ -10,7 +10,7 @@ p, li, a {
     font-weight: 400;
     color: #212529;
 }
-h1,h2,h3,h4, h5{
+h1,h2,h3,h4,h5{
     font-weight: 400;
 }
 
@@ -32,30 +32,6 @@ h5{
     cursor: pointer;
 }
 
-.col-2 {
-    display: inline-block;
-    box-sizing: border-box;
-}
-
-.col-3{
-    width: 27%;
-    margin: 0 3%;
-    text-align: center;
-}
-
-.col-el {
-    float: left;
-    margin: 0 25px;
-}
-
-.col-last {
-    float: right;
-}
-
-.row {
-    align-content: center;
-}
-
 .no-select {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -64,17 +40,21 @@ h5{
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
+.no-text-link{
+
+}
+
 /*Header start*/
 header {
     height: 25em;
 }
 
-.header-first-row {
+.header-top-row {
     height: 100px;
     animation-duration: 500ms;
     animation-name: fade;
+    align-content: center;
 }
-
 
 #logo {
     margin-left: 20px;
@@ -82,18 +62,22 @@ header {
     background-repeat: no-repeat;
 }
 
-.welcome-img {
-    height: inherit;
-    background-size: cover;
-    background-position-y: center;
-}
-
-.hidden-content {
-    display: none;
+#logoWrapper{
+    display: inline-block;
+    box-sizing: border-box;
 }
 
 .header-nav {
-    padding-top: 40px;
+    display: inline-block;
+    float: right;
+    box-sizing: border-box;
+    padding: 40px 40px 0 0;
+}
+
+#welcome-img {
+    height: inherit;
+    background-size: cover;
+    background-position-y: center;
 }
 
 nav ul {
@@ -131,22 +115,23 @@ nav a:hover{
     border-bottom: 2px solid #000;
 }
 
-#searchWrapper {
+.searchWrapper {
     margin-right: 45px;
 }
 
-#searchWrapper form{
+.searchWrapper form{
     float: left;
     margin-left: 25px;
 }
 
-#searchWrapper .material-icons {
+.searchWrapper .material-icons {
     cursor: pointer;
     font-size: 32px;
-    line-height: 40px;
+    line-height: 50px;
+    vertical-align: bottom;
 }
 
-#search-form input {
+.search-form input {
     height: 45px;
     width: 250px;
     border: none;
@@ -155,14 +140,14 @@ nav a:hover{
     animation-duration: 500ms;
     animation-name: searchIn;
 }
-    #search-form input::-webkit-input-placeholder {
+    .search-form input::-webkit-input-placeholder {
         color: #000;
     }
 
-    #search-form input::-moz-placeholder {
+    .search-form input::-moz-placeholder {
         color: #000;
     }
-    #search-form input:focus{
+    .search-form input:focus{
         outline: none;
     }
 
@@ -174,16 +159,18 @@ nav a:hover{
     background-color: #fff;
 }
 
-#search-form.visually-hidden{
+.search-form.visually-hidden{
     animation-duration: 500ms !important;
     animation-name: searchOut !important;
+}
+.search-form input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
 }
 
 .header-second-row {
     max-width: 700px;
     padding: 75px 0 0 30px;
 }
-
 
 .header-entry-title{
     font-size: 28px;
@@ -195,15 +182,23 @@ nav a:hover{
     font-size: 18px;
 }
 
-#more-info-btn .btn-content {
+.more-info-btn .btn-content {
     position: absolute;
     width: 450px;
     margin-top: 20px;
     margin-left: -20px;
-    padding: 20px;
-
+    padding: 45px 45px 20px 20px;
+    border-radius: 3px;
     animation-duration: 500ms;
     animation-name: slidein;
+}
+.more-info-btn .close-icon {
+    position: absolute;
+    float: right;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    font-size: 32px;
 }
 
 .header-scroll-position {
@@ -230,8 +225,11 @@ nav a:hover{
     color: #fff;
 }
 
-.mobile-nav .close-icon{
+.mobile-nav .close-icon {
+    position: relative;
     color: #000;
+    cursor: pointer;
+    z-index: 150;
 }
 
 .mobile-inner-nav {
@@ -245,7 +243,17 @@ nav a:hover{
     box-sizing: border-box;
     background-color: #fff;
     z-index: 100;
+    animation-duration: 500ms;
+    animation-name: navIn;
 }
+
+.more-info-btn,
+.nav-links,
+.searchWrapper{
+    float: left;
+    margin: 0 25px;
+}
+
 .mobile-nav-right-bar {
     position: fixed;
     width: 25%;
@@ -262,13 +270,23 @@ nav a:hover{
     vertical-align: bottom;
     margin-bottom: 20px;
 }
-.mobile-search #searchWrapper {
-    margin: 0;
+.mobile-search .searchWrapper {
     height: inherit;
+    width: 100%;
+    margin: 0;
 }
-.mobile-search #searchWrapper .material-icons {
+.mobile-search .searchWrapper .material-icons {
     line-height: 50px;
     vertical-align: bottom;
+}
+.mobile-search .searchWrapper form {
+    float: right;
+    margin-top: -5px;
+    width: 90%;
+    margin-left: 0;
+}
+.mobile-search .searchWrapper input {
+    width: 85%;
 }
 .mobile-nav-links {
     height: 100px;
@@ -282,7 +300,7 @@ nav a:hover{
     display: block;
     margin-bottom: 15px;
 }
-.mobile-more-info #more-info-btn {
+.mobile-more-info .more-info-btn {
     margin: 70px 0 0 0;
 }
 /*Header end*/
@@ -329,14 +347,12 @@ nav a:hover{
 .article-title {
     padding-top: 10px;
     padding-bottom: 20px;
+    font-size: 18px;
+    line-height: 28px;
+    color: rgb(68,68,68);
+    font-family: Roboto Slab;
+    font-weight: 300;
 }
-
-    .article-title a {
-        font-family: "Roboto Slab";
-        font-weight: 300;
-        font-size: 18px;
-        line-height: 28px;
-    }
 
 .article-lead {
     display: -webkit-box;
@@ -524,7 +540,7 @@ nav a:hover{
 }
 
 .search-result-item {
-    height: 100px;
+    height: auto;
     margin-bottom: 40px;
     box-sizing: border-box;
 }
@@ -580,7 +596,10 @@ nav a:hover{
 .footer-row-el {
     display: inline-block;
     position: relative;
+    width: 27%;
     height: 100px;
+    margin: 0 3%;
+    text-align: center;
 }
 
 .footer-img {
@@ -702,15 +721,12 @@ nav a:hover{
 }
 @keyframes fade {
     from {
-        position: fixed;
         width: 100%;
         z-index: 100;
     }
 
     to {
-        position: relative;
         width: initial;
-        height: 100px;
         background-color: transparent;
         z-index: initial;
     }
@@ -737,6 +753,54 @@ nav a:hover{
     to {
         width: 0;
         opacity: 0;
+    }
+}
+
+@keyframes navIn {
+    from {
+        opacity: 0;
+        width: 100px;
+    }
+
+    to {
+        opacity: 1;
+        width: 75%;
+    }
+}
+
+@keyframes navOut {
+    from {
+        opacity: 1;
+        width: 75%;
+    }
+
+    to {
+        opacity: 0;
+        width: 100px;
+    }
+}
+
+@keyframes searchHeaderIn {
+    from {
+        opacity: 0;
+        width: 100px;
+    }
+
+    to {
+        opacity: 1;
+        width: 100%;
+    }
+}
+
+@keyframes searchHeaderOut {
+    from {
+        opacity: 1;
+        width: 100%;
+    }
+
+    to {
+        opacity: 0;
+        width: 30%;
     }
 }
 /*Keyframes end*/
@@ -793,6 +857,9 @@ nav a:hover{
     }
     .article-detail{
         width: 80%;
+    }
+    .search-results{
+        padding: 0 50px;
     }
 }
 

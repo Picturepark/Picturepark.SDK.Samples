@@ -1,14 +1,10 @@
 ﻿
-//classes
-class Button {
-    id: HTMLElement;
-    content: HTMLElement;
 
-    constructor(data?: any) {
-        this.id = data.id;
-        this.content = data.content;
-    }
-}
+//classes
+//import { ArticleHandler } from "../tsClassesAndModules/articleHandler.model";
+//import { Button } from "../tsClassesAndModules/button.model";
+//import { MobileElements } from "../tsClassesAndModules/mobileElements.model";
+//import { ScrollPosition } from "../tsClassesAndModules/scrollPositions.model";
 
 class ScrollPosition {
     element: HTMLElement;
@@ -16,9 +12,45 @@ class ScrollPosition {
     posX: number;
 
     constructor(data?: any) {
-        this.element = document.getElementsByClassName("header-first-row")[0] as HTMLElement,
-        this.posY = window.scrollY,
-        this.posX = data.posX;
+        this.element = document.getElementsByClassName("header-top-row")[0] as HTMLElement,
+            this.posY = window.scrollY,
+            this.posX = data.posX;
+    }
+}
+
+class MobileElements {
+    mobileInnerNav: HTMLElement;
+    mobileSearch: HTMLElement;
+    mobileMoreInfo: HTMLElement;
+    mobileNavLinks: HTMLElement;
+    mobileMenu: HTMLElement;
+    mobileClose: HTMLElement;
+    mobileBanner: HTMLElement;
+    searchWrapper: HTMLElement;
+    moreInfo: HTMLElement;
+    navLinks: HTMLElement;
+
+    constructor(data?: any) {
+        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0] as HTMLElement;
+        this.mobileSearch = document.getElementsByClassName("mobile-search")[0] as HTMLElement;
+        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0] as HTMLElement;
+        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0] as HTMLElement;
+        this.mobileMenu = document.getElementsByClassName("menu-icon")[0] as HTMLElement;
+        this.mobileClose = document.getElementsByClassName("mobile-nav")[0].getElementsByClassName("close-icon")[0] as HTMLElement;
+        this.mobileBanner = document.getElementsByClassName("mobile-header-banner")[0] as HTMLElement;
+        this.searchWrapper = document.getElementsByClassName("searchWrapper")[0] as HTMLElement;
+        this.moreInfo = document.getElementsByClassName("more-info-btn")[0] as HTMLElement;
+        this.navLinks = document.getElementsByClassName("nav-links")[0] as HTMLElement;
+    }
+}
+
+class Button {
+    id: HTMLElement;
+    content: HTMLElement;
+
+    constructor(data?: any) {
+        this.id = data.id;
+        this.content = data.content;
     }
 }
 
@@ -47,62 +79,48 @@ class ArticleHandler {
     }
 }
 
-class MobileElements {
-    mobileInnerNav: HTMLElement;
-    mobileSearch: HTMLElement;
-    mobileMoreInfo: HTMLElement;
-    mobileNavLinks: HTMLElement;
-    mobileMenu: HTMLElement;
-    mobileClose: HTMLElement;
-    searchWrapper: HTMLElement;
-    moreInfo: HTMLElement;
-    navLinks: HTMLElement;
-
-    constructor(data?: any) {
-        this.mobileInnerNav = document.getElementsByClassName("mobile-inner-nav")[0] as HTMLElement;
-        this.mobileSearch = document.getElementsByClassName("mobile-search")[0] as HTMLElement;
-        this.mobileMoreInfo = document.getElementsByClassName("mobile-more-info")[0] as HTMLElement;
-        this.mobileNavLinks = document.getElementsByClassName("mobile-nav-links")[0] as HTMLElement;
-        this.mobileMenu = document.getElementsByClassName("menu-icon")[0] as HTMLElement;
-        this.mobileClose = document.getElementsByClassName("close-icon")[0] as HTMLElement;
-        this.searchWrapper = document.getElementById("searchWrapper") as HTMLElement;
-        this.moreInfo = document.getElementById("more-info-btn") as HTMLElement;
-        this.navLinks = document.getElementsByClassName("nav-links")[0] as HTMLElement;
-    }
-}
 
 //viewport and mobile support
 function mobileNavOpen() {
     const mobileElements = new MobileElements({});
     const scrollPosition = new ScrollPosition({});
 
+
+    mobileElements.mobileBanner.style.marginTop = "70px";
+    mobileElements.mobileInnerNav.style.animationName = "navIn";
+    scrollPosition.element.style.animationName = "searchHeaderIn";
     mobileElements.mobileSearch.append(mobileElements.searchWrapper);
     mobileElements.mobileMoreInfo.append(mobileElements.moreInfo);
     mobileElements.mobileNavLinks.append(mobileElements.navLinks);
     mobileElements.mobileInnerNav.classList.remove("hide-element");
     mobileElements.mobileClose.classList.remove("hide-element");
     mobileElements.mobileMenu.classList.add("hide-element");
-    scrollPosition.element.classList.add("gradient-shadow");
-    scrollPosition.element.classList.add("header-scroll-position");
+    scrollPosition.element.classList.add("gradient-shadow", "header-scroll-position");
 }
 
 function mobileNavClose() {
     const mobileElements = new MobileElements({});
     const scrollPosition = new ScrollPosition({});
 
-    mobileElements.mobileInnerNav.classList.add("hide-element");
-    mobileElements.mobileClose.classList.add("hide-element");
-    mobileElements.mobileMenu.classList.remove("hide-element");
-    if (scrollPosition.posY < 500) {
-        scrollPosition.element.classList.remove("gradient-shadow");
-        scrollPosition.element.classList.remove("header-scroll-position");
-    }
-}
+    mobileElements.mobileInnerNav.style.animationName = "navOut";
 
+    setTimeout(function () {
+        mobileElements.mobileInnerNav.classList.add("hide-element");
+        mobileElements.mobileClose.classList.add("hide-element");
+        mobileElements.mobileMenu.classList.remove("hide-element");
+        scrollPosition.element.style.animationName = "searchHeaderOut";
+        mobileElements.mobileBanner.style.marginTop = "-30px";
+        scrollPosition.element.style.animationName = "fade";
+    }, 450);
+
+    if (scrollPosition.posY < 500) {
+        scrollPosition.element.classList.remove("gradient-shadow", "header-scroll-position");
+    }
+
+}
 
 //article overflow handler
 loadElement();
-
 function overflowHanlder() {
     const articleHandler = new ArticleHandler({});
 
@@ -123,7 +141,6 @@ function overflowHanlder() {
         if (articleHandler.pageCount > 4) { //only display so many page numbers
             for (let i = 4; i < articleHandler.pageCount; i++) {
                 document.getElementsByClassName("page-number")[i].classList.add("hide-element");
-                console.log(i);
             }
 
             //make this function dynamic
@@ -160,7 +177,7 @@ function overflowHanlder() {
     }
 }
 
-function changePage(clickedPage) { //page navigation
+function changePage(clickedPage: string) { //page navigation
     const articleHandler = new ArticleHandler({});
 
     switch (clickedPage) {
@@ -176,7 +193,7 @@ function changePage(clickedPage) { //page navigation
     }
 
     for (let i = 0; i < articleHandler.articleCount; i++) {
-        if (articleHandler.article[i].classList.contains("pageNr" + articleHandler.currentPage)){
+        if (articleHandler.article[i].classList.contains("pageNr" + articleHandler.currentPage)) {
             articleHandler.article[i].classList.remove("hide-element");
         }
         else {
@@ -185,18 +202,17 @@ function changePage(clickedPage) { //page navigation
     }
 
     for (let i = 1; i <= articleHandler.pageCount; i++) {
-        console.log(articleHandler.currentPage);
         if (i == articleHandler.currentPage) {
             document.getElementById("page-nav-nr" + articleHandler.currentPage).classList.add("active-page", "gradient-bckgr", "gradient-shadow");
         }
         else {
-            if (document.getElementsByClassName("page-number")[i-1].classList.contains("active-page")){
-                document.getElementsByClassName("page-number")[i-1].classList.remove("active-page", "gradient-bckgr", "gradient-shadow");
+            if (document.getElementsByClassName("page-number")[i - 1].classList.contains("active-page")) {
+                document.getElementsByClassName("page-number")[i - 1].classList.remove("active-page", "gradient-bckgr", "gradient-shadow");
             }
         }
     }
 
-    window.scroll({top: 0, behavior: 'smooth'});
+    window.scroll({ top: 0, behavior: 'smooth' });
 
     switch (articleHandler.currentPage) { //hide and display page nav btns
         case 1:
@@ -216,38 +232,50 @@ function changePage(clickedPage) { //page navigation
 
 function loadElement() { //wait until articles are loaded
     if (document.getElementsByClassName("article-box").length == 0) {
-        window.requestAnimationFrame(loadElement); 
+        window.requestAnimationFrame(loadElement);
     }
     else {
         overflowHanlder();
     }
 }
 
-function clickOpenBtn(btnEl, childEl) { //button function
+function clickOpenBtn(btnEl: HTMLElement, childEl: HTMLElement) { //button function
     const button = new Button({
         id: btnEl as HTMLElement,
         content: childEl as HTMLElement
     });
 
     setTimeout(function () {
-        button.content.classList.remove("visually-hidden");
-        button.content.classList.remove("hide-element");
-
-        document.addEventListener("click", function () {
-            button.content.classList.add("visually-hidden");
-            setTimeout(function () {
-                button.content.classList.add("hide-element");
-            }, 500);
+        openItem();
+        document.addEventListener("click", function (ev) {
+            closeItem();
+            ev.stopPropagation();
+        });
+        button.content.getElementsByClassName("close-icon")[0].addEventListener("click", function (ev) {
+            closeItem();
+            ev.stopPropagation();
         });
         button.id.addEventListener("click", function (ev) {
-            button.content.classList.remove("visually-hidden");
-            button.content.classList.remove("hide-element");
+            openItem();
             ev.stopPropagation();
         });
     }, 10);
+
+    function closeItem() {
+        button.content.classList.add("visually-hidden");
+        setTimeout(function () {
+            button.content.classList.add("hide-element");
+        }, 500);
+    }
+    function openItem() {
+        button.content.classList.remove("visually-hidden");
+        button.content.classList.remove("hide-element");
+    }
 }
 
-function search(btnEl, childEl) {
+
+
+function search(btnEl: HTMLElement, childEl: HTMLElement, inputEl: HTMLInputElement) {
     const button = new Button({
         id: btnEl as HTMLElement,
         content: childEl as HTMLElement
@@ -256,6 +284,7 @@ function search(btnEl, childEl) {
     setTimeout(function () {
         button.id.classList.add("gradient-shadow", "search-active");
         button.content.classList.remove("visually-hidden", "hide-element");
+        inputEl.focus();
 
         document.addEventListener("click", function () {
             button.content.classList.add("visually-hidden");
@@ -267,7 +296,12 @@ function search(btnEl, childEl) {
         button.id.addEventListener("click", function (ev) {
             button.id.classList.add("gradient-shadow", "search-active");
             button.content.classList.remove("visually-hidden", "hide-element");
+            inputEl.focus();
             ev.stopPropagation();
+        });
+
+        document.getElementsByClassName("clear-search")[0].addEventListener("click", function () {
+            inputEl.value = "";
         });
     }, 10);
 }
@@ -297,6 +331,3 @@ window.addEventListener("scroll", function () { //header white on scroll
         }, 100)
     }
 });
-
-
-//toggle mobile navigation

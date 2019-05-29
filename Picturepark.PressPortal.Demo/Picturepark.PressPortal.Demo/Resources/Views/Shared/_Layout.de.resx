@@ -135,8 +135,8 @@
   <data name="Terms of use" xml:space="preserve">
     <value>Nutzungsbedingungen</value>
   </data>
-  <data name="You are watching a sample demo of a Press Kits microsite of the Picturepark Content Platform." xml:space="preserve">
-    <value>Sie sehen eine Demo einer Presseportal Microsite der Picturepark Content Platform.</value>
+  <data name="You are using a sample demo of a Press Kits microsite of the Picturepark Content Platform." xml:space="preserve">
+    <value>Sie benutzen eine Demo einer Presseportal Microsite der Picturepark Content Platform.</value>
   </data>
   <data name="Contact Picturepark" xml:space="preserve">
     <value>Picturepark kontaktieren</value>
@@ -147,7 +147,7 @@
   <data name="This is a slightly customized microsite of the Picturepark SDK - part of our online demo." xml:space="preserve">
     <value>Dies ist eine leicht angepasste Microsite des Picturepark SDKs - ein Teil unserer Online Demo.</value>
   </data>
-  <data name="You can play around with your limited read-only access which simulates access of FOFA members." xml:space="preserve">
-    <value>Sie können Funktionen auf dieser Seite mit den limitierten Leserechten eines FOFA-Mitglieds ausprobieren.</value>
+  <data name="You can play around with your limited read-only access which simulates access of media representatives who can access all content without signup and login." xml:space="preserve">
+    <value>Sie können die Funktionen auf dieser Seite mit den limitierten Leserechten eines Medienvertreters ausprobieren, welcher Zugang zu allem Inhalt ohne Login erhält.</value>
   </data>
 </root>

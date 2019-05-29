@@ -17,19 +17,19 @@
     });
 </script>*@
 
-<div class="col-3 breadcrumb primary-color">
+<div class="breadcrumb primary-color">
     <a asp-controller="Home" asp-action="Overview">
         <i class="material-icons">keyboard_backspace</i> @Localizer.GetString("Back to Overview")
     </a>
 </div>
 
-<div class="col-3 article-detail">
+<div class="article-detail">
     <article>
         <h1 class="article-detail-title">@Model.Content.Headline.GetTranslation()</h1>
         <p class="article-detail-about">
             <span>
                 @Localizer.GetString("By")
-                <a clasS="primary-color" href="#" title="Posts By @Model.Owner.FirstName @Model.Owner.LastName" rel="author">@Model.Owner.FirstName @Model.Owner.LastName</a>
+                <a class="primary-color" href="#" title="Posts By @Model.Owner.FirstName @Model.Owner.LastName" rel="author">@Model.Owner.FirstName @Model.Owner.LastName</a>
             </span>
             <span>•</span>
             <span>@Model.Content.ReleaseDate.ToShortDateString()</span>

@@ -6,20 +6,22 @@
 
 /*Color palette*/
 /*primary color*/
-.primary-color, .primary-color p, .primary-color a {
+.primary-color,
+.primary-color p,
+.primary-color a {
     color: #2c6836;
 }
 
-#more-info-btn .btn-content{
+.more-info-btn .btn-content{
     background-color: #fff;
     color: #000;
 }
 
-#more-info-btn .btn-content a {
+.more-info-btn .btn-content a {
     color: #2c6836;
     text-decoration: none;
 }
-#more-info-btn .btn-content a:hover{
+.more-info-btn .btn-content a:hover{
     text-decoration: underline;
 }
 .primary-color-bckgr {
@@ -27,10 +29,15 @@
 }
 
 /*secondary color*/
-.secondary-color-bckgr, *::selection {
+.secondary-color-bckgr,
+*::selection {
     background-color: #78be31;
 }
-*::selection, .footer-bottom, .footer-bottom a, .footer-bottom li, .active-page {
+*::selection,
+.footer-bottom,
+.footer-bottom a,
+.footer-bottom li,
+.active-page {
     color: #fff;
 }
 
@@ -57,7 +64,7 @@
     background-image: url('../media/images/logo-fofa.png');
 }
 
-.welcome-img {
+#welcome-img {
     background-image: url('../media/images/header-background.jpg');
 }
 
@@ -66,7 +73,7 @@
 }
 
 /*style solely for FOFA*/
-#more-info-btn {
+.more-info-btn {
     padding: 10px 20px;
     line-height: 22px;
     font-size: 17px;
