@@ -1,28 +1,75 @@
-﻿*{
+﻿/*General styling*/
+*{
     margin: 0;
     padding: 0;
     font-family: Roboto, sans-serif;
+    font-weight: 400;
 }
 
-/*General styling*/
-p, li, a {
-    font-size: 16px;
-    font-weight: 400;
-    color: #212529;
+.article-title, .article-detail-lead {
+    font-family: Roboto Slab;
 }
-h1,h2,h3,h4,h5{
-    font-weight: 400;
+
+.article-title, .article-detail-lead,
+.read-more, .breadcrumb a {
+    font-weight: 300;
+}
+
+p, li, a, nav a,
+.search-form input,
+.article-lead,
+.footer-bottom, .footer-bottom a,
+.breadcrumb .material-icons {
+    font-size: 15px;
+}
+
+.more-info-btn .btn-content a,
+.article-title, .article-detail-lead,
+.breadcrumb a,
+.article-detail-about a, .article-detail-about span,
+.detail-body-text p,
+.contact-info a, .contact-info span {
+    font-size: 18px;
+}
+
+h5, .breadcrumb,
+.header-entry-subtitle, .header-entry-subtitle a,
+.page-nav .button,
+.contact-info a .material-icons {
+    font-size: 20px;
 }
 
 h4 {
     font-size: 24px;
     margin-top: 20px;
-    line-height: 1.2;
     margin-bottom: 10px;
 }
 
-h5{
-    font-size: 20px;
+.header-entry-title,
+.searchWrapper .material-icons,
+.more-info-btn .close-icon {
+    font-size: 30px;
+}
+
+.mobile-nav .material-icons,
+.article-detail-title{
+    font-size: 40px;
+}
+
+.read-more {
+    line-height: 25px;
+}
+
+.article-title,
+.article-detail-lead,
+.detail-body-text p{
+    line-height: 30px;
+}
+
+.searchWrapper .material-icons,
+.mobile-search .searchWrapper .material-icons,
+.footer-bottom ul {
+    line-height: 50px;
 }
 
 .button {
@@ -40,8 +87,14 @@ h5{
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
-.no-text-link{
-
+.no-text-link, .semi-link{
+    text-decoration: none;
+}
+.no-text-link:hover{
+    text-decoration: none;
+}
+.semi-link:hover{
+    text-decoration: underline;
 }
 
 /*Header start*/
@@ -90,13 +143,10 @@ nav li {
 }
 
 nav a{
-    font-size: 14px;
     letter-spacing: 0.7px;
-    text-decoration: none;
 }
 
 nav a:hover{
-    text-decoration: none;
     padding: 5px 0;
     border-bottom: 2px solid #000;
 }
@@ -126,8 +176,6 @@ nav a:hover{
 
 .searchWrapper .material-icons {
     cursor: pointer;
-    font-size: 32px;
-    line-height: 50px;
     vertical-align: bottom;
 }
 
@@ -135,18 +183,9 @@ nav a:hover{
     height: 45px;
     width: 250px;
     border: none;
-    font-size: 16px;
-    color: #000;
     animation-duration: 500ms;
     animation-name: searchIn;
 }
-    .search-form input::-webkit-input-placeholder {
-        color: #000;
-    }
-
-    .search-form input::-moz-placeholder {
-        color: #000;
-    }
     .search-form input:focus{
         outline: none;
     }
@@ -156,7 +195,6 @@ nav a:hover{
     border-radius: 5px;
     padding-right: 10px;
     box-sizing: border-box;
-    background-color: #fff;
 }
 
 .search-form.visually-hidden{
@@ -172,14 +210,8 @@ nav a:hover{
     padding: 75px 0 0 30px;
 }
 
-.header-entry-title{
-    font-size: 28px;
-    line-height: 35px;
-}
-
 .header-entry-subtitle{
     margin-top: 50px;
-    font-size: 18px;
 }
 
 .more-info-btn .btn-content {
@@ -191,6 +223,7 @@ nav a:hover{
     border-radius: 3px;
     animation-duration: 500ms;
     animation-name: slidein;
+    z-index: 200;
 }
 .more-info-btn .close-icon {
     position: absolute;
@@ -198,14 +231,12 @@ nav a:hover{
     top: 0;
     right: 0;
     margin: 10px;
-    font-size: 32px;
 }
 
 .header-scroll-position {
     position: fixed;
     width: 100%;
     height: 110px;
-    background-color: #fff;
     z-index: 100;
 }
 .mobile-nav {
@@ -217,17 +248,10 @@ nav a:hover{
 }
 .mobile-nav .material-icons {
     border-radius: 3px;
-    padding: 2px;
-    font-size: 40px;
-    
-}
-.mobile-nav .menu-icon {
-    color: #fff;
+    padding: 2px;    
 }
 
 .mobile-nav .close-icon {
-    position: relative;
-    color: #000;
     cursor: pointer;
     z-index: 150;
 }
@@ -241,7 +265,6 @@ nav a:hover{
     left: 0;
     padding: 50px 5% 0 5%;
     box-sizing: border-box;
-    background-color: #fff;
     z-index: 100;
     animation-duration: 500ms;
     animation-name: navIn;
@@ -276,14 +299,12 @@ nav a:hover{
     margin: 0;
 }
 .mobile-search .searchWrapper .material-icons {
-    line-height: 50px;
     vertical-align: bottom;
 }
 .mobile-search .searchWrapper form {
-    float: right;
-    margin-top: -5px;
+    margin-top: -60px;
     width: 90%;
-    margin-left: 0;
+    margin-left: 45px;
 }
 .mobile-search .searchWrapper input {
     width: 85%;
@@ -295,7 +316,7 @@ nav a:hover{
 .mobile-nav-links .nav-links {
     margin: 0;
     width: 90%;
-}
+}box-shadow
 .mobile-nav-links .left-nav {
     display: block;
     margin-bottom: 15px;
@@ -321,7 +342,6 @@ nav a:hover{
     box-shadow: 0 1px 6px rgba(0,0,0,0.18);
     box-sizing: border-box;
     overflow: hidden;
-    text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
@@ -340,25 +360,15 @@ nav a:hover{
     padding: 0px 25px;
     box-sizing: border-box;
 }
-    .article-head-info a, .article-head-info a:hover {
-        text-decoration: none;
-    }
 
 .article-title {
     padding-top: 10px;
     padding-bottom: 20px;
-    font-size: 18px;
-    line-height: 28px;
-    color: rgb(68,68,68);
-    font-family: Roboto Slab;
-    font-weight: 300;
 }
+
 
 .article-lead {
     display: -webkit-box;
-    font-size: 15px;
-    line-height: 24px;
-    color: #aaa;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
@@ -367,11 +377,8 @@ nav a:hover{
 .read-more {
     position: absolute;
     bottom: 30px;
-    font-weight: 300;
-    line-height: 24px;
 }
 .read-more i{
-    line-height: 24px;
     vertical-align: bottom;
 }
 .page-nav {
@@ -398,11 +405,6 @@ nav a:hover{
     padding: 18px 20px;
     box-sizing: border-box;
     text-align: center;
-    font-size: 20px;
-}
-
-.active-page {
-    color: #fff;
 }
 
 .hide-element{
@@ -422,25 +424,9 @@ nav a:hover{
 /*Body detail view start*/
 .breadcrumb {
     position: absolute;
-    width: 150px;
+    width: 170px;
     left: 70px;
     text-align: initial;
-}
-
-.breadcrumb .material-icons{
-    font-size: 15px;
-}
-
-.breadcrumb a {
-    font-weight: 300;
-}
-
-.breadcrumb a, .article-detail-about a{
-    text-decoration: none;
-}
-
-.breadcrumb a:hover, .article-detail-about a:hover{
-    text-decoration: underline;
 }
 
 .article-detail{
@@ -449,24 +435,9 @@ nav a:hover{
     text-align: initial;
 }
 
-.article-detail-title{
-    font-size: 40px;
-}
-
 .article-detail-about{
     height: 75px;
     margin-top: 50px;
-}
-
-.article-detail-about a, .article-detail-about span  {
-    font-size: 17px;
-}
-
-.article-detail-lead{
-    font-size: 18px;
-    font-family: "Roboto Slab";
-    font-weight: 300;
-    line-height: 30px;
 }
 
 .detail-hero-image{
@@ -475,8 +446,6 @@ nav a:hover{
 }
 
 .detail-body-text p {
-    font-size: 17px;
-    line-height: 30px;
     margin-bottom: 30px;
 }
 
@@ -489,19 +458,10 @@ nav a:hover{
 
 .download-item:hover {
     cursor: pointer;
-    background-color: rgba(50,50,50, .1);
-    transition: background-color 500ms, box-shadow 250ms;
-    box-shadow: 4px 5px 4px -2px rgba(75,75,75, .7);
 }
-
 .download-item a {
     display: inline-block;
     width: 100%;
-    text-decoration: none;
-}
-
-.download-item:hover a{
-    text-decoration: underline;
 }
 
 .download-item .material-icons {
@@ -552,22 +512,10 @@ nav a:hover{
 .search-result-item a {
     font-size: inherit;
     font-weight: inherit;
-    line-height: 24px;
-    text-decoration: none;
-}
-
-.search-result-item a:hover{
-    text-decoration: underline;
 }
 
 .no-results {
     padding-bottom: 25px;
-}
-.no-results a{
-    text-decoration: none;
-}
-.no-results a:hover{
-    text-decoration: underline;
 }
 /*Body search results end*/
 
@@ -616,30 +564,17 @@ nav a:hover{
 }
 
 .contact-info a, .contact-info span {
-    font-size: 17px;
-    line-height: 25px;
-    text-decoration: none;
     vertical-align: bottom;
 }
 
 .contact-info a .material-icons{
-    font-size: 21px;
-    line-height: 25px;
     vertical-align: bottom;
-}
-
-.social-media-info a{
-    text-decoration: none;
 }
 
 .social-media-info img {
     height: 25px;
     width: 25px;
     margin-right: 10px;
-}
-
-.social-media-info img:hover{
-    background-color: #000;
 }
 
 .footer-bottom{
@@ -660,22 +595,12 @@ nav a:hover{
 }
 
 .footer-bottom, .footer-bottom a{
-    font-size: 14px;
     font-weight: 400;
-}
-
-.footer-bottom a {
-    text-decoration: none;
-}
-
-.footer-bottom a:hover{
-    text-decoration: underline;
 }
 
 .footer-bottom ul {
     height: 50px;
     padding: 0 35px;
-    line-height: 50px;
 }
 
 #links-footer {
@@ -694,6 +619,9 @@ nav a:hover{
 
 #terms-footer .footer-row-el{
     height: 20px;
+}
+#terms-footer .footer-row-el {
+    width: initial;
 }
 
 #terms-footer span {
@@ -735,7 +663,7 @@ nav a:hover{
 @keyframes searchIn {
     from {
         opacity: 0;
-        width: 0;
+        width: 50px;
     }
 
     to {
@@ -751,7 +679,7 @@ nav a:hover{
     }
 
     to {
-        width: 0;
+        width: 50px;
         opacity: 0;
     }
 }
@@ -912,141 +840,3 @@ nav a:hover{
     }
 }
 /*Responsive end*/
-
-/*AddToAny start*/
-.a2a_vertical_style {
-    top: 40vh !important;
-}
-
-.page-template-page-template-blank .a2a_vertical_style,
-.home .a2a_vertical_style {
-    display: none;
-}
-
-
-body .a2a_vertical_style {
-    /*	background-color: #f2f2f2;*/
-    background-color: transparent;
-    padding: 1px 2px 1px 0;
-    border-radius: 0 !important;
-    border-top-right-radius: 3px !important;
-    border-bottom-right-radius: 3px !important;
-    z-index: 100000;
-}
-
-.a2a_vertical_style .a2a_svg {
-    border-radius: 0 !important;
-    padding: 10px;
-}
-
-.a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_google_plus {
-    padding: 5px;
-}
-
-.a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_a2a {
-    padding: 12px;
-}
-
-.a2a_vertical_style a {
-    padding: 0 !important;
-}
-
-.a2a_floating_style .a2a_svg svg path {
-    fill: #aaaaaa;
-}
-
-.a2a_floating_style .a2a_svg {
-    background-color: #f2f2f2 !important;
-    opacity: 1 !important;
-}
-
-    .a2a_floating_style .a2a_svg.a2a_s__default:hover {
-        opacity: 1 !important;
-    }
-
-    .a2a_floating_style .a2a_svg:hover svg path {
-        fill: #fff !important;
-    }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_facebook {
-        border-top-right-radius: 3px !important;
-    }
-
-        .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_facebook:hover {
-            background-color: #3C5B96 !important;
-        }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_twitter:hover {
-        background-color: #5AAEEB !important;
-    }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_google_plus:hover {
-        background-color: #D94D3F !important;
-    }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_linkedin:hover {
-        background-color: #147DB3 !important;
-    }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_xing:hover {
-        background-color: #1D5B65 !important;
-    }
-
-    .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_a2a {
-        border-bottom-right-radius: 3px !important;
-    }
-
-        .a2a_floating_style .a2a_svg.a2a_s__default.a2a_s_a2a:hover {
-            background-color: #006DFB !important;
-        }
-
-
-body.en .a2a_button_xing {
-    display: none;
-}
-
-.a2a_default_style .a2a_count, .a2a_default_style .a2a_svg, .a2a_floating_style .a2a_svg, .a2a_menu .a2a_svg, .a2a_vertical_style .a2a_count, .a2a_vertical_style .a2a_svg{
-    box-sizing: border-box;
-}
-
-@media all and (max-width: 767px) {
-    .a2a_vertical_style {
-        display: none !important;
-    }
-
-    .a2a_floating_style.a2a_default_style a {
-        padding: 0 5px !important;
-    }
-
-    .a2a_floating_style.a2a_default_style {
-        background-color: #fff;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        border-radius: 0px;
-        padding: 2px 0 0 !important;
-    }
-
-        .a2a_floating_style.a2a_default_style .a2a_svg {
-            border-radius: 0 !important;
-            border-top-right-radius: 3px !important;
-            border-top-left-radius: 3px !important;
-            padding: 5px;
-        }
-
-            .a2a_floating_style.a2a_default_style .a2a_svg.a2a_s__default.a2a_s_google_plus {
-                padding: 0px;
-            }
-
-            .a2a_floating_style.a2a_default_style .a2a_svg.a2a_s__default.a2a_s_a2a {
-                padding: 8px;
-            }
-
-    .et_pb_scroll_top.et-pb-icon {
-        bottom: 0;
-        background-color: #4ab2b0;
-        z-index: 99999999;
-    }
-}
-
-/*AddToAny end*/

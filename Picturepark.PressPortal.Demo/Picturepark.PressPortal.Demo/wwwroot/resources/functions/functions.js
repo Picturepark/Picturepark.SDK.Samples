@@ -221,11 +221,14 @@ function search(btnEl, childEl, inputEl) {
         id: btnEl,
         content: childEl
     });
+    var clearSearch = document.getElementsByClassName("clear-search")[0];
     setTimeout(function () {
+        clearSearch.classList.remove("hide-element");
         button.id.classList.add("gradient-shadow", "search-active");
         button.content.classList.remove("visually-hidden", "hide-element");
         inputEl.focus();
         document.addEventListener("click", function () {
+            clearSearch.classList.add("hide-element");
             button.content.classList.add("visually-hidden");
             setTimeout(function () {
                 button.id.classList.remove("gradient-shadow", "search-active");
@@ -233,12 +236,13 @@ function search(btnEl, childEl, inputEl) {
             }, 500);
         });
         button.id.addEventListener("click", function (ev) {
+            clearSearch.classList.remove("hide-element");
             button.id.classList.add("gradient-shadow", "search-active");
             button.content.classList.remove("visually-hidden", "hide-element");
             inputEl.focus();
             ev.stopPropagation();
         });
-        document.getElementsByClassName("clear-search")[0].addEventListener("click", function () {
+        clearSearch.addEventListener("click", function () {
             inputEl.value = "";
         });
     }, 10);

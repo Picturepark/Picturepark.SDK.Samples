@@ -78,3 +78,42 @@
     line-height: 22px;
     font-size: 17px;
 }
+
+
+/*all other colors*/
+/*color*/
+.search-form input,
+.search-form input::-webkit-input-placeholder,
+.search-form input::-moz-placeholder,
+.mobile-nav .close-icon {
+    color: #000;
+}
+
+.mobile-nav .menu-icon,
+.active-page {
+    color: #fff;
+}
+p, li, a {
+    color: #212529; /*dark grey*/
+}
+.article-title{
+    color: #444; /*regular grey*/
+}
+.article-lead{
+    color: #aaa; /*light grey*/
+}
+/*background-color*/
+.social-media-info img:hover {
+    background-color: #000;
+}
+.header-scroll-position,
+.search-active,
+.mobile-inner-nav {
+    background-color: #fff;
+}
+.download-item:hover {
+    cursor: pointer;
+    background-color: rgba(50,50,50, .1);
+    transition: background-color 500ms, box-shadow 250ms;
+    box-shadow: 4px 5px 4px -2px rgba(75,75,75, .7);
+}

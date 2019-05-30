@@ -15,7 +15,7 @@
 {
     articleCounter = articleCounter + 1;
 
-    <a id="articleNr@(articleCounter.ToString())" class="article-box" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
+    <a id="articleNr@(articleCounter.ToString())" class="article-box no-text-link" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
         <article>
                 <img class="article-img" src="/Home/ImageResized/@portal.Content.HeroImage.TargetId?width=400&height=400"/>
             <div class="article-head-info">

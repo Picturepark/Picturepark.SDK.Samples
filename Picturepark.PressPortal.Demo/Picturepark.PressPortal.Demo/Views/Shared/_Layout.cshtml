@@ -70,6 +70,7 @@
     <link href="~/resources/styles/defaultStyles.css" rel="stylesheet" />
     <link href="~/resources/styles/customStyles.css" rel="stylesheet" />
     <script async src="https://static.addtoany.com/menu/page.js"></script> <!--addtoany plugin (social media share)-->
+    <link href="~/resources/styles/addToAny.css" rel="stylesheet" />
     <script src="~/resources/functions/functions.js"></script>
 
 
@@ -121,7 +122,7 @@
 
                     <nav class="nav-links">
                         <ul>
-                            <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a asp-controller="Home" asp-action="Overview">News</a></li>
+                            <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a class="no-text-link" asp-controller="Home" asp-action="Overview">News</a></li>
                             <!--Login currently disabled-->
                             @*@if (User.Identity.IsAuthenticated)    /*check login function*/
                                 {
@@ -134,11 +135,11 @@
 
                             <!-- Language selection -->
                             <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "en" ? "menu-item-language-current wpml-ls-current-language" : "") ">
-                                <a title="En" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="en"><span>En</span></a>
+                                <a class="no-text-link" title="En" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="en"><span>En</span></a>
                             </li>
                             <li>/</li>
                             <li class="right-nav @(requestCulture.RequestCulture.UICulture.TwoLetterISOLanguageName == "de" ? "menu-item-language-current wpml-ls-current-language" : "") ">
-                                <a title="De" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="de"><span>De</span></a>
+                                <a class="no-text-link" title="De" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" asp-route-culture="de"><span>De</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -186,25 +187,25 @@
         <div class="footer-row">
             <div class="footer-img footer-row-el"></div>
             <div class="contact-info footer-row-el primary-color">
-                <a href="mailto:info@picturepark.com">
+                <a class="no-text-link" href="mailto:info@picturepark.com">
                     <i class="material-icons">email</i>
-                    <span>info@picturepark.com</span>
+                    <span class="no-text-link">info@picturepark.com</span>
                 </a>
             </div>
             <div class="social-media-info footer-row-el">
                 <ul>
                     <li>
-                        <a href="https://www.twitter.com/Picturepark" target="_blank">
+                        <a class="no-text-link" href="https://www.twitter.com/Picturepark" target="_blank">
                             <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-twitter.png" />
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.facebook.com/Picturepark" target="_blank">
+                        <a class="no-text-link" href="https://www.facebook.com/Picturepark" target="_blank">
                             <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-facebook.png" />
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.linkedin.com/company/picturepark" target="_blank">
+                        <a class="no-text-link" href="https://www.linkedin.com/company/picturepark" target="_blank">
                             <img class="primary-color-bckgr" src="~/resources/Media/Images/icon-linkedin.png" />
                         </a>
                     </li>
@@ -215,11 +216,11 @@
         <div class="footer-bottom gradient-bckgr gradient-shadow">
             <div id="links-footer" class="footer-row">
                 <ul class="footer-row-el">
-                    <li><a target="_blank" href="https://picturepark.com">picturepark.com</a></li>
+                    <li><a class="semi-link" target="_blank" href="https://picturepark.com">picturepark.com</a></li>
                     <li>|</li>
-                    <li><a target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
+                    <li><a class="semi-link" target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
                     <li>|</li>
-                    <li><a href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
+                    <li><a class="semi-link" href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
                 </ul>
             </div>
 
@@ -227,9 +228,9 @@
                 <div class="footer-row-el">
                     &copy; @DateTime.Now.Year Vision Information Transaction AG
                     <span>|</span>
-                    <a target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
+                    <a class="semi-link" target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
                     <span>|</span>
-                    <a target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                    <a class="semi-link" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
                 </div>
             </div>
         </div>

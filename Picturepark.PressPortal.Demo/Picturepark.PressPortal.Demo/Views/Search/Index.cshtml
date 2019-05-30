@@ -10,7 +10,7 @@
     @foreach (var result in Model.SearchResults)
     {
         <div class="search-result-item gradient-shadow-bottom">
-            <h5><a class="primary-color" asp-controller="Home" asp-action="Detail" asp-route-id="@result.Id">@result.Title</a></h5>
+            <h5><a class="primary-color semi-link" asp-controller="Home" asp-action="Detail" asp-route-id="@result.Id">@result.Title</a></h5>
             <p>@result.Description</p>
         </div>
     }
@@ -20,7 +20,7 @@
         <p class="no-results gradient-shadow-bottom">
             @Localizer.GetString("No search results")
         <br /><br />
-        <a class="primary-color" href='/'>@Localizer.GetString("Back to Overview")</a>
+        <a class="primary-color semi-link" href='/'>@Localizer.GetString("Back to Overview")</a>
     </p>
 }
 
