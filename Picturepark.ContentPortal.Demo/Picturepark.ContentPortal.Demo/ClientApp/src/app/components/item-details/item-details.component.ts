@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, SecurityContext } from '@angular/core';
+import { LiquidRenderingService } from '@picturepark/sdk-v1-angular-ui';
 import {
   ContentService, ContentDetail, ContentResolveBehavior,
   ContentType, ContentDownloadLinkCreateRequest, ContentDownloadRequestItem, SchemaService, SchemaDetail
@@ -40,6 +41,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     private contentService: ContentService,
     private schemaService: SchemaService,
     private translationService: TranslationService,
+    private liquidRenderingService: LiquidRenderingService,
     private sanitizer: DomSanitizer) {
   }
 
@@ -96,7 +98,8 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       ContentResolveBehavior.Outputs,
       ContentResolveBehavior.InnerDisplayValueName,
       ContentResolveBehavior.InnerDisplayValueList,
-      ContentResolveBehavior.InnerDisplayValueThumbnail]).subscribe(content => {
+      ContentResolveBehavior.InnerDisplayValueThumbnail]).subscribe(async content => {
+        await this.liquidRenderingService.renderNestedDisplayValues(content);
         this.content = content;
         this.item = this.processContent(content);
 

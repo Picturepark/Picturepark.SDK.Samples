@@ -13,7 +13,7 @@ import * as lodash from 'lodash';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PageBase } from '../page-base';
 
 @Component({
@@ -22,7 +22,7 @@ import { PageBase } from '../page-base';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
-  @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
+  @ViewChild(ItemDetailsComponent, { static: false }) public itemDetailsComponent: ItemDetailsComponent;
   public channel: Channel = null;
   public searchQuery: string = null;
   public filter: FilterBase = null;
@@ -31,7 +31,7 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   private channelId: string;
   public basketItems: string[] = [];
   public isInBasket = true;
-  @ViewChild('snav') public sideNav: MatSidenav;
+  @ViewChild('snav', { static: true }) public sideNav: MatSidenav;
 
   private subscription: Subscription = new Subscription();
 

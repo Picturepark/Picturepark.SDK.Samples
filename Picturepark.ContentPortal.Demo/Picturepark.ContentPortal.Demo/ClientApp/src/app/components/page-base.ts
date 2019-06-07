@@ -1,7 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { DemoInfoDialogComponent } from './demo-info-dialog/demo-info-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 export abstract class PageBase implements OnDestroy {
 
