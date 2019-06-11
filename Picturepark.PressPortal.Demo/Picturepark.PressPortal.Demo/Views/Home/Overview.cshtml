@@ -5,48 +5,35 @@
 @model IEnumerable<ContentItem<PressKits>>
 @inject IViewLocalizer Localizer
 
-<div class=" et_pb_row et_pb_row_1">
-	<div class="et_pb_column et_pb_column_4_4  et_pb_column_1">
-		<div class="et_pb_blog_grid_wrapper">
-            <div class="et_pb_blog_grid clearfix et_pb_module et_pb_bg_layout_light et_pb_blog_0">
-                @{ 
-                    int articleCounter = 0;
-                }
-                @foreach (var portal in Model)
-                {
-                    articleCounter = articleCounter + 1;
 
-                    <div id="articleNr@(articleCounter.ToString())" class="articlePreview column size-1of3">
-                        <article class="et_pb_post clearfix post type-post status-publish format-standard has-post-thumbnail hentry category-best-practices-for-dam">
+<!--start-->
+@{ 
+    int articleCounter = 0;
+}
 
-                            <div class="et_pb_image_container">
-                                <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id" class="entry-featured-image-url">
-                                    <img src="/Home/ImageResized/@portal.Content.HeroImage.TargetId?width=400&height=400" alt="The Value of Synonyms in Content Systems" width="400" height="250" />
-                                </a>
-                            </div> <!-- .et_pb_image_container -->
-                            <div class="postImageContainer">
-                                <h2 class="entry-title"><a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">@portal.Content.Headline.GetTranslation()</a></h2>
+@foreach (var portal in Model)
+{
+    articleCounter = articleCounter + 1;
 
-                                <div class="post-content">
-                                    <p>@portal.Content.Lead?.GetTranslation()</p>
-                                    <a asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id" class="more-link">@Localizer.GetString("Read more")</a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                }
+    <a id="articleNr@(articleCounter.ToString())" class="article-box no-text-link" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@portal.Id">
+        <article>
+                <img class="article-img" src="/Home/ImageResized/@portal.Content.HeroImage.TargetId?width=400&height=400"/>
+            <div class="article-head-info">
+                <h2 class="article-title">
+                    @portal.Content.Headline.GetTranslation()
+                </h2>
+                <p class="article-lead">@portal.Content.Lead?.GetTranslation()</p>
+                <div class="read-more primary-color">
+                    @Localizer.GetString("Read more")<i class="material-icons primary-color">keyboard_arrow_right</i>
+                </div>
             </div>
-		</div>
-	</div>
-</div>
+        </article>
+    </a>
+}
 
-<div id="postArticles">
-    <div id="pageCount"></div>
-
-
-    <!--only displayed if more than 9 articles-->
-    <div id="navPageBtns">
-        <div id="lastPage" class="pageNavBtn" onclick="showLastPage()">@Localizer.GetString("Last page")</div>
-        <div id="nextPage" class="pageNavBtn" onclick="showNextPage()">@Localizer.GetString("Next page")</div>
+<!--only displayed if more than 9 articles-->
+    <div class="page-nav">
+        <div class="page-list"></div>
+        <div onclick="changePage('lastPageBtn')" class="last-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Last page")</div>
+        <div onclick="changePage('nextPageBtn')" class="next-page button gradient-bckgr gradient-shadow">@Localizer.GetString("Next page")</div>
     </div>
-</div>

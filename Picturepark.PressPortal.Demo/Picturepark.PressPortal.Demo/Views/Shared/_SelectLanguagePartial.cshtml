@@ -12,8 +12,7 @@
 			.ToList();
 }
 <div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
-	<form id="selectLanguage" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post" class="form-horizontal" role="form">
+	<form asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path" method="post" role="form">
 		@Localizer["Language:"] <select name="culture" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems" onchange="if (this.value != 0) { this.form.submit();}"></select>
-		@*<button type="submit" class="btn btn-default btn-xs">Save</button>*@
 	</form>
 </div>

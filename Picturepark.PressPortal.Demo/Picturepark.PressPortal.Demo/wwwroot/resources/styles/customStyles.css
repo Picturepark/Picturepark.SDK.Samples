@@ -1,119 +1,119 @@
 ﻿/*
-    This stylesheet contains all code which can easily be customised.
-    Examples: logo, main colors
+    This is the customStyle.css file
+    Any easy and common used adjustments can be done in here, such as colors, logo etc.
 */
 
-/*MAIN FONT COLOR*/
-h2.catHead, .L3header h1.entry-title, .L2header h1.entry-title, .L1header h1.entry-title, .L1header .L1tag, .L1header .L1tag p, .L1header .L1tag a, a:hover,
-#moreInfoTooltip a, /*header area*/
-.pageNr, /*paging area*/
-.breadcrumbs a, .breadcrumbs .separator, .breadcrumbs a:hover, article .post-meta span.author a, #downloadWrapper p, /*article detail view*/
-.more-link, /*overview boxes*/
-.searchResults a, /*search page*/
-#et-info-email, .et-social-icon a, #et-info-phone:before, #et-info-email:before /*footer area*/ {
-    color: #2c6836 !important;
+
+/*Color palette*/
+/*primary color*/
+.primary-color,
+.primary-color p,
+.primary-color a {
+    color: #2c6836;
 }
 
-    /*2ND FONT COLOR*/
-    #moreInfo, #moreInfo:hover, /*header area*/
-    .pageNavBtn, .pageActive, .pageNr:hover, /*paging area*/
-    #et-footer-nav, #footer-bottom, #footer-bottom a, #et-footer-nav a:hover, #footer-bottom a:hover /*footer area*/ {
-        color: #fff !important;
-    }
-
-
-/*BUTTONS, GRADIENTS AND SHADOWS*/
-#moreInfo,
-.pageNavBtn, .pageActive, .pageNr:hover,
-#et-footer-nav, #footer-bottom, #footerTopSection {
-    background: linear-gradient(to right, rgba(80,150,49,1), rgba(44,104,54,1)) !important;
+.more-info-btn .btn-content{
+    background-color: #fff;
+    color: #000;
 }
 
-.pageNavBtn,
-#mobileNavHeader {
-    box-shadow: 2px 2px 3px rgba(44,104,54,.5);
+.more-info-btn .btn-content a {
+    color: #2c6836;
+    text-decoration: none;
 }
-.pageActive, .pageNr:hover,
-.searchResults p {
-    box-shadow: 0px 3px 1px -2px rgba(44,104,54,.7);
+.more-info-btn .btn-content a:hover{
+    text-decoration: underline;
 }
-#moreInfo,
-#et-footer-nav, #footer-bottom, #footerTopSection {
+.primary-color-bckgr {
+    background-color: #2c6836;
+}
+
+/*secondary color*/
+.secondary-color-bckgr,
+*::selection {
+    background-color: #78be31;
+}
+*::selection,
+.footer-bottom,
+.footer-bottom a,
+.footer-bottom li,
+.active-page {
+    color: #fff;
+}
+
+/*gradients*/
+.gradient-bckgr {
+    background: linear-gradient(to right, rgba(80,150,49,1), rgba(44,104,54,1)) !important
+}
+.gradient-shadow {
     box-shadow: 4px 10px 8px rgba(44,104,54,.5);
 }
-.searchActive .et-search-field {
-    box-shadow: 1px 2px 4px 1px rgba(44,104,54,.7);
-}
-.scrollHeader {
-    background: #fff !important;
-    box-shadow: 1px 1px 1px rgba(44,104,54,.7) !important;
-}
-#downloadWrapper .downloadItem {
-    box-shadow: 4px 5px 4px -2px rgba(44,104,54, .5);
-}
-#downloadWrapper .downloadItem:hover {
-    background-color: rgba(50,50,50, .1);
-    box-shadow: 4px 5px 4px -2px rgba(75,75,75, .7);
-    transition: background-color 500ms, box-shadow 250ms;
-}
-#moreInfoTooltip {
-    box-shadow: 4px 4px 10px 4px rgba(44,104,54,.6);
+.gradient-shadow-bottom {
+    box-shadow: 0px 3px 1px -2px rgba(44,104,54,.7);
 }
 
-/*TEXT SELECTION*/
-p::selection, h1::selection, h2::selection, h3::selection, a::selection, div::selection, span::selection {
+.button{
     color: #fff;
-    background: #2c6836;
-    background: #78be31;
-}
-
-/*REST OF ADJUSTMENTS*/
-.breadcrumbs:hover a {
-    border-bottom: 2px solid #2c6836;
-}
-#et_top_search.mobileNavActiveItems,
-#top-menu-nav.mobileNavActiveItems li a {
-    border-bottom: 2px solid rgba(44,104,54,.5);
 }
 
 
-/*LOGO AND OTHER IMAGES*/
+/*Images and media*/
 #logo {
-    height: 95px;
     width: 200px;
-    background-image: url("../media/images/logo-fofa.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+    height: 95px;
+    background-image: url('../media/images/logo-fofa.png');
 }
 
-.L1header:before { /*welcome intro image*/
-    height: 400px;
-    background-image: url(../media/images/header-background.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    /*flip image horizontally*/
-    -moz-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
+#welcome-img {
+    background-image: url('../media/images/header-background.jpg');
 }
 
-#footerImg {
-    height: 100px;
-    background-image: url(../media/images/logo-fofa.png);
-    background-size: contain;
-    background-repeat: no-repeat;
+.footer-img {
+    background-image: url('../media/images/logo-fofa.png');
+}
+
+/*style solely for FOFA*/
+.more-info-btn {
+    padding: 10px 20px;
+    line-height: 22px;
+    font-size: 17px;
 }
 
 
-/*custom adjustments for FOR*/
-#top-menu li:nth-child(2) {
-    display: none;
+/*all other colors*/
+/*color*/
+.search-form input,
+.search-form input::-webkit-input-placeholder,
+.search-form input::-moz-placeholder,
+.mobile-nav .close-icon {
+    color: #000;
 }
 
-/*.a2a_kit {
-    display: none;
-}*/
+.mobile-nav .menu-icon,
+.active-page {
+    color: #fff;
+}
+p, li, a {
+    color: #212529; /*dark grey*/
+}
+.article-title{
+    color: #444; /*regular grey*/
+}
+.article-lead{
+    color: #aaa; /*light grey*/
+}
+/*background-color*/
+.social-media-info img:hover {
+    background-color: #000;
+}
+.header-scroll-position,
+.search-active,
+.mobile-inner-nav {
+    background-color: #fff;
+}
+.download-item:hover {
+    cursor: pointer;
+    background-color: rgba(50,50,50, .1);
+    transition: background-color 500ms, box-shadow 250ms;
+    box-shadow: 4px 5px 4px -2px rgba(75,75,75, .7);
+}
