@@ -1,8 +1,3 @@
-//classes
-//import { ArticleHandler } from "../tsClassesAndModules/articleHandler.model";
-//import { Button } from "../tsClassesAndModules/button.model";
-//import { MobileElements } from "../tsClassesAndModules/mobileElements.model";
-//import { ScrollPosition } from "../tsClassesAndModules/scrollPositions.model";
 var ScrollPosition = /** @class */ (function () {
     function ScrollPosition(data) {
         this.element = document.getElementsByClassName("header-top-row")[0],

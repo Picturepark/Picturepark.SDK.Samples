@@ -15,10 +15,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Remove="wwwroot\resources\functions\functions.ts" />
-	  <Content Remove="wwwroot\resources\tsClassesAndModules\ArticleHandler.model.ts" />
-	  <Content Remove="wwwroot\resources\tsClassesAndModules\Button.model.ts" />
-	  <Content Remove="wwwroot\resources\tsClassesAndModules\MobileElements.model.ts" />
-	  <Content Remove="wwwroot\resources\tsClassesAndModules\scrollPositions.model.ts" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -39,10 +35,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <TypeScriptCompile Include="wwwroot\resources\functions\functions.ts" />
-	  <TypeScriptCompile Include="wwwroot\resources\tsClassesAndModules\articleHandler.model.ts" />
-	  <TypeScriptCompile Include="wwwroot\resources\tsClassesAndModules\button.model.ts" />
-	  <TypeScriptCompile Include="wwwroot\resources\tsClassesAndModules\mobileElements.model.ts" />
-	  <TypeScriptCompile Include="wwwroot\resources\tsClassesAndModules\scrollPositions.model.ts" />
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Views\Home\Overview.de.resx">

@@ -1,12 +1,4 @@
-﻿
-
-//classes
-//import { ArticleHandler } from "../tsClassesAndModules/articleHandler.model";
-//import { Button } from "../tsClassesAndModules/button.model";
-//import { MobileElements } from "../tsClassesAndModules/mobileElements.model";
-//import { ScrollPosition } from "../tsClassesAndModules/scrollPositions.model";
-
-class ScrollPosition {
+﻿class ScrollPosition {
     element: HTMLElement;
     posY: number;
     posX: number;
