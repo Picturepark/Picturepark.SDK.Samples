@@ -48,7 +48,7 @@
     <meta charset="UTF-8" />
 
     <!--------------------CUSTOM ADJUSTMETNS-------------------->
-    <title>Dev FOFA Press Portal</title>
+    <title>FOFA Press Portal</title>
     <link rel="shortcut icon" href="~/resources/media/images/FaviconFOFA.png" />
     <!--change tab color on mobile devices-->
     <meta name="theme-color" content="#78be31" />
@@ -145,7 +145,7 @@
                     </nav>
 
                     <div class="searchWrapper" onclick="search(this, this.getElementsByClassName('btn-content')[0], this.getElementsByTagName('input')[0])">
-                        <i class="material-icons">search</i>
+                        <i class="material-icons search-go">search</i>
                         <form class="search-form btn-content hide-element" role="search" method="get" asp-controller="Search" asp-action="Index">
                             <input type="search" value="" name="search" title="Search for:" placeholder="@Localizer.GetString("Search...")" />
                             <i class="material-icons no-select close-icon clear-search">close</i>
@@ -216,33 +216,36 @@
         <div class="footer-bottom gradient-bckgr gradient-shadow">
             <div id="links-footer" class="footer-row">
                 <ul class="footer-row-el">
-                    <li><a class="semi-link" target="_blank" href="https://picturepark.com">picturepark.com</a></li>
-                    <li>|</li>
-                    <li><a class="semi-link" target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
-                    <li>|</li>
+                    <li><a class="semi-link company-website" target="_blank" href="https://picturepark.com">picturepark.com</a></li>
+                    <li class="separator">|</li>
+                    <li><a class="semi-link support-link" target="_blank" href="https://picturepark.com/company/picturepark-customer-support/">Support</a></li>
+                    <li class="separator">|</li>
                     <li><a class="semi-link" href="mailto:info@picturepark.com">@Localizer.GetString("Contact Picturepark")</a></li>
                 </ul>
             </div>
 
             <div id="terms-footer" class="footer-row">
                 <div class="footer-row-el">
-                    &copy; @DateTime.Now.Year Vision Information Transaction AG
+                    <a class="semi-link company-website" target="_blank" href="https://picturepark.com">&copy; @DateTime.Now.Year Vision Information Transaction AG</a>
                     <span>|</span>
-                    <a class="semi-link" target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
+                    <a class="semi-link privacy" target="_blank" href="https://picturepark.com/terms/privacy/">@Localizer.GetString("Privacy")</a>
                     <span>|</span>
-                    <a class="semi-link" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
+                    <a class="semi-link aup" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <div class="back-to-top" onclick="backToTop()">
+        <i class="material-icons secondary-color">keyboard_arrow_up</i>
+    </div>
+
     <!--add to any plugin-->
     <div class="a2a_kit a2a_kit_size_48 a2a_default_style a2a_floating_style a2a_vertical_style">
         <a class="a2a_button_facebook"></a>
         <a class="a2a_button_twitter"></a>
-        <a class="a2a_button_email"></a>
         <a class="a2a_button_google_gmail"></a>
-        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+        <a onclick="a2aAdjust()" class="a2a_dd" href="https://www.addtoany.com/share"></a>
     </div>
 
 </body>
