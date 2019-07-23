@@ -1,19 +1,44 @@
-@import "~normalize.css";
+// LIBRARY GLOBAL STYLES (keep on top)
+@import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/styles_lib.scss';
 
-@import '~@angular/material/theming';
+// CUSTOM THEME
+@import "custom-theme.scss";
 
-@import 'custom-theme.scss';
+// REQUIRED THEMES
+@import './theme/application-header-theme.component.scss';
+@import './theme/application-menu-theme.component.scss';
+@import './theme/basket-item-theme.components.scss';
+@import './theme/browser-base-theme.component.scss';
+@import './theme/browser-toolbar-theme.component.scss';
+@import './theme/content-browser-item-theme.component.scss';
+@import './theme/dialog-base.component.scss';
+@import './theme/list-browser-theme.component.scss';
+@import './theme/share-content-dialog-theme.component.scss';
+@import './theme/share-aggregation-list-theme.component.scss';
+@import './theme/share-content-recipients-input-theme.component.scss';
+@import './theme/panel-base-theme.component.scss';
 
-$picturepark-app-primary: mat-palette($mat-fofagreen, 500, 300, 900); //default, lighter, darker
-$picturepark-app-accent: mat-palette($mat-accentGreen, 500,300,900);
-// The warn palette is optional (defaults to red).
-$picturepark-app-warn : mat-palette($mat-red);
-$picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);
-
-
-@include mat-core();
+// LOAD THEME COMPONENTS WITH CUSTOM THEME
+@mixin my-components-theme($theme) {
+    @include pp-application-header-theme($theme);
+    @include pp-application-menu-theme($theme);
+    @include pp-basket-item-theme($theme);
+    @include pp-browser-base-theme($theme);
+    @include pp-browser-toolbar-theme($theme);
+    @include pp-content-browser-item-theme($theme);
+    @include pp-dialog-base-theme($theme);
+    @include pp-list-browser-theme($theme);
+    @include pp-share-content-dialog-theme($theme);
+    @include pp-share-aggregation-list-theme($theme);
+    @include pp-share-content-recipients-input-theme($theme);
+    @include pp-panel-base-theme($theme);
+}
 
 @include angular-material-theme($picturepark-app-theme);
+@include my-components-theme($picturepark-app-theme);
+
+// GLOBAL STYLES (keep at bottom)
+@import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
 body {
   font-family: Roboto;
@@ -21,13 +46,6 @@ body {
 
 .content .mat-tab-label {
   height: 64px;
-}
-
-.mat-expansion-panel-body,
-.mat-expansion-panel,
-.mat-expansion-panel-header.mat-expanded,
-.mat-expansion-panel-header.mat-expanded:hover {
-  background: whitesmoke !important;
 }
 
 .form {
