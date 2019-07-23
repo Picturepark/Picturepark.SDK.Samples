@@ -9,6 +9,7 @@
 @import './theme/application-menu-theme.component.scss';
 @import './theme/basket-item-theme.components.scss';
 @import './theme/browser-base-theme.component.scss';
+@import './theme/browser-item-base-theme.component.scss';
 @import './theme/browser-toolbar-theme.component.scss';
 @import './theme/content-browser-item-theme.component.scss';
 @import './theme/dialog-base.component.scss';
@@ -24,6 +25,7 @@
     @include pp-application-menu-theme($theme);
     @include pp-basket-item-theme($theme);
     @include pp-browser-base-theme($theme);
+    @include pp-browser-item-base-theme($theme);
     @include pp-browser-toolbar-theme($theme);
     @include pp-content-browser-item-theme($theme);
     @include pp-dialog-base-theme($theme);
@@ -40,35 +42,6 @@
 // GLOBAL STYLES (keep at bottom)
 @import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
-body {
-  font-family: Roboto;
-}
-
-.content .mat-tab-label {
-  height: 64px;
-}
-
-.form {
-  background: rgba(0,0,0,.24) !important;
-}
-.form:focus-within {
-  background: rgba(0,0,0,.14) !important;
-}
-
-.content-item--selected {
-  box-shadow: 0 0 0 2px #6f6f6f;
-}
-
-.content-browser__header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
-}
-
-.mat-card {
-  &.custom-shadow {
-    @include mat-elevation(2, mat-color($picturepark-app-primary), 2);
-  }
-}
-
 .logo {
   height: 80px;
   width: 160px;
@@ -76,56 +49,4 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
-}
-
-a {
-  color: #2c6836;
-  text-decoration: none;
-}
-
-.demo-button {
-  background-color: #BCDF98;
-  height: 42px;
-}
-
-.content-item__image-virtual-item-container {
-  font-size: 14px;
-  color: #eeeeee !important;
-  background-color: #6f6f6f;
-  border-radius: 2px;
-
-  h1 {
-    font-size: 20px;
-    line-height: 22px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h2 {
-    font-size: 18px;
-    line-height: 20px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h3 {
-    font-size: 17px;
-    line-height: 19px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h4 {
-    font-size: 16px;
-    line-height: 18px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h5 {
-    font-size: 15px;
-    line-height: 17px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-
-  .virtual-content-footer {
-    display: none;
-  }
 }
