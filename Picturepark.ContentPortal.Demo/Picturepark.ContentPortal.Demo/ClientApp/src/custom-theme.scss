@@ -1,5 +1,3 @@
-
-
 @import '~@angular/material/theming';
 
 @include mat-core();
@@ -7,14 +5,14 @@
 $mat-picturepark-accent: ( 50: #EFF7E6, 100: #D7ECC1, 200: #BCDF98, 300: #A1D26F, 400: #8CC850, 500: #78BE31, 600: #70B82C, 700: #65AF25, 800: #5BA71F, 900: #489913, A100: #DEFFCC, A200: #BDFF99, A400: #9CFF66, A700: #8CFF4D, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white, ) );
 
 // GLOBAL COLORS
-$base: #78be31 ;
+$base: #78be31;
 
 $mat-picturepark-primary: (
     base: $base,
     dark-background: #444,
     dark-border: #2f2f2f,
     dialog-background: #f8f8f8,
-    light-background: #fff,
+    light-background: whitesmoke,
     light-border: #d8d8d8,
     white-background: #fff,
     white-font: #fff,

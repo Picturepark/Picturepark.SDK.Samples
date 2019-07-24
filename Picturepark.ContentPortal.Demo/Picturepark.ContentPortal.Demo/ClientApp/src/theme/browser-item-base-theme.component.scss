@@ -3,6 +3,7 @@
 // BROWSER ITEM BASE VARS
 $pp-browser-item: (
     background-color: #fff,
+    white-font: #fff,
     contrast: ()
 );
 
@@ -13,35 +14,37 @@ $pp-browser-item: (
     $warn: map-get($theme, warn);
 
     .browser-item {
-        $self: &;
-        &--selected {
-          // use primary color.
-          box-shadow: 0 0 0 2px mat-color($primary, base) !important;
-      
-          #{ $self }__title {
-            background-color: mat-color($primary, base) !important; color: mat-color($primary, white-font) !important;
-          }
-      
+      $self: &;
+      &--selected {
+        // use primary color.
+        box-shadow: 0 0 0 2px mat-color($primary, base) !important;
+    
+        #{ $self }__title {
+          background-color: mat-color($primary, base) !important;
+          color: mat-color($pp-browser-item, white-font) !important;
         }
+    
+      }
+    
+      &__title {
+        color: #727272;
+      }
       
-        &__title {
-          color: #727272;
-        }
-        
-        &__actions {
-          background: rgba(0,0,0,.4);
-          ul {
-            li {
-              .material-icons {
-                font-size: 15px;
-                color: white;
-              }
+      &__actions {
+    
+        background: rgba(0,0,0,.4);
+        ul {
+          li {
+            .material-icons {
+              font-size: 15px;
+              color: white;
             }
           }
         }
-      
-        &__thumbnail-overlay {
-          color: white;
-        }
       }
+    
+      &__thumbnail-overlay {
+        color: white;
+      }
+    }
 }
