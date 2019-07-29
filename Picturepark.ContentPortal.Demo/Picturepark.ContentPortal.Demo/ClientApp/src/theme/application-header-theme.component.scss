@@ -2,10 +2,6 @@
 
 // APPLICATION HEADER
 $pp-application-header: (
-    font-color: #000,
-    title-font-color: #444,
-    search-font-color: #444,
-    search-icon-font-color: #444,
     contrast: ()
 );
 
@@ -17,24 +13,27 @@ $pp-application-header: (
 
     .application-header-container {
         background-color: mat-color($primary, white-background) !important;
-        border-bottom: 1px solid mat-color($primary, light-border) !important;
-        color: mat-color($pp-application-header, font-color) !important;
+        border-bottom: 1px solid mat-contrast($primary, light-background) !important;
+        color: mat-color($primary, dark-font) !important;
         .title-container {
-            color: mat-color($pp-application-header, title-font-color) !important;
-            border-right: 1px solid mat-color($primary, light-border) !important;
+            color: mat-color($primary, dark-font) !important;
+            border-right: 1px solid mat-contrast($primary, light-background) !important;
         }
         .search-container {
-            color: mat-color($pp-application-header, search-font-color) !important;
-            font-size: 18px !important;
+            color: mat-color($primary, dark-font) !important;
             .search-content {
-                & i { color: mat-color($pp-application-header, search-icon-font-color) !important; }
+                & i { color: mat-color($primary, light-font) !important; }
                 & input { 
-                    font-size: 18px !important; background-color: mat-color($primary, white-background) !important;
+                   background-color: mat-color($primary, white-background) !important;
+                   font-size: mat-font-size($custom-typography, display-2) !important;
+                   &:focus {
+                    font-size: mat-font-size($custom-typography, display-4) !important;
+                   }
                 }
             }
         }
         .close-container { 
-            border-left: 1px solid mat-color($primary, light-border) !important;
+            border-left: 1px solid mat-contrast($primary, light-background) !important;
         }
     }
 
