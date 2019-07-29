@@ -42,6 +42,10 @@
 // GLOBAL STYLES (keep at bottom)
 @import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
+body {
+  font-family: mat-font-family($custom-typography)
+}
+
 .logo {
   height: 80px;
   width: 160px;
