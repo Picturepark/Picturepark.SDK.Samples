@@ -1,4 +1,54 @@
-$mat-fofagreen: ( 50: #E6EDE7, 100: #C0D2C3, 200: #96B49B, 300: #6B9572, 400: #ef5350, 500: #2C6836, 600: #276030, 700: #215529, 800: #1B4B22, 900: #103A16, A100: #76FF86, A200: #43FF59, A400: #10FF2B, A700: #00F61C, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white, ) );
+@import '~@angular/material/theming';
 
+$custom-typography: mat-typography-config(
+    $font-family:   '"Roboto", "Helvetica Neue", sans-serif',
+    $display-4:     mat-typography-level(21px, 56px, 400),
+    $display-3:     mat-typography-level(18px, 48px, 400),
+    $display-2:     mat-typography-level(14px, 112px, 300),
+    $display-1:     mat-typography-level(13px, 40px, 400),
+    $headline:      mat-typography-level(21px, 64px, 600),
+    $title:         mat-typography-level(20px, 32px, 500),
+    $subheading-2:  mat-typography-level(18px, 24px, 200),
+    $subheading-1:  mat-typography-level(15px, 24px, 400),
+    $body-2:        mat-typography-level(14px, 24px, 500),
+    $body-1:        mat-typography-level(14px, 20px, 400),
+    $caption:       mat-typography-level(10px, 20px, 400),
+    $button:        mat-typography-level(12px, 21px, 500),
+    $input:         mat-typography-level(18px, 1.125, 400)
+);
 
-$mat-accentGreen: ( 50: #EFF7E6, 100: #D7ECC1, 200: #BCDF98, 300: #A1D26F, 400: #8CC850, 500: #78BE31, 600: #70B82C, 700: #65AF25, 800: #5BA71F, 900: #489913, A100: #DEFFCC, A200: #BDFF99, A400: #9CFF66, A700: #8CFF4D, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white, ) );
+@include mat-base-typography($custom-typography);
+
+@include mat-core($custom-typography);
+
+$mat-picturepark-accent: ( 50: #EFF7E6, 100: #D7ECC1, 200: #BCDF98, 300: #A1D26F, 400: #8CC850, 500: #78BE31, 600: #70B82C, 700: #65AF25, 800: #5BA71F, 900: #489913, A100: #DEFFCC, A200: #BDFF99, A400: #9CFF66, A700: #8CFF4D, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white, ) );
+
+// GLOBAL COLORS
+$base: #78be31;
+
+$mat-picturepark-primary: (
+    base: $base,
+    dark-background: #444,
+    dialog-background: #f8f8f8,
+    light-background: #fff,
+    white-background: #fff,
+    white-font: #fff,
+    dark-font: #444,
+    light-font: #727272,
+    icon-selected-color: #2f2f2f,
+    image-slot-background-color: #eee,
+    button: #aaa,
+    button-active: $base,
+    progress-bar: $base,
+    progress-bar-background: #e4e4e4,
+    spinner: $base,
+    shadow-color: #000,
+    contrast: (
+        light-background: #d8d8d8,
+        dialog-background: #eee,
+    )
+);
+$picturepark-app-primary: mat-palette($mat-picturepark-primary);
+$picturepark-app-accent: mat-palette($mat-picturepark-accent, 400, 200, 700);
+$picturepark-app-warn: mat-palette($mat-red);
+$picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);

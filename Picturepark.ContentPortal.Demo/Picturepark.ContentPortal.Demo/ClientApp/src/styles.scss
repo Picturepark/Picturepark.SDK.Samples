@@ -1,54 +1,49 @@
-@import "~normalize.css";
+// LIBRARY GLOBAL STYLES (keep on top)
+@import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/styles_lib.scss';
 
-@import '~@angular/material/theming';
+// CUSTOM THEME
+@import "custom-theme.scss";
 
-@import 'custom-theme.scss';
+// REQUIRED THEMES
+@import './theme/application-header-theme.component.scss';
+@import './theme/application-menu-theme.component.scss';
+@import './theme/basket-item-theme.component.scss';
+@import './theme/browser-base-theme.component.scss';
+@import './theme/browser-item-base-theme.component.scss';
+@import './theme/browser-toolbar-theme.component.scss';
+@import './theme/content-browser-item-theme.component.scss';
+@import './theme/dialog-base-theme.component.scss';
+@import './theme/list-browser-theme.component.scss';
+@import './theme/share-content-dialog-theme.component.scss';
+@import './theme/share-aggregation-list-theme.component.scss';
+@import './theme/share-content-recipients-input-theme.component.scss';
+@import './theme/panel-base-theme.component.scss';
 
-$picturepark-app-primary: mat-palette($mat-fofagreen, 500, 300, 900); //default, lighter, darker
-$picturepark-app-accent: mat-palette($mat-accentGreen, 500,300,900);
-// The warn palette is optional (defaults to red).
-$picturepark-app-warn : mat-palette($mat-red);
-$picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);
-
-
-@include mat-core();
+// LOAD THEME COMPONENTS WITH CUSTOM THEME
+@mixin my-components-theme($theme) {
+  @include pp-application-header-theme($theme);
+  @include pp-application-menu-theme($theme);
+  @include pp-basket-item-theme($theme);
+  @include pp-browser-base-theme($theme);
+  @include pp-browser-item-base-theme($theme);
+  @include pp-browser-toolbar-theme($theme);
+  @include pp-content-browser-item-theme($theme);
+  @include pp-dialog-base-theme($theme);
+  @include pp-list-browser-theme($theme);
+  @include pp-share-content-dialog-theme($theme);
+  @include pp-share-aggregation-list-theme($theme);
+  @include pp-share-content-recipients-input-theme($theme);
+  @include pp-panel-base-theme($theme);
+}
 
 @include angular-material-theme($picturepark-app-theme);
+@include my-components-theme($picturepark-app-theme);
+
+// GLOBAL STYLES (keep at bottom)
+@import '../node_modules/@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
 body {
-  font-family: Roboto;
-}
-
-.content .mat-tab-label {
-  height: 64px;
-}
-
-.mat-expansion-panel-body,
-.mat-expansion-panel,
-.mat-expansion-panel-header.mat-expanded,
-.mat-expansion-panel-header.mat-expanded:hover {
-  background: whitesmoke !important;
-}
-
-.form {
-  background: rgba(0,0,0,.24) !important;
-}
-.form:focus-within {
-  background: rgba(0,0,0,.14) !important;
-}
-
-.content-item--selected {
-  box-shadow: 0 0 0 2px #6f6f6f;
-}
-
-.content-browser__header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
-}
-
-.mat-card {
-  &.custom-shadow {
-    @include mat-elevation(2, mat-color($picturepark-app-primary), 2);
-  }
+  font-family: mat-font-family($custom-typography)
 }
 
 .logo {
@@ -58,56 +53,4 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
-}
-
-a {
-  color: #2c6836;
-  text-decoration: none;
-}
-
-.demo-button {
-  background-color: #BCDF98;
-  height: 42px;
-}
-
-.content-item__image-virtual-item-container {
-  font-size: 14px;
-  color: #eeeeee !important;
-  background-color: #6f6f6f;
-  border-radius: 2px;
-
-  h1 {
-    font-size: 20px;
-    line-height: 22px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h2 {
-    font-size: 18px;
-    line-height: 20px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h3 {
-    font-size: 17px;
-    line-height: 19px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h4 {
-    font-size: 16px;
-    line-height: 18px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-  h5 {
-    font-size: 15px;
-    line-height: 17px;
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-  }
-
-  .virtual-content-footer {
-    display: none;
-  }
 }
