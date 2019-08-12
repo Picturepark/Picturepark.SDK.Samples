@@ -1,5 +1,5 @@
 import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter
+  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content
 } from '@picturepark/sdk-v1-angular';
 
 import {
@@ -9,12 +9,14 @@ import {
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import * as lodash from 'lodash';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { PageBase } from '../page-base';
+import { ContentModel } from '@picturepark/sdk-v1-angular-ui/lib/shared-module/models/content-model';
+
+import * as lodash from 'lodash';
 
 @Component({
   selector: 'app-items',
@@ -85,9 +87,9 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     }
   }
 
-  public previewItem(itemId: string) {
+  public previewItem(item: ContentModel<Content>) {
     this.dialog.open(ContentDetailsDialogComponent,
-      { data: itemId, width: '980px', height: '700px' }
+      { data: item.item.id, width: '980px', height: '700px' }
     );
   }
 
