@@ -3,7 +3,7 @@ import {
 } from '@picturepark/sdk-v1-angular';
 
 import {
-  BasketService
+  BasketService, ContentDetailsDialogComponent
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -86,9 +86,9 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   }
 
   public previewItem(itemId: string) {
-    this.itemId = itemId;
-    this.isInBasket = this.basketItems.some(item => item === this.itemId);
-    this.updateRoute(this.QueryParams);
+    this.dialog.open(ContentDetailsDialogComponent,
+      { data: itemId, width: '980px', height: '700px' }
+    );
   }
 
   public closeItem() {
