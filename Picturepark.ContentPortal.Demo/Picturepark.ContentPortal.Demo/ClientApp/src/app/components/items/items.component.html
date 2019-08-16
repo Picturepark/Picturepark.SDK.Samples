@@ -14,7 +14,7 @@
 
     <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
     &nbsp;
-    <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
+    <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
     <!--
       <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
@@ -49,13 +49,13 @@
       </mat-toolbar-row>
     
       <mat-toolbar-row *ngIf="mobileQuery.matches">
-        <pp-search-box style="width: 100%; font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)"></pp-search-box>
+        <pp-search-box style="width: 100%; font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
       </mat-toolbar-row>
 
       <mat-tab-group class="content-panel">
         <mat-tab label="Filters">
           <pp-content-aggregation-list [channelId]="channel?.id" [aggregators]="channel?.aggregations" [aggregationFilters]="aggregationFilters"
-            (aggregationFiltersChange)="changeAggregationFilters($event)" [query]="searchQuery" (filterChange)="filter=$event"></pp-content-aggregation-list>
+            (aggregationFiltersChange)="changeAggregationFilters($event)" [searchString]="searchQuery" (filterChange)="filter=$event"></pp-content-aggregation-list>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
