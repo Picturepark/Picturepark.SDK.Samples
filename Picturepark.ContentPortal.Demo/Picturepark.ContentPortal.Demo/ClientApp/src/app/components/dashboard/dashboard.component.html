@@ -20,7 +20,7 @@
     <p>Our association is all about sharing knowledge, logistics and resources to promote organic farming - to both farmers and the public. As a valued member of our organization, you can access carefully researched and approved content for reuse via this Content Portal.</p>
 
     <div class="search-box-wrap">
-      <pp-search-box style="font-size: 16px;" [query]="searchQuery" (queryChange)="changeSearchQuery($event)"></pp-search-box>
+      <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
     </div>
 
     <div class="container">
