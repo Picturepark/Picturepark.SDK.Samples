@@ -96,6 +96,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       [ContentResolveBehavior.Metadata,
       ContentResolveBehavior.LinkedListItems,
       ContentResolveBehavior.Outputs,
+      ContentResolveBehavior.OuterDisplayValueName,
       ContentResolveBehavior.InnerDisplayValueName,
       ContentResolveBehavior.InnerDisplayValueList,
       ContentResolveBehavior.InnerDisplayValueThumbnail]).subscribe(async content => {
