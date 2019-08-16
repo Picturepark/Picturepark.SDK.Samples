@@ -66,12 +66,10 @@
       </mat-tab-group>
     </mat-sidenav>
 
-
     <mat-sidenav-content>
-      <pp-content-browser class="content-browser" [channel]="channel" [filter]="filter" (previewItemChange)="previewItem($event)"></pp-content-browser>
+      <pp-content-browser class="content-browser" [channel]="channel" [filter]="filter" [searchString]="searchQuery" (previewItemChange)="previewItem($event)"></pp-content-browser>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
 
 </div>
 

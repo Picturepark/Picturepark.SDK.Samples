@@ -1,5 +1,5 @@
 import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter
+  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content
 } from '@picturepark/sdk-v1-angular';
 
 import {
@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { PageBase } from '../page-base';
+import { ContentModel } from '@picturepark/sdk-v1-angular-ui/lib/shared-module/models/content-model';
 
 @Component({
   selector: 'app-items',
@@ -85,9 +86,9 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     }
   }
 
-  public previewItem(itemId: string) {
-    this.itemId = itemId;
-    this.isInBasket = this.basketItems.some(item => item === this.itemId);
+  public previewItem(item: ContentModel<Content>) {
+    this.itemId = item.item.id;
+    this.isInBasket = item.isInBasket;
     this.updateRoute(this.QueryParams);
   }
 
