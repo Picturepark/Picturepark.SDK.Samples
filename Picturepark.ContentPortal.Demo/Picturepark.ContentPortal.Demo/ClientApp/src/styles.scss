@@ -34,7 +34,7 @@ $mat-picturepark-primary: (
     base: $base,
     dark-background: #444,
     dialog-background: #f8f8f8,
-    light-background: #fff,
+    light-background: #f8f8f8,
     white-background: #fff,
     white-font: #fff,
     dark-font: #444,
@@ -76,4 +76,29 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.mat-card {
+  &.custom-shadow {
+    @include mat-elevation(2, mat-color($picturepark-app-accent, 800), 2);
+  }
+}
+
+a {
+  color: #2c6836;
+  text-decoration: none;
+}
+
+.demo-button {
+  background-color: #BCDF98;
+  height: 42px;
+}
+
+.browser-item__image-virtual-item-container {
+  color: #eeeeee !important;
+  background-color: #6f6f6f;
+
+  .virtual-content-footer {	
+    display: none;	
+  }
 }

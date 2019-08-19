@@ -13,10 +13,8 @@ import { ItemsComponent } from './components/items/items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ConfigService, configFactory } from './services/config.service';
-import { LayerPanelsComponent } from './components/layer-panels/layer-panels.component';
 import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info-dialog.component';
 import { MaterialModule } from './material.module';
-import { FieldDetailInfoDialogComponent } from './components/layer-panels/field-detail-info-dialog/field-detail-info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +23,9 @@ import { FieldDetailInfoDialogComponent } from './components/layer-panels/field-
     ItemDetailsComponent,
     ProfileComponent,
     DashboardComponent,
-    LayerPanelsComponent,
-    DemoInfoDialogComponent,
-    FieldDetailInfoDialogComponent
+    DemoInfoDialogComponent
   ],
-  entryComponents: [DemoInfoDialogComponent, FieldDetailInfoDialogComponent],
+  entryComponents: [DemoInfoDialogComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
