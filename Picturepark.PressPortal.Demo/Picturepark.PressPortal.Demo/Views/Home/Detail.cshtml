@@ -29,7 +29,12 @@
         <p class="article-detail-about">
             <span>
                 @Localizer.GetString("By")
+
+                <!--Link to author deactivated. This feature will come at a later stage-->
+                @Model.Owner.FirstName @Model.Owner.LastName
+                <!--            
                 <a class="primary-color semi-link" href="#" title="Posts By @Model.Owner.FirstName @Model.Owner.LastName" rel="author">@Model.Owner.FirstName @Model.Owner.LastName</a>
+                -->
             </span>
             <span>•</span>
             <span>@Model.Content.ReleaseDate.ToShortDateString()</span>
@@ -43,16 +48,18 @@
             <markdown>@Html.Raw(Model.Content.BodyText?.GetTranslation())</markdown>
         </div>
 
-        <h4>Downloads</h4>
-        @foreach (var download in Model.Content.MediaDownloads)
-        {
-        <div class="download-item gradient-shadow primary-color">
-            <a class="semi-link" asp-area="" asp-controller="Home" asp-action="Embed" asp-route-id="@download.TargetId">
-                <i class="material-icons">cloud_download</i>
-                <img src="/Home/Thumbnail/@download.TargetId">
-                <p>@download.LegendTitle?.GetTranslation()</p>
-            </a>
+        <div id="download-wrapper">
+            <h4>Downloads</h4>
+            @foreach (var download in Model.Content.MediaDownloads)
+            {
+                <div class="download-item gradient-shadow primary-color">
+                    <a class="semi-link" asp-area="" asp-controller="Home" asp-action="Embed" asp-route-id="@download.TargetId">
+                        <i class="material-icons">cloud_download</i>
+                        <img src="/Home/Thumbnail/@download.TargetId">
+                        <p>@download.LegendTitle?.GetTranslation()</p>
+                    </a>
+                </div>
+            }
         </div>
-        }
-    </article>
+</article>
 </div>

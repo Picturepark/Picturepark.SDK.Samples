@@ -185,6 +185,7 @@ nav a:hover{
     border: none;
     animation-duration: 500ms;
     animation-name: searchIn;
+    -webkit-appearance: none;
 }
     .search-form input:focus{
         outline: none;
@@ -259,7 +260,7 @@ nav a:hover{
 .mobile-inner-nav {
     position: fixed;
     float: left;
-    width: 75%;
+    width: 85%;
     height: 100vh;
     top: 110px;
     left: 0;
@@ -300,11 +301,17 @@ nav a:hover{
 }
 .mobile-search .searchWrapper .material-icons {
     vertical-align: bottom;
+    font-size: 30px;
 }
 .mobile-search .searchWrapper form {
-    margin-top: -60px;
-    width: 90%;
-    margin-left: 45px;
+    margin-top: -76px;
+    width: 100%;
+    margin-left: 35px;
+    height: 45px;
+}
+.mobile-search .searchWrapper .clear-search {
+    margin-left: -30px;
+    padding-top: 20px;
 }
 .mobile-search .searchWrapper input {
     width: 85%;
@@ -316,13 +323,26 @@ nav a:hover{
 .mobile-nav-links .nav-links {
     margin: 0;
     width: 90%;
-}box-shadow
-.mobile-nav-links .left-nav {
+}
+
+.mobile-inner-nav .nav-links .left-nav {
+    display: block;
+    margin-bottom: 20px;
+}
+
+box-shadow .mobile-nav-links .left-nav {
     display: block;
     margin-bottom: 15px;
 }
 .mobile-more-info .more-info-btn {
     margin: 70px 0 0 0;
+}
+.mobile-nav .more-info-btn .btn-content {
+    width: 90%;
+    height: 350px;
+    bottom: 200px;
+    padding-top: 60px;
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,.3);
 }
 /*Header end*/
 
@@ -344,6 +364,7 @@ nav a:hover{
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    vertical-align: -webkit-baseline-middle;
 }
     .article-box:hover {
         transform: scale(1.03, 1.03);
@@ -408,7 +429,7 @@ nav a:hover{
 }
 
 .hide-element{
-    display: none;
+    display: none !important;
 }
 .visually-hidden{
     opacity: 0;
@@ -467,8 +488,12 @@ nav a:hover{
 .download-item .material-icons {
     opacity: 0;
     position: absolute;
-    margin-top: 35px;
-    margin-left: 35px;
+    width: 150px;
+    height: 150px;
+    padding-top: 35px;
+    padding-left: 35px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,.5);
     font-size: 80px;
 }
 
@@ -584,14 +609,12 @@ nav a:hover{
 
 .footer-bottom .footer-row-el {
     position: initial;
+    width: auto;
+    right: initial;
 }
 
 .footer-bottom .footer-row{
     position: relative;
-}
-
-.footer-bottom .footer-row-el {
-    right: initial;
 }
 
 .footer-bottom, .footer-bottom a{
@@ -628,6 +651,19 @@ nav a:hover{
     margin: 0 15px;
 }
 /*Footer end*/
+
+/*back to top start*/
+.back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
+}
+.back-to-top .material-icons {
+    font-size: 40px;
+}
+/*back to top end*/
+
 
 /*Keyframes start*/
 @keyframes slidein {
@@ -734,7 +770,7 @@ nav a:hover{
 /*Keyframes end*/
 
 /*Responsive start*/
-@media(max-width: 1600px){
+@media(max-width: 1600px) {
     .article-wrap {
         width: 75%;
     }
@@ -753,7 +789,7 @@ nav a:hover{
         height: 255px;
         left: 0;
         margin-top: -30px;
-        background: rgba(255,255,255,.4);
+        background: rgba(255,255,255,.7);
         box-shadow: 2px -5px 5px -3px rgba(255,255,255,.4);
         z-index: 50;
     }
@@ -774,7 +810,7 @@ nav a:hover{
         width: 100%;
     }
     #links-footer, #terms-footer {
-        width: 66%;
+        width: 90%;
     }
 }
 
@@ -785,6 +821,7 @@ nav a:hover{
     }
     .article-detail{
         width: 80%;
+        margin-top: 80px;
     }
     .search-results{
         padding: 0 50px;
@@ -829,8 +866,9 @@ nav a:hover{
     .article-box {
         width: 70%;
     }
-    .breadcrumb{
-        left: 30px;
+    .breadcrumb {
+        margin-top: -50px;
+        left: 10%;
     }
     .footer-bottom ul{
         padding: 0;
@@ -839,4 +877,49 @@ nav a:hover{
         margin: 0;
     }
 }
+
+/*vp-mobile*/
+/*header*/
+.vp-mobile #welcome-img {
+    background-position: top center;
+}
+
+.vp-mobile .header-second-row {
+    padding: 75px 30px 0 30px;
+}
+
+.vp-mobile .header-entry-title {
+    font-size: 28px;
+}
+
+/*overview*/
+.vp-mobile .article-wrap {
+    margin-top: 50px;
+}
+
+/*detail*/
+.vp-mobile .article-detail-title{
+    font-size: 30px;
+}
+
+.vp-mobile .detail-body-text p {
+    font-weight: 300;
+}
+.vp-mobile .download-item p {
+    margin-top: 20px;
+    margin-left: 0;
+}
+
+/*footer*/
+.vp-mobile #terms-footer {
+    height: 75px;
+}
+.vp-mobile #terms-footer .company-website{
+    display: block;
+}
+
+.vp-mobile .back-to-top{
+    right: 10px;
+}
+
 /*Responsive end*/

@@ -71,6 +71,85 @@ class ArticleHandler {
     }
 }
 
+class Language {
+    currentLanguage: string;
+    clickHereDemoLink: HTMLElement;
+    privacyLink: HTMLElement;
+    aupLink: HTMLElement;
+    companyWebsite: HTMLElement;
+    supportLink: HTMLElement;
+    moreInfoBtnLink: HTMLElement;
+
+    constructor(data?: any) {
+        this.currentLanguage = document.querySelector(".menu-item-language-current .no-text-link span").innerHTML as string;
+        this.clickHereDemoLink = document.querySelector(".header-entry-subtitle a");
+        this.privacyLink = document.querySelector("#terms-footer .privacy");
+        this.aupLink = document.querySelector("#terms-footer .aup");
+        this.companyWebsite = document.querySelector("#links-footer .company-website");
+        this.supportLink = document.querySelector("#links-footer .support-link");
+        this.moreInfoBtnLink = document.querySelector(".more-info-btn a");
+    }
+}
+
+//language (not changeable in resources)
+let time:number = 1;
+const interval:any = setInterval(function () {
+    if (time <= 10) {
+        time = time + 1;
+    }
+    else {
+        languageChange();
+        clearInterval(interval);
+    }
+},100)
+
+function languageChange() {
+    const language = new Language({});
+
+    switch (language.currentLanguage) {
+        case "En":
+            language.clickHereDemoLink.setAttribute("href", "https://picturepark.com/try-picturepark-now/finefoods/");
+            language.moreInfoBtnLink.setAttribute("href", "https://picturepark.com/try-picturepark-now/finefoods/");
+            language.privacyLink.setAttribute("href", "https://picturepark.com/terms/privacy/");
+            language.aupLink.setAttribute("href", "https://picturepark.com/terms/aup/");
+            language.companyWebsite.setAttribute("href", "https://picturepark.com");
+            language.supportLink.setAttribute("href", "https://picturepark.com/company/picturepark-customer-support/");
+            break;
+
+        case "De":
+            language.clickHereDemoLink.setAttribute("href", "https://picturepark.com/de/picturepark-jetzt-testen/finefoods/");
+            language.moreInfoBtnLink.setAttribute("href", "https://picturepark.com/de/picturepark-jetzt-testen/finefoods/");
+            language.privacyLink.setAttribute("href", "https://picturepark.com/de/terms/privacy/");
+            language.aupLink.setAttribute("href", "https://picturepark.com/de/terms/aup/");
+            language.companyWebsite.setAttribute("href", "https://picturepark.com/de/");
+            language.supportLink.setAttribute("href", "https://picturepark.com/de/unternehmen/picturepark-kundensupport/");
+            break;
+    }
+}
+
+//check if downloads exist
+let downloadElements: HTMLCollection = document.getElementsByClassName("download-item");
+setTimeout(function () {
+    if (document.getElementsByClassName("article-detail").length != 0 &&  downloadElements.length == 0) {
+        let downloadWrapper: HTMLElement = document.getElementById("download-wrapper") as HTMLElement;
+        downloadWrapper.classList.add("hide-element");        
+    }
+}, 200);
+
+//disable mail in add2any as there's a bug (not our fault)
+setTimeout(function () {
+    a2aAdjust(); //is used at 2 points
+}, 200);
+
+function a2aAdjust() {
+    let a2aMAil = document.getElementsByClassName("a2a_s_email");
+    let a2aParent = [];
+
+    for (let i = 0; i < a2aMAil.length; i++) {
+        a2aParent[i] = a2aMAil[i].parentNode;
+        a2aParent[i].classList.add("hide-element");
+    }
+}
 
 //viewport and mobile support
 function mobileNavOpen() {
@@ -88,6 +167,8 @@ function mobileNavOpen() {
     mobileElements.mobileClose.classList.remove("hide-element");
     mobileElements.mobileMenu.classList.add("hide-element");
     scrollPosition.element.classList.add("gradient-shadow", "header-scroll-position");
+
+    mobileElements.searchWrapper.getElementsByClassName("clear-search")[0].setAttribute("onclick", "mobileNavClose()");
 }
 
 function mobileNavClose() {
@@ -109,6 +190,29 @@ function mobileNavClose() {
         scrollPosition.element.classList.remove("gradient-shadow", "header-scroll-position");
     }
 
+}
+
+//mobile support
+let time2: number = 1;
+const interval2: any = setInterval(function () {
+    if (time2 <= 10 && document.getElementsByTagName("body").length < 1) {
+        time2 = time2 + 1;
+    }
+    else {
+        isMobileDevice();
+        clearInterval(interval2);
+    }
+}, 100)
+
+function isMobileDevice() {
+    if (typeof window.orientation !== "undefined" || (navigator.userAgent.indexOf('IEMobile') !== -1)) {
+        document.getElementsByTagName("body")[0].classList.add("vp-mobile");
+        document.getElementsByTagName("head")[0].innerHTML += "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+
+    }
+    else {
+        document.getElementsByTagName("body")[0].classList.remove("vp-mobile");
+    }
 }
 
 //article overflow handler
@@ -327,3 +431,7 @@ window.addEventListener("scroll", function () { //header white on scroll
         }, 100)
     }
 });
+
+function backToTop() {
+    window.scroll({ top: 0, behavior: 'smooth' });
+}
