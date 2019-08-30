@@ -64,8 +64,11 @@ a:visited {
 }
 
 .profile-wrap {
-  width: 220px;
+  width: 320px;
   text-align: right;
+  app-profile {
+    padding-left: 10px;
+  }
 }
 
 .mat-toolbar.mat-primary {
