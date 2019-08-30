@@ -29,7 +29,7 @@ function PictureparkUIConfigurationFactory(configService: ConfigService) {
       'BasketComponent': {
           download: true,
           select: false,
-          share: true
+          share: configService.config.isAuthenticated
       },
       'BrowserToolbarComponent': {
           select: true,
