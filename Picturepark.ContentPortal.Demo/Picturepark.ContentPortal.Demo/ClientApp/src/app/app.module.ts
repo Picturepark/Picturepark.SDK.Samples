@@ -17,7 +17,7 @@ import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info
 import { MaterialModule } from './material.module';
 import { PictureparkUIConfiguration } from '@picturepark/sdk-v1-angular-ui/lib/configuration';
 
-function PictureparkUIConfigurationFactory(configService: ConfigService) {
+export function PictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
       'ContentBrowserComponent': {
           download: true,
@@ -29,7 +29,7 @@ function PictureparkUIConfigurationFactory(configService: ConfigService) {
       'BasketComponent': {
           download: true,
           select: false,
-          share: true
+          share: configService.config.isAuthenticated
       },
       'BrowserToolbarComponent': {
           select: true,
