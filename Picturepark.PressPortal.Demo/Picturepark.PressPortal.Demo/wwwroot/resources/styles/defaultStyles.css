@@ -27,7 +27,7 @@ p, li, a, nav a,
 .article-title, .article-detail-lead,
 .breadcrumb a,
 .article-detail-about a, .article-detail-about span,
-.detail-body-text p,
+.detail-body-text p, .detail-body-text li,
 .contact-info a, .contact-info span {
     font-size: 18px;
 }
@@ -508,25 +508,48 @@ box-shadow .mobile-nav-links .left-nav {
     object-fit: cover;
 }
 
+.downlaod-text {
+    position: relative;
+    margin-left: 170px;
+    margin-top: -150px;
+}
+
 .download-item p {
-    display: inline-block;
-    margin-left: 50px;
     padding: 10px;
     box-sizing: border-box;
     vertical-align: top;
+}
+
+.download-item .download-title {
+    display: inline-block;
+}
+
+.download-item .download-description {
+    display: -webkit-box;
+    float: left;
+    height: 90px;
+    width: calc(100% - 50px);
+    overflow: hidden;
+    box-sizing: content-box;
+    vertical-align: top;
+    padding: 0 10px;
+    font-style: italic;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
 }
 /*Body detail view end*/
 
 
 /*Body search results start*/
-.search-results{
+.search-results {
     max-width: 1080px;
     margin: auto;
 }
 
 .search-result-item {
     height: auto;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    padding-bottom: 10px;
     box-sizing: border-box;
 }
 
@@ -814,6 +837,14 @@ box-shadow .mobile-nav-links .left-nav {
     }
 }
 
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .download-item .download-description {
+        width: calc(100% - 20px) !important;
+        height: 80px !important;
+        -webkit-line-clamp: 4 !important;
+    }
+}
+
 @media(max-width: 1100px){
     .breadcrumb{
         left: 75px;
@@ -864,7 +895,7 @@ box-shadow .mobile-nav-links .left-nav {
 
 @media(max-width: 650px){
     .article-box {
-        width: 70%;
+        width: 80%;
     }
     .breadcrumb {
         margin-top: -50px;
@@ -906,7 +937,6 @@ box-shadow .mobile-nav-links .left-nav {
     font-weight: 300;
 }
 .vp-mobile .download-item p {
-    margin-top: 20px;
     margin-left: 0;
 }
 
