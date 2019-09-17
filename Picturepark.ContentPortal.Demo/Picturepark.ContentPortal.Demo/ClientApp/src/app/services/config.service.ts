@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { ClientConfiguration } from '../models/client-configuration.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigService {
 
   public config: ClientConfiguration;

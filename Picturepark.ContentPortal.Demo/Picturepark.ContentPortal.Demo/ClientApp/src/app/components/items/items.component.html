@@ -16,11 +16,10 @@
     &nbsp;
     <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
-    <!--
-      <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
-      </mat-divider>
-      <app-profile></app-profile>
-    -->
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
+    </mat-divider>
+    <app-profile></app-profile>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
