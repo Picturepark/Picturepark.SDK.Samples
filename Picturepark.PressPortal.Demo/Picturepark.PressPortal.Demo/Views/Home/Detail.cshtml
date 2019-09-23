@@ -19,7 +19,7 @@
 
 <div class="breadcrumb primary-color">
     <a class="semi-link" asp-controller="Home" asp-action="Overview">
-        <i class="material-icons">keyboard_backspace</i> @Localizer.GetString("Back to Overview")
+        <i class="material-icons">keyboard_backspace</i> @Localizer.GetString("Back")
     </a>
 </div>
 
@@ -56,7 +56,11 @@
                     <a class="semi-link" asp-area="" asp-controller="Home" asp-action="Embed" asp-route-id="@download.TargetId">
                         <i class="material-icons">cloud_download</i>
                         <img src="/Home/Thumbnail/@download.TargetId">
-                        <p>@download.LegendTitle?.GetTranslation()</p>
+                        <div class="downlaod-text">
+                            <p class="download-title">@download.LegendTitle?.GetTranslation()</p>
+                            <p class="download-description">@download.LegendDescription?.GetTranslation()</p>
+                        </div>
+                        
                     </a>
                 </div>
             }
