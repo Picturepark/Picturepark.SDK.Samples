@@ -74,7 +74,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         isPdf: isPdf,
         isImage: isImage,
         isMovie: isMovie,
-        isBinary: this.content.contentType !== ContentType.ContentItem,
+        isBinary: this.content.contentType !== ContentType.Virtual,
         displayValues: {},
         previewUrl: isImage ? response.downloadUrl : this.imageUrl,
         originalUrl: response.downloadUrl,
@@ -104,7 +104,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
         this.content = content;
         this.item = this.processContent(content);
 
-        if (this.content.contentType === ContentType.ContentItem) {
+        if (this.content.contentType === ContentType.Virtual) {
           this.virtualItemHtml = this.sanitizer.sanitize(SecurityContext.HTML, this.content.displayValues['detail']);
         } else {
           this.contentService.download(this.itemId, 'Preview', undefined, undefined, null).subscribe((fileResult) => {
