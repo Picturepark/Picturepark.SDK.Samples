@@ -49,7 +49,6 @@ export class DashboardComponent extends PageBase implements OnDestroy {
       lifeCycleFilter: LifeCycleFilter.ActiveOnly,
       brokenDependenciesFilter: BrokenDependenciesFilter.All,
       searchType: ContentSearchType.Metadata,
-      channelId: 'rootChannel',
       debugMode: false,
       filter: new TermFilter ({
         field: 'contentSchemaId',
