@@ -23,10 +23,3 @@
 .checkbox {
   margin: 0 8px;
 }
-
-// TODO: Fix when overflow is fixed
-::ng-deep pp-layer-panels {
-  .value {
-    overflow: hidden !important;
-  }
-}
