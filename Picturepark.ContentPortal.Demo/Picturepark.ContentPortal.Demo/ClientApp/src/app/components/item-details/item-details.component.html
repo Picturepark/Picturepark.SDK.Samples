@@ -13,7 +13,7 @@
       </div>
     </mat-card>
 
-    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas" [showContentSchema]="content.contentType === 'Virtual'">
+    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas" [showContentSchema]="content.contentType === 'Virtual'" (relationClick)="relationClick($event)">
     </pp-layer-panels>
 
   </div>

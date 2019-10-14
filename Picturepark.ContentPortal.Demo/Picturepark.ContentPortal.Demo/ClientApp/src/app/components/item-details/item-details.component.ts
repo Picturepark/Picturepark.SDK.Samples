@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, OnDestroy, SecurityContext } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { LiquidRenderingService } from '@picturepark/sdk-v1-angular-ui';
 import {
-  ContentService, ContentDetail, ContentResolveBehavior, ContentType, SchemaService, SchemaDetail
+  ContentService, ContentDetail, ContentResolveBehavior, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { RelationFieldInfo } from '@picturepark/sdk-v1-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
 
 @Component({
   selector: 'app-item-details',
@@ -52,6 +53,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       });
 
     this.subscription.add(contentSubscription);
+  }
+
+  public relationClick(relation: RelationFieldInfo) {
+    console.log(relation);
   }
 
   public ngOnDestroy(): void {
