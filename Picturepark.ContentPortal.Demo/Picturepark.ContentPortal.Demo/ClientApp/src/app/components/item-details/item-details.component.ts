@@ -1,11 +1,14 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { LiquidRenderingService } from '@picturepark/sdk-v1-angular-ui';
+import { LiquidRenderingService, ContentDetailsDialogComponent } from '@picturepark/sdk-v1-angular-ui';
 import {
   ContentService, ContentDetail, ContentResolveBehavior, SchemaService, SchemaDetail
 } from '@picturepark/sdk-v1-angular';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { RelationFieldInfo } from '@picturepark/sdk-v1-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  ContentDetailDialogOptions
+} from '@picturepark/sdk-v1-angular-ui/lib/features-module/content-details-dialog/ContentDetailDialogOptions';
 
 @Component({
   selector: 'app-item-details',
@@ -28,7 +31,7 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     private contentService: ContentService,
     private schemaService: SchemaService,
     private liquidRenderingService: LiquidRenderingService,
-    private sanitizer: DomSanitizer) {
+    private dialog: MatDialog) {
   }
 
   public ngOnInit() {
@@ -37,7 +40,6 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
       [
         ContentResolveBehavior.Content,
         ContentResolveBehavior.Metadata,
-        // ContentResolveBehavior.LinkedListItems,
         ContentResolveBehavior.Outputs,
         ContentResolveBehavior.OuterDisplayValueName,
         ContentResolveBehavior.OuterDisplayValueDetail,
@@ -56,7 +58,19 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   }
 
   public relationClick(relation: RelationFieldInfo) {
-    console.log(relation);
+    this.dialog.open(ContentDetailsDialogComponent,
+      {
+        data: <ContentDetailDialogOptions>{
+          id: relation.contentId,
+          showMetadata: true
+        },
+        autoFocus: false,
+        width: '980px',
+        height: '700px',
+        maxWidth: '98vw',
+        maxHeight: '99vh'
+      }
+    );
   }
 
   public ngOnDestroy(): void {
