@@ -82,8 +82,15 @@ body {
 .mat-card {
   &.custom-shadow {
     @include mat-elevation(2, mat-color($picturepark-app-accent, 800), 2);
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+  }
+}
+
+.item-container {
+  .mat-card {
+    &.custom-shadow {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
   }
 }
 

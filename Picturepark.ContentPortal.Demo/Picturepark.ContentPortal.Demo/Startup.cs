@@ -118,17 +118,20 @@ namespace Picturepark.ContentPortal.Demo
             app.UseSpaStaticFiles();
 
             // Proxy requests from "/api" to Picturepark API Server. If user is not logged in, use access token stored in config
-            app.RunProxy("/api", async context =>
+            app.Map("/api", appProxy =>
             {
-                var forwardContext = context.ForwardTo(PictureparkConfiguration.ApiServer);
-                forwardContext.UpstreamRequest.Headers.Add("Picturepark-CustomerAlias", PictureparkConfiguration.CustomerAlias);
+                appProxy.RunProxy(async context =>
+                {
+                    var forwardContext = context.ForwardTo(PictureparkConfiguration.ApiServer);
+                    forwardContext.UpstreamRequest.Headers.Add("Picturepark-CustomerAlias", PictureparkConfiguration.CustomerAlias);
 
-                var accessToken = await context.GetTokenAsync("access_token");
-                forwardContext.UpstreamRequest.Headers.Authorization = string.IsNullOrEmpty(accessToken) ? 
-                    new AuthenticationHeaderValue("Bearer", PictureparkConfiguration.AccessToken) :
-                    new AuthenticationHeaderValue("Bearer", accessToken);
+                    var accessToken = await context.GetTokenAsync("access_token");
+                    forwardContext.UpstreamRequest.Headers.Authorization = string.IsNullOrEmpty(accessToken) ?
+                        new AuthenticationHeaderValue("Bearer", PictureparkConfiguration.AccessToken) :
+                        new AuthenticationHeaderValue("Bearer", accessToken);
 
-                return await forwardContext.Send();
+                    return await forwardContext.Send();
+                });
             });
 
             app.UseMvc(routes =>

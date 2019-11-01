@@ -3,22 +3,17 @@
   <div *ngIf="!loading" class="item mat-typography">
     <mat-card class="custom-shadow">
       <mat-card-title>
-        {{ item.name }}
+        {{ content.displayValues!['name'] }}
       </mat-card-title>
     </mat-card>
 
-    <mat-card class="custom-shadow">
-      <div *ngIf="virtualItemHtml === null; else virtualContent">
-        <img *ngIf="imageUrl" [src]="imageUrl" (click)="openContent()" />
+    <mat-card class="custom-shadow preview-image" *ngIf="content.contentType !== 'Virtual'">
+      <div>
+        <pp-content-image-preview [content]="content" width="960" height="600"></pp-content-image-preview>
       </div>
-
-      <ng-template #virtualContent>
-        <div [innerHTML]="virtualItemHtml"></div>
-      </ng-template>
     </mat-card>
 
-    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas">
-
+    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas" [showContentSchema]="content.contentType === 'Virtual'" (relationClick)="relationClick($event)">
     </pp-layer-panels>
 
   </div>
