@@ -70,7 +70,7 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_API_URL, useValue: '/api'},
-    { provide: AuthService, useClass: AccessTokenAuthService },
+    { provide: AuthService, useClass: AccessTokenAuthService }
   ],
   bootstrap: [AppComponent]
 })
