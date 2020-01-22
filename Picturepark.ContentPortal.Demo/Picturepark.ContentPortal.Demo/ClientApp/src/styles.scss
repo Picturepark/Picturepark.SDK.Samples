@@ -77,6 +77,10 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+
+  &.center {
+    background-position: center;
+  }
 }
 
 .mat-card {
@@ -108,7 +112,7 @@ a {
   color: #eeeeee !important;
   background-color: #6f6f6f;
 
-  .virtual-content-footer {	
-    display: none;	
+  .virtual-content-footer {
+    display: none;
   }
 }
