@@ -32,8 +32,10 @@
   <mat-divider [vertical]=" true " class="divider">
   </mat-divider>
   <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()">
-    <mat-icon *ngIf="!isInBasket" aria-label="Add to basket">add</mat-icon>
-    <mat-icon *ngIf="isInBasket" aria-label="Remove from basket">remove</mat-icon>
+    <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
+    <ng-template #removeIcon>
+      <mat-icon aria-label="Remove from basket">remove</mat-icon>
+    </ng-template>
   </button>
 </mat-toolbar>
 

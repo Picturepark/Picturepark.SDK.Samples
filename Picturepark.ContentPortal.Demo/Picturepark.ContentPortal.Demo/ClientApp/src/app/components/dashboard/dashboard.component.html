@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="!mobileQuery.matches" color="primary" class="header">
+<mat-toolbar *ngIf="!mobileQuery.matches; else mobileToolbar" color="primary" class="header">
   <div class="logo" routerLink="/items"></div>
 
   <div class="spacer"></div>
@@ -13,14 +13,16 @@
     <app-profile></app-profile>
   </div>
 </mat-toolbar>
-<mat-toolbar *ngIf="mobileQuery.matches" color="primary" class="header">
-  <div class="spacer"></div>
-  <div class="logo center" routerLink="/items"></div>
-  <div class="spacer"></div>
-  <div class="profile-wrap-mobile">
-    <app-profile></app-profile>
-  </div>
-</mat-toolbar>
+<ng-template #mobileToolbar>
+  <mat-toolbar color="primary" class="header">
+    <div class="spacer"></div>
+    <div class="logo center" routerLink="/items"></div>
+    <div class="spacer"></div>
+    <div class="profile-wrap-mobile">
+      <app-profile></app-profile>
+    </div>
+  </mat-toolbar>
+</ng-template>
 <div class="content-wrap">
   <div class="content" [class.content-mobile]="mobileQuery.matches">
     <p *ngIf="mobileQuery.matches" class="title-mobile">Welcome to the FOFA Content Portal!</p>
