@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { LiquidRenderingService, ContentDetailsDialogComponent } from '@picturepark/sdk-v1-angular-ui';
 import {
   ContentService, ContentDetail, ContentResolveBehavior, SchemaService, SchemaDetail
@@ -9,13 +9,15 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   ContentDetailDialogOptions
 } from '@picturepark/sdk-v1-angular-ui/lib/features-module/content-details-dialog/ContentDetailDialogOptions';
+import { PageBase } from '../page-base';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss']
 })
-export class ItemDetailsComponent implements OnInit, OnDestroy {
+export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy {
   @Input()
   public itemId: string;
 
@@ -31,7 +33,10 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
     private contentService: ContentService,
     private schemaService: SchemaService,
     private liquidRenderingService: LiquidRenderingService,
-    private dialog: MatDialog) {
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    dialog: MatDialog) {
+    super(media, changeDetectorRef, dialog);
   }
 
   public ngOnInit() {

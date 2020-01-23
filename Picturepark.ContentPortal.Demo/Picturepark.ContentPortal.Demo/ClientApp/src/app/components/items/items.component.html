@@ -32,7 +32,10 @@
   <mat-divider [vertical]=" true " class="divider">
   </mat-divider>
   <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()">
-    <mat-icon aria-label="Add to basket">add</mat-icon>
+    <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
+    <ng-template #removeIcon>
+      <mat-icon aria-label="Remove from basket">remove</mat-icon>
+    </ng-template>
   </button>
 </mat-toolbar>
 
@@ -46,7 +49,7 @@
       <mat-toolbar-row *ngIf="mobileQuery.matches">
         <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>
       </mat-toolbar-row>
-    
+
       <mat-toolbar-row *ngIf="mobileQuery.matches">
         <pp-search-box style="width: 100%; font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
       </mat-toolbar-row>

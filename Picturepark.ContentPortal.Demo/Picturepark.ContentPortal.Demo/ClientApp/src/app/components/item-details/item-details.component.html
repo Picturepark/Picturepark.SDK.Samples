@@ -1,5 +1,5 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<div class="item-container">
+<div class="item-container" [class.item-container-mobile]="mobileQuery.matches">
   <div *ngIf="!loading" class="item mat-typography">
     <mat-card class="custom-shadow">
       <mat-card-title>
@@ -13,7 +13,8 @@
       </div>
     </mat-card>
 
-    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas" [showContentSchema]="content.contentType === 'Virtual'" (relationClick)="relationClick($event)">
+    <pp-layer-panels *ngIf="schemas" [content]="content" [schemas]="schemas"
+      [showContentSchema]="content.contentType === 'Virtual'" (relationClick)="relationClick($event)">
     </pp-layer-panels>
 
   </div>
