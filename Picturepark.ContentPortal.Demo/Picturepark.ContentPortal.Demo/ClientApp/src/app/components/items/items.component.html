@@ -31,6 +31,10 @@
   <!--<pp-output-download-menu [id]="itemId" [overlapTrigger]="false" [formats]="itemDetailsComponent && itemDetailsComponent.outputFormats"></pp-output-download-menu>-->
   <mat-divider [vertical]=" true " class="divider">
   </mat-divider>
+  <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''" aria-label="Download"
+    (click)="downloadItem()" matTooltip="Download item">
+    <mat-icon aria-label="Download item">get_app</mat-icon>
+  </button>
   <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()">
     <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
     <ng-template #removeIcon>
@@ -69,7 +73,8 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <pp-content-browser class="content-browser" [channel]="channel" [filter]="filter" [searchString]="searchQuery" (previewItemChange)="previewItem($event)"></pp-content-browser>
+      <pp-content-browser class="content-browser" [channel]="channel" [filter]="filter" [searchString]="searchQuery"
+        (previewItemChange)="previewItem($event)"></pp-content-browser>
     </mat-sidenav-content>
   </mat-sidenav-container>
 

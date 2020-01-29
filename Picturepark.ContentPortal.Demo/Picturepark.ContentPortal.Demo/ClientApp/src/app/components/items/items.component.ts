@@ -1,9 +1,9 @@
 import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content
+  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content, ContentService, ContentResolveBehavior
 } from '@picturepark/sdk-v1-angular';
 
 import {
-  BasketService, groupBy
+  BasketService, groupBy, ContentDownloadDialogService, ContentModel
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { PageBase } from '../page-base';
-import { ContentModel } from '@picturepark/sdk-v1-angular-ui/lib/shared-module/models/content-model';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-items',
@@ -39,6 +39,8 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private basketService: BasketService,
+    private contentService: ContentService,
+    private contentDownloadDialogService: ContentDownloadDialogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     dialog: MatDialog) {
@@ -96,7 +98,6 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     this.updateRoute(this.QueryParams);
   }
 
-
   public get QueryParams(): Params {
     return Object.assign({}, this.route.snapshot.queryParams);
   }
@@ -145,6 +146,17 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     this.updateRoute(queryParams);
   }
 
+  public downloadItem() {
+    this.contentService.get(this.itemId, [ContentResolveBehavior.Content])
+      .pipe(take(1))
+      .subscribe(async content => {
+        this.contentDownloadDialogService.showDialog({
+          mode: 'multi',
+          contents: [content.content]
+        });
+      });
+  }
+
   private updateRoute(queryParams: Params) {
     if (this.mobileQuery.matches) {
       if (this.sideNav.opened) {
@@ -158,21 +170,21 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   private createFilter(aggregationFilters: AggregationFilter[]): FilterBase | null {
     const flatten = groupBy(aggregationFilters, i => i.aggregationName);
     const preparedFilters = Array.from(flatten).map(array => {
-    const filtered = array[1].filter(aggregationFilter =>
-      aggregationFilter.filter).map(aggregationFilter =>
-        aggregationFilter.filter as FilterBase);
+      const filtered = array[1].filter(aggregationFilter =>
+        aggregationFilter.filter).map(aggregationFilter =>
+          aggregationFilter.filter as FilterBase);
 
-        switch (filtered.length) {
-          case 0: return null;
-          case 1: return filtered[0];
-          default: return new OrFilter({ filters: filtered });
-        }
-      }).filter(value => value !== null);
-
-      switch (preparedFilters.length) {
+      switch (filtered.length) {
         case 0: return null;
-        case 1: return preparedFilters[0]!;
-        default: return new AndFilter({ filters: preparedFilters as FilterBase[] });
+        case 1: return filtered[0];
+        default: return new OrFilter({ filters: filtered });
       }
+    }).filter(value => value !== null);
+
+    switch (preparedFilters.length) {
+      case 0: return null;
+      case 1: return preparedFilters[0]!;
+      default: return new AndFilter({ filters: preparedFilters as FilterBase[] });
+    }
   }
 }
