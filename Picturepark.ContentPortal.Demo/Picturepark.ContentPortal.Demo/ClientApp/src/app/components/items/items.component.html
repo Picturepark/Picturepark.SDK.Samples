@@ -32,10 +32,11 @@
   <mat-divider [vertical]=" true " class="divider">
   </mat-divider>
   <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''" aria-label="Download"
-    (click)="downloadItem()" matTooltip="Download item">
+    (click)="downloadItem()" matTooltip="Download">
     <mat-icon aria-label="Download item">get_app</mat-icon>
   </button>
-  <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()">
+  <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()"
+    [matTooltip]="isInBasket ? 'Remove from basket' : 'Add to basket'">
     <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
     <ng-template #removeIcon>
       <mat-icon aria-label="Remove from basket">remove</mat-icon>
