@@ -9,14 +9,14 @@
 }
 
 ::ng-deep .content-image-preview-content {
-  display: flex !important;
   justify-content: center !important;
+  display: flex !important;
+  flex-direction: row !important;
+  overflow: hidden !important;
 
   img {
-    max-width: 100% !important;
-    width: inherit !important;
-    max-height: 600px !important;
-    height: auto !important;
+    flex: 1;
+    height: 100% !important;
   }
 }
 
