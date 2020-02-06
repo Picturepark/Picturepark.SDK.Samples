@@ -1,5 +1,4 @@
 # Picturepark Microsite SDK Samples
-# Picturepark Microsite SDK Samples
 Microsites are single or collections of web pages which are integrated within larger websites or online portals, or provided stand-alone. Microsites complement other online premises with purpose-specific content and functionality, often targeting specific audiences.
 
 A Picturepark Microsite pulls content from the [Picturepark Content Platform](https://picturepark.com/software/), where content authorities manage the material, e.g., metadata, taxonomy, semantics, permissions. Editors make content available using distribution channels, query filters, or permissions without having to manually copy between systems, aka [headless content management](https://picturepark.com/solutions/headless-content-management).
