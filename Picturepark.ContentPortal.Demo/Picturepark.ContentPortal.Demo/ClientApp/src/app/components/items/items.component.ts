@@ -152,7 +152,7 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
       .subscribe(async content => {
         this.contentDownloadDialogService.showDialog({
           mode: 'multi',
-          contents: [content.content]
+          contents: [content as any]
         });
       });
   }
