@@ -22,7 +22,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
-  @ViewChild(ItemDetailsComponent, { static: false }) public itemDetailsComponent: ItemDetailsComponent;
+  @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
   public channel: Channel = null;
   public searchQuery: string = null;
   public filter: FilterBase = null;
