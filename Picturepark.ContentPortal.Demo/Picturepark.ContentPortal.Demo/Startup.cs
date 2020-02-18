@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +10,7 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Picturepark.ContentPortal.Demo.Controllers;
 using Picturepark.SDK.V1;
@@ -37,7 +37,7 @@ namespace Picturepark.ContentPortal.Demo
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllersWithViews();
 
             services.AddSingleton(PictureparkConfiguration);
             services.AddSingleton<IPictureparkService, PictureparkService>();
@@ -95,7 +95,7 @@ namespace Picturepark.ContentPortal.Demo
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -111,7 +111,14 @@ namespace Picturepark.ContentPortal.Demo
                 ForwardedHeaders = ForwardedHeaders.XForwardedProto
             });
 
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
 
             app.UseResponseCompression();
             app.UseStaticFiles();
@@ -132,13 +139,6 @@ namespace Picturepark.ContentPortal.Demo
 
                     return await forwardContext.Send();
                 });
-            });
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
