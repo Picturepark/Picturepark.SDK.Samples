@@ -1,17 +1,13 @@
-# Samples
+# Picturepark SDK Samples
 
 ## Picturepark.ContentUploader
 
-WPF Application (Work in progess)
-
-## Picturepark.Microsite.Example
-
-ASP.NET Core 2 Web Application
-
-Features two Picturepark SDK Clients:
-- SDK Client with AccessToken (long lived)
-- SDK Client with Authentication using hybrid flow (login)
+WPF Application to show a simple upload of a content into a Picturepark instance.
 
 ## Picturepark.ServiceProvider.Example
 
-Example service provider listening on livestream
+Example service provider listening on livestream.
+
+## Picturepark.ServiceProvider.Example.BusinessProcess
+
+Sample shows the usage of a service provider to react on the execution of a business rule in the CP backend, creating a notification about a then triggered long-running task for the user. The user is able to cancel that task from the CP UI.
