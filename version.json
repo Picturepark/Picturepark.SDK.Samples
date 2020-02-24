@@ -1,0 +1,10 @@
+﻿{
+  "version": "10.6.0",
+  "assemblyVersion": {
+    "precision": "revision"
+  },
+  "publicReleaseRefSpec": [
+    "^refs/heads/release/",
+    "^refs/heads/v\\d+(?:\\.\\d+)?$"
+  ]
+}

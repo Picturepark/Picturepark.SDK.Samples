@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Picturepark.PressPortal.Demo.Configuration;
-using Picturepark.PressPortal.Demo.Contracts;
 using Picturepark.PressPortal.Demo.Controllers;
 using Picturepark.PressPortal.Demo.Helpers;
 using Picturepark.PressPortal.Demo.Repository;
@@ -53,8 +53,8 @@ namespace Picturepark.PressPortal.Demo
             // Add the localization services to the services container
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services.AddControllersWithViews()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
@@ -111,7 +111,7 @@ namespace Picturepark.PressPortal.Demo
             services.AddTransient<OidcEvents>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
@@ -132,6 +132,7 @@ namespace Picturepark.PressPortal.Demo
 
             app.UseStaticFiles();
 
+            app.UseRouting();
             app.UseAuthentication();
 
             // Register / update schemas in PCP
@@ -140,11 +141,11 @@ namespace Picturepark.PressPortal.Demo
 
             //serviceHelper.EnsureSchemaExists<PressRelease>(null, updateSchema).Wait();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Overview}/{id?}");
+                    pattern: "{controller=Home}/{action=Overview}/{id?}");
             });
         }
     }

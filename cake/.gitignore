@@ -1,0 +1,3 @@
+# Build related
+tools/**
+!tools/packages.config

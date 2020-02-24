@@ -333,3 +333,4 @@ ASALocalRun/
 appsettings.Development.json
 .DS_Store
 Picturepark.SDK.V1.Samples/Picturepark.ServiceProvider.Example.BusinessProcess/appsettings.json
+Publish/
