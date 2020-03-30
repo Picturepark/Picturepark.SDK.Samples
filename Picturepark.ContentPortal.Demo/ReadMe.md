@@ -5,7 +5,7 @@ This example should give developers an easy entry point.
 
 - Prerequisites
     - Visual Studio Code or another Editor
-    - Node JS installed
+    - Node JS v10 or newer installed
     - .Net Core 3.1 installed
     - Customer instance provided by Picturepark available in advance and access must be granted
     - User must be flagged as developer (Please check with your Picturepark representative)
@@ -23,12 +23,12 @@ This example should give developers an easy entry point.
         "ApplicationBaseUrl": "", // URL to your customer instance. Example: https://[CUSTOMER].picturepark.com
         "FrontendBaseUrl": "", // URL to your customer instance. Example: https://[CUSTOMER].picturepark.com
         "CustomerId": "", // use /service/info/customer endpoint to get "customerId". Example: https://[CUSTOMER].picturepark.com/service/info/customer
-        "ClientId": "", // Create new API Client with scopes defined below. Client can be created within the customer instance. After login go to settings -> API Clients. NOTE: If you do not see "API Clients", your user has not been marked as developer. Contact your Picturepark representative...  ( SAN - I think it would be good to say the grant type that will be used for the client authentication)
+        "ClientId": "", // Create new API Client with scopes defined below. Client can be created within the customer instance. After login go to settings -> API Clients. NOTE: If you do not see "API Clients", your user has not been marked as developer. Contact your Picturepark representative.
         "ClientSecret": "", // The client secret that was defined during the creation of the API client
         "Scopes": [ "openid", "profile", "picturepark_api", "content_read", "profile_read", "schema_read", "output_read", "channel_read", "share_read", "share_write" ],
         "CustomerAlias": "", // use /service/info/customer endpoint to get "customerAlias". Example: https://[CUSTOMER].picturepark.com/service/info/customer
         "AccessToken": "", // Generate Access Token by using the client you just have created
-        "AutoAssignUserRoleIds": [ ], // Only needed when using the Login functionality - User Role Id`s which will be assigned on user registration ( SAN - When it is needed what information should be put in the array?)
+        "AutoAssignUserRoleIds": [], // Only needed when using the Login functionality - String array of User Role Id`s which will be assigned on user registration
         "UserRegistrationAccessToken": "" // Only needed when using the Login functionality - Access token of a user who has "Manager Users" right to be able to register 
 }
 ```
@@ -45,8 +45,9 @@ Please find below some different possibilities of configuring the Content Portal
 
 Solution without dashboard (https://demo-contentportal.picturepark.com/items/portal/)
 
-        - remove dashboard configuration from /ClientApp/src/app/app-routing.module.ts
-        - Routes must be configured like this:
+  - remove dashboard configuration from /ClientApp/src/app/app-routing.module.ts
+  - Routes must be configured like this:
+
 ``` typescript 
         const routes: Routes = [
         {
@@ -72,15 +73,27 @@ Solution without dashboard (https://demo-contentportal.picturepark.com/items/por
 
 Solution with dashboard (https://demo-contentportal.picturepark.com/dashboard)
 
-        - keep configuration as is (dashboard configuration from /ClientApp/src/app/app-routing.module.ts)
+- keep configuration as is (dashboard configuration from /ClientApp/src/app/app-routing.module.ts)
 		
 
 By default the solution is using the Picturepark .net SDK (https://github.com/Picturepark/Picturepark.SDK.DotNet) to support user authentication and the use of more functionality, e.g. Share items. If the content portal is only used as a public portal where (public) users should have access to the Picturepark Content Platform, this functionality can be removed. 
-    
-    Solution with / without Login
-        - Remove login button
-            /ClientApp/src/app/components/profile/profile.component.html -> Remove first line to not show the login button
+Please remove the following code from the items component (ClientApp/src/app/components/items/items.component.html)
 
+``` html
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
+    </mat-divider>
+    <app-profile></app-profile>
+``` 
+
+and in dashboard component (ClientApp/src/app/components/dashboard/dashboard.component.html)
+
+``` html
+  <div class="profile-wrap-mobile">
+      <app-profile></app-profile>
+  </div>
+
+  <app-profile></app-profile>
+``` 
 
 
 
