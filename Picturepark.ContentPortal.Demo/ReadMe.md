@@ -11,19 +11,9 @@ This example should give developers an easy entry point.
     - User must be flagged as developer (Please check with your Picturepark representative)
     - To enable to complete experience, some pre-configuration in your customer instance must be applied, such as Channels, Filters and Virtual Items. Please check this with you Picturepark representative or remove the Dashboard configuration (see below)
 
-- Get Picturepark Typescript SDK from GitHub and build (https://github.com/Picturepark/Picturepark.SDK.TypeScript)
-	- Open folder \Picturepark.SDK.TypeScript in CMD
-		- npm install
-	    - npm run build
-	- Open folder \Picturepark.SDK.TypeScript\src\picturepark-sdk-v1-angular in CMD
-		- npm install
-		- npm run build
-
 - Get Content Portal Project from GitHub (SDK Samples)
-    - select correct branch and download the package -> check your CP version, it must match to the correct branch
-    - extract Picturepark.SDK.Samples-10.x.x
-    - open Picturepark.ContentPortal.Demo folder in Visual Studio Code
-    - define settings in appsettings.json
+    - Select correct branch and download the package -> check your Content Platform version
+    - After extracting the package, define the following settings in appsettings.json in the .Picturepark.ContentPortal.Demo folder to connect your Content Portal to your Content Platform
 
 ``` typescript 
 {
@@ -44,13 +34,14 @@ This example should give developers an easy entry point.
 ```
 
 - Building and start the ContentPortal
-    - Open Picturepark.SDK.Samples-10.5.x\Picturepark.ContentPortal.Demo\Picturepark.ContentPortal.Demo in CMD
+    - Open .Picturepark.ContentPortal.Demo\Picturepark.ContentPortal.Demo in CMD
     - dotnet run environment=development
     - It should now be reachable at http://localhost:5000
 - Publish the Content Portal
 	- Please check here how to publish .NET Core apps with the .NET Core CLI (https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli)
 	
-There are different possibilities of configuring the Content Portal. Using a Dashboard as landing page or directly show the content items with filter options and also whether the access is fully public so that users only consume the content, or with the possibility to login and then offer functionalites like e.g. Sharing. Please see below how to configure those functions
+
+Please find below some different possibilities of configuring the Content Portal. Using a Dashboard as landing page or directly show the content items with filter options and also whether the access is fully public so that users only consume the content, or with the possibility to login and then offer functionalites like e.g. Sharing. Please see below how to configure those functions
 
 Solution without dashboard (https://demo-contentportal.picturepark.com/items/portal/)
 
