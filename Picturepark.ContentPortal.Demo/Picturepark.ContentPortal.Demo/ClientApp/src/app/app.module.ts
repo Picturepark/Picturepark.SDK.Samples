@@ -1,10 +1,22 @@
-import { AuthService, AccessTokenAuthService,  PICTUREPARK_API_URL } from '@picturepark/sdk-v1-angular';
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { CommonModule } from '@angular/common';
-import { PictureparkUiModule, PICTUREPARK_UI_CONFIGURATION } from '@picturepark/sdk-v1-angular-ui';
+
+import {
+  AuthService,
+  AccessTokenAuthService,
+  PICTUREPARK_API_URL,
+  LocalStorageService,
+  StorageKey,
+} from '@picturepark/sdk-v1-angular';
+import {
+  PictureparkUiModule,
+  PICTUREPARK_UI_CONFIGURATION,
+  PictureparkUIConfiguration,
+  TRANSLATIONS,
+  LanguageService,
+} from '@picturepark/sdk-v1-angular-ui';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -15,7 +27,18 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ConfigService, configFactory } from './services/config.service';
 import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info-dialog.component';
 import { MaterialModule } from './material.module';
-import { PictureparkUIConfiguration } from '@picturepark/sdk-v1-angular-ui/lib/configuration';
+import { LanguageComponent } from './components/language/language.component';
+import { Translations } from './utilities/translations';
+
+export function LocaleIdFactory(localStorageService: LocalStorageService) {
+  const uiTranslations = TRANSLATIONS;
+  Object.assign(uiTranslations, Translations);
+
+  return (
+    localStorageService.get(StorageKey.LanguageCode) ||
+    ((<any>navigator).languages ? (<any>navigator).languages[0] : navigator.language)
+  );
+}
 
 export function PictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
@@ -42,6 +65,10 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
   };
 }
 
+export function languageFactory(languageService: LanguageService) {
+  return () => languageService.loadLanguages();
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +76,8 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     ItemDetailsComponent,
     ProfileComponent,
     DashboardComponent,
-    DemoInfoDialogComponent
+    DemoInfoDialogComponent,
+    LanguageComponent,
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [
@@ -58,7 +86,7 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     AppRoutingModule,
     PictureparkUiModule,
     CommonModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [
     ConfigService,
@@ -69,8 +97,16 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
       multi: true
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
-    { provide: PICTUREPARK_API_URL, useValue: '/api'},
-    { provide: AuthService, useClass: AccessTokenAuthService }
+    { provide: PICTUREPARK_API_URL, useValue: '/api' },
+    { provide: AuthService, useClass: AccessTokenAuthService },
+    { provide: LOCALE_ID, useFactory: LocaleIdFactory, deps: [LocalStorageService] },
+    LanguageService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: languageFactory,
+      deps: [LanguageService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
