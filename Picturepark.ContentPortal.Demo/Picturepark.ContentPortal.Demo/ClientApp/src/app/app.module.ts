@@ -16,6 +16,7 @@ import { ConfigService, configFactory } from './services/config.service';
 import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info-dialog.component';
 import { MaterialModule } from './material.module';
 import { PictureparkUIConfiguration } from '@picturepark/sdk-v1-angular-ui/lib/configuration';
+import { PresskitComponent } from './components/presskit/presskit.component';
 
 export function PictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
@@ -46,6 +47,7 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
   declarations: [
     AppComponent,
     ItemsComponent,
+    PresskitComponent,
     ItemDetailsComponent,
     ProfileComponent,
     DashboardComponent,
