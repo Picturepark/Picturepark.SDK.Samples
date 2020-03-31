@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 
@@ -7,8 +7,7 @@ import {
   AuthService,
   AccessTokenAuthService,
   PICTUREPARK_API_URL,
-  LocalStorageService,
-  StorageKey,
+  LocaleModule,
 } from '@picturepark/sdk-v1-angular';
 import {
   PictureparkUiModule,
@@ -30,15 +29,8 @@ import { MaterialModule } from './material.module';
 import { LanguageComponent } from './components/language/language.component';
 import { Translations } from './utilities/translations';
 
-export function LocaleIdFactory(localStorageService: LocalStorageService) {
-  const uiTranslations = TRANSLATIONS;
-  Object.assign(uiTranslations, Translations);
-
-  return (
-    localStorageService.get(StorageKey.LanguageCode) ||
-    ((<any>navigator).languages ? (<any>navigator).languages[0] : navigator.language)
-  );
-}
+const uiTranslations = TRANSLATIONS;
+Object.assign(uiTranslations, Translations);
 
 export function PictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
@@ -87,6 +79,7 @@ export function languageFactory(languageService: LanguageService) {
     PictureparkUiModule,
     CommonModule,
     MaterialModule,
+    LocaleModule.forRoot(),
   ],
   providers: [
     ConfigService,
@@ -94,12 +87,11 @@ export function languageFactory(languageService: LanguageService) {
       provide: APP_INITIALIZER,
       useFactory: configFactory,
       deps: [ConfigService],
-      multi: true
+      multi: true,
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_API_URL, useValue: '/api' },
     { provide: AuthService, useClass: AccessTokenAuthService },
-    { provide: LOCALE_ID, useFactory: LocaleIdFactory, deps: [LocalStorageService] },
     LanguageService,
     {
       provide: APP_INITIALIZER,
