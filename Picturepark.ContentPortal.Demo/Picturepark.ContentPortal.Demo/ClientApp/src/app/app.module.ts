@@ -14,7 +14,6 @@ import {
   PICTUREPARK_UI_CONFIGURATION,
   PictureparkUIConfiguration,
   TRANSLATIONS,
-  LanguageService,
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -57,10 +56,6 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
   };
 }
 
-export function languageFactory(languageService: LanguageService) {
-  return () => languageService.loadLanguages();
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,14 +87,7 @@ export function languageFactory(languageService: LanguageService) {
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_API_URL, useValue: '/api' },
     { provide: AuthService, useClass: AccessTokenAuthService },
-    LanguageService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: languageFactory,
-      deps: [LanguageService],
-      multi: true,
-    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
