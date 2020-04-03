@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsUpdate } from '../../models/params-update.model';
 
@@ -9,9 +8,6 @@ import { ParamsUpdate } from '../../models/params-update.model';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent {
-
-
-  private subscription: Subscription = new Subscription();
 
   public constructor(private router: Router, private route: ActivatedRoute) {
   }

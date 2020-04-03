@@ -18,12 +18,10 @@ const routes: Routes = [
   {
     path: 'items',
     component: ItemsComponent,
-    pathMatch: 'full'
   },
   {
     path: 'items/:channelId',
     component: ItemsComponent,
-    pathMatch: 'full'
   },
   {
     path: 'items/:channelId/:itemId',

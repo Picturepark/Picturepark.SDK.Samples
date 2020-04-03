@@ -132,7 +132,6 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   }
 
   public changeAggregationFilters(aggregationFilters: AggregationFilter[]) {
-    debugger;
     const filtersQuery = aggregationFilters.map(filter => JSON.stringify(filter.toJSON()));
 
     const queryParams = this.QueryParams;
