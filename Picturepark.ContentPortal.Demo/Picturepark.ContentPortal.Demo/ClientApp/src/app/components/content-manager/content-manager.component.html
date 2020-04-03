@@ -1,51 +1,52 @@
 <mat-toolbar color="primary" class="header">
-    <mat-toolbar-row>
-      <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
-        <mat-icon>menu</mat-icon>
-      </button>
-  
-      <div class="logo" routerLink="/dashboard"></div>
-  
-      <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
-      </mat-divider>
-      <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
-        *ngIf="!mobileQuery.matches && showChannels"></pp-channel-picker>
-      <div class="spacer"></div>
-      
-  
-      <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
-      &nbsp;
-      <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
-  
-      <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
-      </mat-divider>
-      <app-profile></app-profile>
-  
-    </mat-toolbar-row>
-  </mat-toolbar>
-  
-  <mat-toolbar color="primary" class="header" *ngIf="itemId !== ''">
-    <button mat-icon-button (click)="closeItem()">
-      <mat-icon aria-label="Close item">clear</mat-icon>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
+      <mat-icon>menu</mat-icon>
     </button>
-    <div class="spacer"></div>
-    <!--<pp-output-download-menu [id]="itemId" [overlapTrigger]="false" [formats]="itemDetailsComponent && itemDetailsComponent.outputFormats"></pp-output-download-menu>-->
-    <mat-divider [vertical]=" true " class="divider">
+
+    <div class="logo" routerLink="/dashboard"></div>
+
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
-    <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''" aria-label="Download"
-      (click)="downloadItem()" matTooltip="Download">
-      <mat-icon aria-label="Download item">get_app</mat-icon>
-    </button>
-    <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()"
-      [matTooltip]="isInBasket ? 'Remove from basket' : 'Add to basket'">
-      <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
-      <ng-template #removeIcon>
-        <mat-icon aria-label="Remove from basket">remove</mat-icon>
-      </ng-template>
-    </button>
-  </mat-toolbar>
-  
-  <div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
+    <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
+      *ngIf="!mobileQuery.matches && showChannels"></pp-channel-picker>
+    <div class="spacer"></div>
+    
+
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">More info about this demo</button>
+    &nbsp;
+    <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
+
+    <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
+    </mat-divider>
+    <app-profile></app-profile>
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-toolbar color="primary" class="header" *ngIf="itemId !== ''">
+  <button mat-icon-button (click)="closeItem()">
+    <mat-icon aria-label="Close item">clear</mat-icon>
+  </button>
+  <div class="spacer"></div>
+  <!--<pp-output-download-menu [id]="itemId" [overlapTrigger]="false" [formats]="itemDetailsComponent && itemDetailsComponent.outputFormats"></pp-output-download-menu>-->
+  <mat-divider [vertical]=" true " class="divider">
+  </mat-divider>
+  <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''" aria-label="Download"
+    (click)="downloadItem()" matTooltip="Download">
+    <mat-icon aria-label="Download item">get_app</mat-icon>
+  </button>
+  <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()"
+    [matTooltip]="isInBasket ? 'Remove from basket' : 'Add to basket'">
+    <mat-icon *ngIf="!isInBasket; else removeIcon" aria-label="Add to basket">add</mat-icon>
+    <ng-template #removeIcon>
+      <mat-icon aria-label="Remove from basket">remove</mat-icon>
+    </ng-template>
+  </button>
+</mat-toolbar>
+
+<div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
+  <ng-container *ngIf="!errorMessage; else onError">
     <mat-sidenav-container style="width:100%">
       <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" disableClose="true" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
         [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
@@ -79,9 +80,13 @@
           (previewItemChange)="previewItem($event)"></pp-content-browser>
       </mat-sidenav-content>
     </mat-sidenav-container>
-  
-  </div>
-  
-  <div class="item" *ngIf="itemId !== ''" [style.top.px]="mobileQuery.matches ? 56 : 80">
-    <app-item-details [itemId]="itemId"></app-item-details>
-  </div>
+  </ng-container>
+  <ng-template #onError>
+    <p class="error-message" >{{errorMessage}}</p>
+  </ng-template>
+
+</div>
+
+<div class="item" *ngIf="itemId !== ''" [style.top.px]="mobileQuery.matches ? 56 : 80">
+  <app-item-details [itemId]="itemId"></app-item-details>
+</div>

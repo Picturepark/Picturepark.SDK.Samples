@@ -12,7 +12,7 @@ import { FilterBase, TermFilter } from '@picturepark/sdk-v1-angular';
 export class PresskitComponent implements OnInit {
 
   public baseFilter: FilterBase ;
-  public errorMessage: string
+  public errorMessage: string;
 
   public constructor( private router: Router, private route: ActivatedRoute ) {
   }
@@ -44,6 +44,7 @@ export class PresskitComponent implements OnInit {
 
   private handleBaseFilterError() {
       // TODO pass paramenter to content manager with error message
+      this.errorMessage = 'Something went wrong, your gallery collection cannot be found...';
   }
 
 }

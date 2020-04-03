@@ -18,7 +18,6 @@ import { MaterialModule } from './material.module';
 import { PictureparkUIConfiguration } from '@picturepark/sdk-v1-angular-ui/lib/configuration';
 import { PresskitComponent } from './components/presskit/presskit.component';
 import { ContentManagerComponent } from './components/content-manager/content-manager.component';
-// import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 
 export function PictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
@@ -55,7 +54,6 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     DashboardComponent,
     DemoInfoDialogComponent,
     ContentManagerComponent,
-    // ErrorDisplayComponent
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [

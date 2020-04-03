@@ -8,7 +8,7 @@ import {
 
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -29,6 +29,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
 
   @Input() baseFilter: FilterBase;
   @Input() showChannels = true;
+  @Input() errorMessage: string;
   @Output() updateParams = new EventEmitter<ParamsUpdate>();
 
   @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
@@ -95,10 +96,6 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-
-  public test(filter) {
-    debugger;
   }
 
   public addToBasket() {

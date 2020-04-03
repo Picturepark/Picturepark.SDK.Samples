@@ -42,6 +42,7 @@
     right: 0;
     bottom: 0;
     display: flex;
+    background-color:#eeeeee;
   }
   
   .item {
@@ -78,4 +79,9 @@
   
   .download {
     margin-right: 16px;
+  }
+
+  .error-message {
+    font-size: 20px;
+    margin: 2vw;
   }
