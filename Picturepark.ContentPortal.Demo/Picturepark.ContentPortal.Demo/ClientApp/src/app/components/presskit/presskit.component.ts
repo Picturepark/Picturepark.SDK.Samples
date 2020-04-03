@@ -1,36 +1,49 @@
-import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content, ContentService, ContentResolveBehavior
-} from '@picturepark/sdk-v1-angular';
 
-import {
-  BasketService, groupBy, ContentDownloadDialogService, ContentModel
-} from '@picturepark/sdk-v1-angular-ui';
-
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ItemDetailsComponent } from '../item-details/item-details.component';
-import { Subscription } from 'rxjs';
-import { MatSidenav } from '@angular/material/sidenav';
-import { MatDialog } from '@angular/material/dialog';
-import { PageBase } from '../page-base';
-import { take } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ParamsUpdate } from '../../models/params-update.model';
+import { FilterBase, TermFilter } from '@picturepark/sdk-v1-angular';
 
 @Component({
   selector: 'app-presskit',
   templateUrl: './presskit.component.html',
   styleUrls: ['./presskit.component.scss']
 })
-export class PresskitComponent extends PageBase implements OnDestroy {
+export class PresskitComponent implements OnInit {
 
-  private subscription: Subscription = new Subscription();
+  public baseFilter: FilterBase ;
+  public errorMessage: string
 
-  public constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    dialog: MatDialog) {
+  public constructor( private router: Router, private route: ActivatedRoute ) {
+  }
 
-    super(media, changeDetectorRef, dialog);
+  ngOnInit() {
+    // Test url
+    // https://localhost:44332/presskit?baseFilter={%22field%22:%22layerSchemaIds%22,%22term%22:%22LayerWaft%22,%22kind%22:%22TermFilter%22}
+    try {
+      const baseFilterJson = this.route.snapshot.queryParamMap.get('baseFilter');
+      if (baseFilterJson) {
+        const parsedBaseFilter = FilterBase.fromJS(JSON.parse(baseFilterJson));
+        if (parsedBaseFilter instanceof FilterBase) {
+          this.baseFilter = parsedBaseFilter;
+          return;
+        }
+      }
+      this.handleBaseFilterError();
+    } catch (error) {
+      this.handleBaseFilterError();
+    }
+  }
+
+  public onUpdateParams(updatedParams: ParamsUpdate) {
+    this.router.navigate(
+      ['/presskit', updatedParams.itemId],
+      { queryParams: updatedParams.queryParams }
+    );
+  }
+
+  private handleBaseFilterError() {
+      // TODO pass paramenter to content manager with error message
   }
 
 }

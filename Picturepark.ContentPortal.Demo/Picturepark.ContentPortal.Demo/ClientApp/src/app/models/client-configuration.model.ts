@@ -3,4 +3,5 @@ export interface ClientConfiguration {
   identityServer: string;
   frontendUrl: string;
   isAuthenticated: boolean;
+  channelId: string;
 }

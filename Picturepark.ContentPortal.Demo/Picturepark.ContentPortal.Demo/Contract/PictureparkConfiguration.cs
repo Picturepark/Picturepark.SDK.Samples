@@ -30,5 +30,7 @@ namespace Picturepark.ContentPortal.Demo.Contract
 
         public string UserRegistrationAccessToken { get; set; }
 
+        public string ChannelId { get; set; }
+
     }
 }

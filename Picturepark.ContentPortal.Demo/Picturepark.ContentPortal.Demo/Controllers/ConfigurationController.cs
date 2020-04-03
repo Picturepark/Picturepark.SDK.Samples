@@ -24,7 +24,8 @@ namespace Picturepark.ContentPortal.Demo.Controllers
                 ContactEmail = config.ContactEmail,
                 IdentityServer = config.IdentityServer,
                 FrontendUrl = config.FrontendBaseUrl,
-                IsAuthenticated = HttpContext.User.Identity.IsAuthenticated
+                IsAuthenticated = HttpContext.User.Identity.IsAuthenticated,
+                ChannelId = config.ChannelId,
             });
         }
     }

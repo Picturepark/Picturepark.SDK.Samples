@@ -1,9 +1,8 @@
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { ItemsComponent } from './components/items/items.component';
-import { BaseFilterGuard } from './guards/base-filter.guard';
 import { PresskitComponent } from './components/presskit/presskit.component';
 
 const routes: Routes = [
@@ -33,7 +32,11 @@ const routes: Routes = [
   },
   {
     path: 'presskit',
-    canActivate: [BaseFilterGuard],
+    component: PresskitComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'presskit/:itemId',
     component: PresskitComponent,
     pathMatch: 'full'
   }

@@ -1,0 +1,81 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+    color: #000;
+    z-index: 100;
+  
+    .mat-toolbar-row {
+      height: 80px;
+    }
+  
+    a {
+      color: inherit;
+    }
+  
+    a:visited {
+      color: inherit;
+    }
+  
+    .menu {
+      margin-right: 40px;
+    }
+  }
+  
+  .divider {
+    height: 36px;
+    margin: 0 16px;
+  }
+  
+  .spacer {
+    flex-grow: 1;
+  }
+  
+  .content {
+    position: fixed;
+    top: 80px !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+  }
+  
+  .item {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    overflow: auto;
+  }
+  
+  .content-browser {
+    flex-grow: 1;
+  }
+  
+  .content-panel {
+    background-color: whitesmoke;
+    height: 100%;
+  }
+  
+  a {
+    text-decoration: none;
+    text-decoration-color: none;
+  }
+  
+  a:visited {
+    color: inherit;
+  }
+  
+  .basket-count {
+    padding-right: 5px;
+  }
+  
+  .download {
+    margin-right: 16px;
+  }
