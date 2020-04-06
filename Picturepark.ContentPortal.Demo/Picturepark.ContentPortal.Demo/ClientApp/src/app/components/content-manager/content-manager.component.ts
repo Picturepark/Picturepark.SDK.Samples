@@ -109,12 +109,12 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   public previewItem(item: ContentModel<Content>) {
     this.itemId = item.item.id;
     this.isInBasket = item.isInBasket;
-    this.EmitParamsUpdate(this.QueryParams);
+    this.emitParamsUpdate(this.QueryParams);
   }
 
   public closeItem() {
     this.itemId = '';
-    this.EmitParamsUpdate(this.QueryParams);
+    this.emitParamsUpdate(this.QueryParams);
   }
 
   public get QueryParams(): Params {
@@ -142,13 +142,13 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
       delete queryParams['filter'];
     }
 
-    this.EmitParamsUpdate(queryParams);
+    this.emitParamsUpdate(queryParams);
   }
 
   public changeChannel(channel: Channel) {
     this.channelId = channel.id;
     this.channel = channel;
-    this.EmitParamsUpdate(this.QueryParams);
+    this.emitParamsUpdate(this.QueryParams);
   }
 
   public changeSearchQuery(query: string) {
@@ -162,7 +162,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
       delete queryParams['search'];
     }
 
-    this.EmitParamsUpdate(queryParams);
+    this.emitParamsUpdate(queryParams);
   }
 
   public downloadItem() {
@@ -176,7 +176,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
       });
   }
 
-  private EmitParamsUpdate(queryParams: Params) {
+  private emitParamsUpdate(queryParams: Params) {
     if (this.mobileQuery.matches) {
       if (this.sideNav.opened) {
         this.sideNav.toggle();
