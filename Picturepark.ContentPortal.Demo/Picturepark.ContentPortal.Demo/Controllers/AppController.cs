@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Picturepark.ContentPortal.Demo.Contract;
 
 namespace Picturepark.ContentPortal.Demo.Controllers
@@ -7,19 +7,11 @@ namespace Picturepark.ContentPortal.Demo.Controllers
     [ApiController]
     public class AppController : ControllerBase
     {
-        private readonly IConfiguration Configuration;
-
-        public AppController(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        [Route("app/info")]
+       [Route("app/info")]
         public IActionResult Info()
         {
-            var appInfo = Configuration.GetSection("AppInfo").Get<AppInfo>();
-
-            return Ok(appInfo);
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            return Ok(new AppInfo { Version = version });
         }
     }
 }

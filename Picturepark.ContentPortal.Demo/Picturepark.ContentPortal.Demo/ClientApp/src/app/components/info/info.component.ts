@@ -10,8 +10,7 @@ import { InfoService } from '../../services/info.service';
 })
 export class InfoComponent implements OnInit {
   public infoTooltip: string;
-  private readonly tooltip = (appName: string, version: string) => `${appName} \n
-  Version: ${version}`;
+  private readonly tooltip = (version: string) => `Version: ${version}`;
 
   constructor(private infoService: InfoService) {}
 
@@ -19,6 +18,6 @@ export class InfoComponent implements OnInit {
     this.infoService
       .getAppInfo()
       .pipe(take(1))
-      .subscribe((appInfo) => (this.infoTooltip = this.tooltip(appInfo.name, appInfo.version)));
+      .subscribe((appInfo) => (this.infoTooltip = this.tooltip(appInfo.version)));
   }
 }
