@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { InfoService } from '../../services/info.service';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-info',
@@ -8,16 +7,11 @@ import { InfoService } from '../../services/info.service';
   styleUrls: ['./info.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class InfoComponent implements OnInit {
-  public infoTooltip: string;
+export class InfoComponent {
+  public readonly infoTooltip: string;
   private readonly tooltip = (version: string) => `Version: ${version}`;
 
-  constructor(private infoService: InfoService) {}
-
-  ngOnInit(): void {
-    this.infoService
-      .getAppInfo()
-      .pipe(take(1))
-      .subscribe((appInfo) => (this.infoTooltip = this.tooltip(appInfo.version)));
+  constructor(private configService: ConfigService) {
+    this.infoTooltip = this.tooltip(this.configService.config.appVersion);
   }
 }

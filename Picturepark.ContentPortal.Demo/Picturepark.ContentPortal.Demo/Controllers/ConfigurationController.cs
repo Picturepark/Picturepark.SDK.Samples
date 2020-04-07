@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Picturepark.ContentPortal.Demo.Contract;
 
@@ -18,13 +19,15 @@ namespace Picturepark.ContentPortal.Demo.Controllers
         public IActionResult GetClientConfiguration()
         {
             var config = _configuration.GetSection("PictureparkConfiguration").Get<PictureparkConfiguration>();
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             return Ok(new ClientConfiguration
             {
                 ContactEmail = config.ContactEmail,
                 IdentityServer = config.IdentityServer,
                 FrontendUrl = config.FrontendBaseUrl,
-                IsAuthenticated = HttpContext.User.Identity.IsAuthenticated
+                IsAuthenticated = HttpContext.User.Identity.IsAuthenticated,
+                AppVersion = version
             });
         }
     }
