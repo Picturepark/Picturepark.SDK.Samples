@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.Extensions.Configuration
+@using System.Reflection;
 
 @inject IAuthorizationService AuthorizationService
 @inject IViewLocalizer Localizer
@@ -11,7 +11,6 @@
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var route = ViewContext.RouteData.Values["controller"].ToString();
 }
-@inject IConfiguration Configuration
 
 <!DOCTYPE html>
 <html>
@@ -234,7 +233,7 @@
                     <span>|</span>
                     <a class="semi-link aup" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
                 </div>
-		<div class="footer-row-el">@Configuration.GetSection("AppInfo")["Version"]</div>
+                <div class="footer-row-el">@Assembly.GetExecutingAssembly().GetName().Version</div>
             </div>
         </div>
     </footer>
