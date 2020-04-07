@@ -7,7 +7,11 @@
     "start": "ng serve",
     "build": "ng build",
     "build:ssr": "npm run build -- --app=ssr --output-hashing=media",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "format:fix": "pretty-quick --staged",
+    "format:check": "prettier --config ./.prettierrc --list-different \"src/{app,assets,environments}/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "format:write": "prettier --config ./.prettierrc --write \"src/{app,assets,environments}/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "precommit": "run-s format:fix lint"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +41,10 @@
     "@angular/language-service": "^9.0.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "husky": "^4.2.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1",
     "ts-node": "^7.0.1",
     "tslint": "^5.20.1",
     "typescript": "3.7.5"
