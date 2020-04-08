@@ -1,10 +1,21 @@
-import { AuthService, AccessTokenAuthService,  PICTUREPARK_API_URL } from '@picturepark/sdk-v1-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { CommonModule } from '@angular/common';
-import { PictureparkUiModule, PICTUREPARK_UI_CONFIGURATION } from '@picturepark/sdk-v1-angular-ui';
+
+import {
+  AuthService,
+  AccessTokenAuthService,
+  LocaleModule,
+  PictureparkConfiguration,
+  PICTUREPARK_CONFIGURATION,
+} from '@picturepark/sdk-v1-angular';
+import {
+  PictureparkUiModule,
+  PICTUREPARK_UI_CONFIGURATION,
+  PictureparkUIConfiguration,
+  TRANSLATIONS,
+} from '@picturepark/sdk-v1-angular-ui';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -15,9 +26,13 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ConfigService, configFactory } from './services/config.service';
 import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info-dialog.component';
 import { MaterialModule } from './material.module';
-import { PictureparkUIConfiguration } from '@picturepark/sdk-v1-angular-ui/lib/configuration';
+import { LanguageComponent } from './components/language/language.component';
+import { Translations } from './utilities/translations';
 
-export function PictureparkUIConfigurationFactory(configService: ConfigService) {
+const uiTranslations = TRANSLATIONS;
+Object.assign(uiTranslations, Translations);
+
+export function pictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
       'ContentBrowserComponent': {
           download: true,
@@ -42,6 +57,12 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
   };
 }
 
+export function pictureparkConfigurationFactory(){
+  return <PictureparkConfiguration>{
+     apiServer: '/api'
+   };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +70,8 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     ItemDetailsComponent,
     ProfileComponent,
     DashboardComponent,
-    DemoInfoDialogComponent
+    DemoInfoDialogComponent,
+    LanguageComponent,
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [
@@ -58,7 +80,8 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
     AppRoutingModule,
     PictureparkUiModule,
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    LocaleModule.forRoot(),
   ],
   providers: [
     ConfigService,
@@ -66,12 +89,12 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
       provide: APP_INITIALIZER,
       useFactory: configFactory,
       deps: [ConfigService],
-      multi: true
+      multi: true,
     },
-    { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
-    { provide: PICTUREPARK_API_URL, useValue: '/api'},
-    { provide: AuthService, useClass: AccessTokenAuthService }
+    { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
+    { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
+    { provide: AuthService, useClass: AccessTokenAuthService },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
