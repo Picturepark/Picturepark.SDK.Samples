@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,7 +20,7 @@ namespace Picturepark.ContentPortal.Demo.Controllers
         public IActionResult GetClientConfiguration()
         {
             var config = _configuration.GetSection("PictureparkConfiguration").Get<PictureparkConfiguration>();
-            var version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+            var version = FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).ProductVersion; ;
 
             return Ok(new ClientConfiguration
             {
