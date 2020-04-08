@@ -10,6 +10,7 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var route = ViewContext.RouteData.Values["controller"].ToString();
+    var version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
 }
 
 <!DOCTYPE html>
@@ -123,7 +124,7 @@
 
                     <nav class="nav-links">
                         <ul>
-                            <li class="left-nav @(route == "Home" ? "current_page_item": "") "><a class="no-text-link" asp-controller="Home" asp-action="Overview">News</a></li>
+                            <li class="left-nav @(route == "Home" ? "current_page_item" : "") "><a class="no-text-link" asp-controller="Home" asp-action="Overview">News</a></li>
                             <!--Login currently disabled-->
                             @*@if (User.Identity.IsAuthenticated)    /*check login function*/
                                 {
@@ -233,7 +234,7 @@
                     <span>|</span>
                     <a class="semi-link aup" target="_blank" href="https://picturepark.com/terms/aup/">@Localizer.GetString("Terms of use")</a>
                 </div>
-                <div class="footer-row-el">@Assembly.GetExecutingAssembly().GetName().Version</div>
+                <div class="footer-row-el">@version</div>
             </div>
         </div>
     </footer>
