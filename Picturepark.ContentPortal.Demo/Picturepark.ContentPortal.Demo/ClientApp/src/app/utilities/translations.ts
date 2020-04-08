@@ -6,60 +6,60 @@ export let Translations = {
     },
     DemoInfo: {
       en: 'More info about this demo',
-      de: 'Weitere infos zu dieser demo',
+      de: 'Weitere Infos zu dieser Demo',
     },
     Content: {
       en: `Our association is all about sharing knowledge, logistics and resources to promote organic farming - to both
       farmers and the public. As a valued member of our organization, you can access carefully researched and approved
       content for reuse via this Content Portal.`,
-      de: `In unserem Verein geht es darum, Wissen, Logistik und Ressourcen zu teilen, um den ökologischen Landbau zu 
-      fördern - für beide Landwirte und die Öffentlichkeit. Als geschätztes Mitglied unserer Organisation können Sie auf 
-      sorgfältig recherchierte und genehmigte Daten zugreifen Inhalte zur Wiederverwendung über dieses Inhaltsportal.`,
+      de: `Unser Verein hat sich zum Ziel gesetzt die ökologische Landwirtschaft voranzutreiben, bei Landwirten und der
+       Öffentlichkeit gleichermassen, durch Wissenstransfer und die gemeinsame Nutzung von Ressourcen und Logistik.
+       Als geschätztes Mitglied unseres Vereins können Sie in diesem Portal auf sorgfältig recherchierte und freigegebene
+       Inhalte zugreifen und diese weiterverwenden.`,
     },
     Contact1: {
       en: 'If you would like to contribute your ideas, please',
-      de: 'Wenn Sie Ihre Ideen einbringen möchten, bitte',
+      de: 'Wenn Sie Ihre einbringen möchten, ',
     },
     Contact2: {
       en: 'contact us',
-      de: 'kontaktiere uns',
+      de: 'kontaktieren Sie uns bitte',
     },
   },
   DemoInfoDialog: {
     Info1: {
       en: 'This is a slightly customized microsite of the Picturepark SDK - part of our online demo.',
-      de: 'Dies ist eine leicht angepasste Microsite des Picturepark SDK - Teil unserer Online-Demo.',
+      de: 'Dies ist eine leicht angepasste Microsite des Picturepark SDK - Teil unserer Online Demo.',
     },
     Info2: {
       en: 'You can play around with your limited read-only access which simulates access of FOFA members.',
-      de: `Sie können mit Ihrem eingeschränkten schreibgeschützten Zugriff herumspielen, der den Zugriff 
-      von FOFA-Mitgliedern simuliert.`,
+      de: 'Sie haben zum Testen einen zeitlich beschränkten Lese-Zugriff, der die Rechte eines FOFA-Mitgliedes simuliert.',
     },
     Info3: {
       en: 'Explore other components of this demo.',
-      de: 'Entdecken Sie andere Komponenten dieser Demo.',
+      de: 'Entdecken Sie weitere Bestandteile dieser Demo.',
     },
   },
   Items: {
     DemoInfo: {
       en: 'More info about this demo',
-      de: 'Weitere infos zu dieser demo',
+      de: 'Weitere Infos zu dieser Demo',
     },
     CloseItem: {
-      en: 'Close item',
-      de: 'Element schließen',
+      en: 'Close Content Item',
+      de: 'Content Item schliessen',
     },
     Download: {
       en: 'Download',
-      de: 'Download',
+      de: 'Herunterladen',
     },
     DownloadItem: {
-      en: 'Download item',
-      de: 'Download Artikel',
+      en: 'Download Content Item',
+      de: 'Content Item herunterladen',
     },
     AddToBasket: {
       en: 'Add to basket',
-      de: 'In Warenkorb legen',
+      de: 'In den Warenkorb legen',
     },
     RemoveFromBasket: {
       en: 'Remove from basket',
@@ -99,7 +99,7 @@ export let Translations = {
     },
     ContactAdmin: {
       en: 'Contact admin',
-      de: 'Kontakt admin',
+      de: 'Admin kontaktieren',
     },
   },
 };
