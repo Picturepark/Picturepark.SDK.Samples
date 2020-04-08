@@ -6,8 +6,9 @@ import { CommonModule } from '@angular/common';
 import {
   AuthService,
   AccessTokenAuthService,
-  PICTUREPARK_API_URL,
   LocaleModule,
+  PictureparkConfiguration,
+  PICTUREPARK_CONFIGURATION,
 } from '@picturepark/sdk-v1-angular';
 import {
   PictureparkUiModule,
@@ -31,7 +32,7 @@ import { Translations } from './utilities/translations';
 const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
 
-export function PictureparkUIConfigurationFactory(configService: ConfigService) {
+export function pictureparkUIConfigurationFactory(configService: ConfigService) {
   return<PictureparkUIConfiguration> {
       'ContentBrowserComponent': {
           download: true,
@@ -54,6 +55,12 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
           share: true
       }
   };
+}
+
+export function pictureparkConfigurationFactory(){
+  return <PictureparkConfiguration>{
+     apiServer: '/api'
+   };
 }
 
 @NgModule({
@@ -84,8 +91,8 @@ export function PictureparkUIConfigurationFactory(configService: ConfigService) 
       deps: [ConfigService],
       multi: true,
     },
-    { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: PictureparkUIConfigurationFactory, deps: [ConfigService] },
-    { provide: PICTUREPARK_API_URL, useValue: '/api' },
+    { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
+    { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
     { provide: AuthService, useClass: AccessTokenAuthService },
   ],
   bootstrap: [AppComponent],
