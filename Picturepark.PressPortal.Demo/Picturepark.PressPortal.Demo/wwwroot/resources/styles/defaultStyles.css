@@ -657,10 +657,12 @@ box-shadow .mobile-nav-links .left-nav {
     padding: 0;
 }
 
-#terms-footer{
+#terms-footer {
     height: 50px;
     min-height: initial;
     margin-top: 100px;
+    display: flex;
+    justify-content: space-between;
 }
 
 #terms-footer .footer-row-el{
