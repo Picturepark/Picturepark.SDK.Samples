@@ -19,7 +19,7 @@ export let Translations = {
     },
     Contact1: {
       en: 'If you would like to contribute your ideas, please',
-      de: 'Wenn Sie Ihre einbringen möchten, ',
+      de: 'Wenn Sie Ihre Ideen einbringen möchten, ',
     },
     Contact2: {
       en: 'contact us',
@@ -33,7 +33,8 @@ export let Translations = {
     },
     Info2: {
       en: 'You can play around with your limited read-only access which simulates access of FOFA members.',
-      de: 'Sie haben zum Testen einen zeitlich beschränkten Lese-Zugriff, der die Rechte eines FOFA-Mitgliedes simuliert.',
+      de:
+        'Sie haben zum Testen einen zeitlich beschränkten Lese-Zugriff, der die Rechte eines FOFA-Mitgliedes simuliert.',
     },
     Info3: {
       en: 'Explore other components of this demo.',
