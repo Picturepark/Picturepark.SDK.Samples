@@ -9,5 +9,7 @@
         public string IdentityServer { get; set; }
 
         public bool IsAuthenticated { get; set; }
+
+        public string AppVersion { get; set; }
     }
 }
