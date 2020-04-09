@@ -28,6 +28,7 @@ import { DemoInfoDialogComponent } from './components/demo-info-dialog/demo-info
 import { MaterialModule } from './material.module';
 import { LanguageComponent } from './components/language/language.component';
 import { Translations } from './utilities/translations';
+import { InfoComponent } from './components/info/info.component';
 
 const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
@@ -72,6 +73,7 @@ export function pictureparkConfigurationFactory(){
     DashboardComponent,
     DemoInfoDialogComponent,
     LanguageComponent,
+	InfoComponent,
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [
