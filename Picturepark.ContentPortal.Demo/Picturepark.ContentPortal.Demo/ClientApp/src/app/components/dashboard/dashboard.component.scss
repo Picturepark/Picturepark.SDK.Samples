@@ -68,19 +68,17 @@ a:visited {
   padding-bottom: 10px;
 }
 
-.profile-wrap {
-  width: 320px;
+.button-wrap {
   text-align: right;
 
-  app-profile {
+  app-language, app-profile {
     padding-left: 10px;
   }
 }
 
-.profile-wrap-mobile {
+.button-wrap-mobile {
   position: absolute;
   right: 0;
-
 }
 
 .mat-toolbar.mat-primary {

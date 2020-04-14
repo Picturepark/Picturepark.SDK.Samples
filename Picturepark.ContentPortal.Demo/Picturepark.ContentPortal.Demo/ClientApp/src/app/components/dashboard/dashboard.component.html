@@ -3,14 +3,17 @@
 
   <div class="spacer"></div>
 
-  <h3>Welcome to the FOFA Content Portal!</h3>
+  <h3>{{ 'Dashboard.Title' | pptranslate }}</h3>
 
   <div class="spacer"></div>
 
-  <div class="profile-wrap">
-    <button mat-button class="demo-button" (click)="openDialog($event)">More info about
-      this demo</button>
+  <div class="button-wrap">
+    <button mat-button class="demo-button" (click)="openDialog($event)">
+      {{ 'Dashboard.DemoInfo' | pptranslate }}
+    </button>
+    <app-language></app-language>
     <app-profile></app-profile>
+    <app-info></app-info>
   </div>
 </mat-toolbar>
 <ng-template #mobileToolbar>
@@ -18,35 +21,44 @@
     <div class="spacer"></div>
     <div class="logo center" routerLink="/items"></div>
     <div class="spacer"></div>
-    <div class="profile-wrap-mobile">
+    <div class="button-wrap-mobile">
+      <app-language></app-language>
       <app-profile></app-profile>
     </div>
   </mat-toolbar>
 </ng-template>
 <div class="content-wrap">
   <div class="content" [class.content-mobile]="mobileQuery.matches">
-    <p *ngIf="mobileQuery.matches" class="title-mobile">Welcome to the FOFA Content Portal!</p>
+    <p *ngIf="mobileQuery.matches" class="title-mobile">{{ 'Dashboard.Title' | pptranslate }}</p>
 
     <p *ngIf="!mobileQuery.matches">&nbsp;</p>
 
-    <p>Our association is all about sharing knowledge, logistics and resources to promote organic farming - to both
-      farmers and the public. As a valued member of our organization, you can access carefully researched and approved
-      content for reuse via this Content Portal.</p>
+    <p>{{ 'Dashboard.Content' | pptranslate }}</p>
 
     <div class="search-box-wrap">
-      <pp-search-box style="font-size: 16px;" [searchString]="searchQuery"
-        (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
+      <pp-search-box
+        style="font-size: 16px;"
+        [searchString]="searchQuery"
+        (searchStringChange)="changeSearchQuery($event)"
+      ></pp-search-box>
     </div>
 
     <div class="container">
-      <mat-card *ngFor="let item of items; let idx = index; trackBy: trackByItem" (click)="navigate(item.path)"
-        class="custom-shadow">
-        <img *ngIf="images[idx]" [src]="images[idx]" mat-card-image alt="">
-        <mat-card-title>{{item.title}}</mat-card-title>
-        <mat-card-content>{{item.description}}</mat-card-content>
+      <mat-card
+        *ngFor="let item of items; let idx = index; trackBy: trackByItem"
+        (click)="navigate(item.path)"
+        class="custom-shadow"
+      >
+        <img *ngIf="images[idx]" [src]="images[idx]" mat-card-image alt="" />
+        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-content>{{ item.description }}</mat-card-content>
       </mat-card>
     </div>
 
-    <p>If you would like to contribute your ideas, please <a href="mailto:marketing@picturepark.com">contact us</a>.</p>
+    <p>
+      {{ 'Dashboard.Contact1' | pptranslate }}
+      <a href="mailto:marketing@picturepark.com">{{ 'Dashboard.Contact2' | pptranslate }}</a
+      >.
+    </p>
   </div>
 </div>

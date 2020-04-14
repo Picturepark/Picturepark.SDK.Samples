@@ -10,6 +10,8 @@
 
         public bool IsAuthenticated { get; set; }
 
+        public string AppVersion { get; set; }
+        
         public string ChannelId { get; set; }
     }
 }
