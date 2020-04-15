@@ -34,34 +34,34 @@ const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
 
 export function pictureparkUIConfigurationFactory(configService: ConfigService) {
-  return<PictureparkUIConfiguration> {
-      'ContentBrowserComponent': {
-          download: true,
-          select: true,
-          share: configService.config.isAuthenticated,
-          preview: true,
-          basket: true
-      },
-      'BasketComponent': {
-          download: true,
-          select: false,
-          share: configService.config.isAuthenticated
-      },
-      'BrowserToolbarComponent': {
-          select: true,
-      },
-      'ListBrowserComponent': {
-          download: true,
-          select: true,
-          share: true
-      }
+  return <PictureparkUIConfiguration>{
+    ContentBrowserComponent: {
+      download: true,
+      select: true,
+      share: configService.config.isAuthenticated,
+      preview: true,
+      basket: true,
+    },
+    BasketComponent: {
+      download: true,
+      select: false,
+      share: configService.config.isAuthenticated,
+    },
+    BrowserToolbarComponent: {
+      select: true,
+    },
+    ListBrowserComponent: {
+      download: true,
+      select: true,
+      share: true,
+    },
   };
 }
 
-export function pictureparkConfigurationFactory(){
+export function pictureparkConfigurationFactory() {
   return <PictureparkConfiguration>{
-     apiServer: '/api'
-   };
+    apiServer: '/api',
+  };
 }
 
 @NgModule({
@@ -73,7 +73,7 @@ export function pictureparkConfigurationFactory(){
     DashboardComponent,
     DemoInfoDialogComponent,
     LanguageComponent,
-	InfoComponent,
+    InfoComponent,
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [

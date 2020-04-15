@@ -1,10 +1,15 @@
 import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content, ContentService, ContentResolveBehavior
+  Channel,
+  FilterBase,
+  AggregationFilter,
+  OrFilter,
+  AndFilter,
+  Content,
+  ContentService,
+  ContentResolveBehavior,
 } from '@picturepark/sdk-v1-angular';
 
-import {
-  BasketService, groupBy, ContentDownloadDialogService, ContentModel
-} from '@picturepark/sdk-v1-angular-ui';
+import { BasketService, groupBy, ContentDownloadDialogService, ContentModel } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
@@ -19,7 +24,7 @@ import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss']
+  styleUrls: ['./items.component.scss'],
 })
 export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
@@ -43,13 +48,13 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
     private contentDownloadDialogService: ContentDownloadDialogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog) {
-
+    dialog: MatDialog
+  ) {
     super(media, changeDetectorRef, dialog);
 
-    const basketChangeSubscription = this.basketService.basketChange.subscribe(items => {
+    const basketChangeSubscription = this.basketService.basketChange.subscribe((items) => {
       this.basketItems = items;
-      this.isInBasket = this.basketItems.some(item => item === this.itemId);
+      this.isInBasket = this.basketItems.some((item) => item === this.itemId);
     });
 
     this.subscription.add(basketChangeSubscription);
@@ -65,7 +70,7 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
       if (typeof filterQuery === 'string') {
         this.aggregationFilters = [AggregationFilter.fromJS(JSON.parse(filterQuery))];
       } else {
-        this.aggregationFilters = (filterQuery as string[]).map(fq => AggregationFilter.fromJS(JSON.parse(fq)));
+        this.aggregationFilters = (filterQuery as string[]).map((fq) => AggregationFilter.fromJS(JSON.parse(fq)));
       }
       this.filter = this.createFilter(this.aggregationFilters);
     }
@@ -103,7 +108,7 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   }
 
   public channelsChange(channels: Channel[]) {
-    const channelIndex = channels.findIndex(c => c.id === this.channelId);
+    const channelIndex = channels.findIndex((c) => c.id === this.channelId);
 
     if (channelIndex > -1) {
       this.changeChannel(channels[channelIndex]);
@@ -113,7 +118,7 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   }
 
   public changeAggregationFilters(aggregationFilters: AggregationFilter[]) {
-    const filtersQuery = aggregationFilters.map(filter => JSON.stringify(filter.toJSON()));
+    const filtersQuery = aggregationFilters.map((filter) => JSON.stringify(filter.toJSON()));
 
     const queryParams = this.QueryParams;
 
@@ -147,12 +152,13 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   }
 
   public downloadItem() {
-    this.contentService.get(this.itemId, [ContentResolveBehavior.Content])
+    this.contentService
+      .get(this.itemId, [ContentResolveBehavior.Content])
       .pipe(take(1))
-      .subscribe(async content => {
+      .subscribe(async (content) => {
         this.contentDownloadDialogService.showDialog({
           mode: 'multi',
-          contents: [content as any]
+          contents: [content as any],
         });
       });
   }
@@ -168,23 +174,31 @@ export class ItemsComponent extends PageBase implements OnInit, OnDestroy {
   }
 
   private createFilter(aggregationFilters: AggregationFilter[]): FilterBase | null {
-    const flatten = groupBy(aggregationFilters, i => i.aggregationName);
-    const preparedFilters = Array.from(flatten).map(array => {
-      const filtered = array[1].filter(aggregationFilter =>
-        aggregationFilter.filter).map(aggregationFilter =>
-          aggregationFilter.filter as FilterBase);
+    const flatten = groupBy(aggregationFilters, (i) => i.aggregationName);
+    const preparedFilters = Array.from(flatten)
+      .map((array) => {
+        const filtered = array[1]
+          .filter((aggregationFilter) => aggregationFilter.filter)
+          .map((aggregationFilter) => aggregationFilter.filter as FilterBase);
 
-      switch (filtered.length) {
-        case 0: return null;
-        case 1: return filtered[0];
-        default: return new OrFilter({ filters: filtered });
-      }
-    }).filter(value => value !== null);
+        switch (filtered.length) {
+          case 0:
+            return null;
+          case 1:
+            return filtered[0];
+          default:
+            return new OrFilter({ filters: filtered });
+        }
+      })
+      .filter((value) => value !== null);
 
     switch (preparedFilters.length) {
-      case 0: return null;
-      case 1: return preparedFilters[0]!;
-      default: return new AndFilter({ filters: preparedFilters as FilterBase[] });
+      case 0:
+        return null;
+      case 1:
+        return preparedFilters[0]!;
+      default:
+        return new AndFilter({ filters: preparedFilters as FilterBase[] });
     }
   }
 }

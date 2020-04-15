@@ -1,4 +1,6 @@
-<button *ngIf="!config.isAuthenticated; else elseBlock" mat-button (click)="login()">{{ 'Profile.Login' | pptranslate }}</button>
+<button *ngIf="!config.isAuthenticated; else elseBlock" mat-button (click)="login()">
+  {{ 'Profile.Login' | pptranslate }}
+</button>
 
 <ng-template #elseBlock>
   <button mat-button [matMenuTriggerFor]="menu">{{ 'Profile.Profile' | pptranslate }}</button>
