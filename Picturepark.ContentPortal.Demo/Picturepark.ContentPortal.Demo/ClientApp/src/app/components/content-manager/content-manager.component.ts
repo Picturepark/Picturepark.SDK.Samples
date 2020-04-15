@@ -1,9 +1,9 @@
 import {
-  Channel, FilterBase, AggregationFilter, OrFilter, AndFilter, Content, ContentService, ContentResolveBehavior, ChannelService, SearchBehavior, ContentSearchFacade
+  Channel, FilterBase, Content, ContentService, ContentResolveBehavior, ChannelService, ContentSearchFacade
 } from '@picturepark/sdk-v1-angular';
 
 import {
-  BasketService, groupBy, ContentDownloadDialogService, ContentModel
+  BasketService, ContentDownloadDialogService, ContentModel
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -185,26 +185,4 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     });
 
   }
-
-  // private createFilter(aggregationFilters: AggregationFilter[]): FilterBase | null {
-  //   const flatten = groupBy(aggregationFilters, i => i.aggregationName);
-  //   const preparedFilters = Array.from(flatten).map(array => {
-  //     const filtered = array[1].filter(aggregationFilter =>
-  //       aggregationFilter.filter).map(aggregationFilter =>
-  //         aggregationFilter.filter as FilterBase);
-
-  //     switch (filtered.length) {
-  //       case 0: return null;
-  //       case 1: return filtered[0];
-  //       default: return new OrFilter({ filters: filtered });
-  //     }
-  //   }).filter(value => value !== null);
-
-  //   switch (preparedFilters.length) {
-  //     case 0: return null;
-  //     case 1: return preparedFilters[0];
-  //     default: return new AndFilter({ filters: preparedFilters as FilterBase[] });
-  //   }
-  // }
-
 }
