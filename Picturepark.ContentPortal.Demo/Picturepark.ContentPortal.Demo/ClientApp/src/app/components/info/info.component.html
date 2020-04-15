@@ -1,8 +1,3 @@
-<mat-icon
-  class="info-icon"
-  [matTooltip]="infoTooltip"
-  matTooltipClass="info-tooltip"
-  matTooltipPosition="below"
-  attr.aria-label="{{ 'InfoAriaLabel' | pptranslate }}"
+<mat-icon #infoIcon class="info-icon" attr.aria-label="{{ 'InfoAriaLabel' | pptranslate }}" (click)="openDialog()"
   >info</mat-icon
 >
