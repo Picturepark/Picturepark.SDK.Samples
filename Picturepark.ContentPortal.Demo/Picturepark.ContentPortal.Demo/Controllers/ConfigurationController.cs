@@ -28,8 +28,8 @@ namespace Picturepark.ContentPortal.Demo.Controllers
                 IdentityServer = config.IdentityServer,
                 FrontendUrl = config.FrontendBaseUrl,
                 IsAuthenticated = HttpContext.User.Identity.IsAuthenticated,
-                AppVersion = version
-                ChannelId = config.ChannelId,
+                AppVersion = version,
+                ChannelId = config.ChannelId
             });
         }
     }

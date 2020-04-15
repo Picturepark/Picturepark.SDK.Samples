@@ -1,6 +1,7 @@
 <mat-toolbar color="primary" class="header">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
+    <button mat-icon-button (click)="snav.toggle()" *ngIf="mobileQuery.matches" class="menu"
+      [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1">
       <mat-icon>menu</mat-icon>
     </button>
 
@@ -8,13 +9,15 @@
 
     <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
-    <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"
-      *ngIf="!mobileQuery.matches && showChannels"></pp-channel-picker>
+    <pp-channel-picker [channel]="channel" (channelChange)="changeChannel($event)"
+      (channelsChange)="channelsChange($event)" *ngIf="!mobileQuery.matches && showChannels"></pp-channel-picker>
     <div class="spacer"></div>
-    
-    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button" (click)="openDialog($event)">{{ 'Items.DemoInfo' | pptranslate }}</button>
+
+    <button *ngIf="!mobileQuery.matches" mat-button class="demo-button"
+      (click)="openDialog($event)">{{ 'Items.DemoInfo' | pptranslate }}</button>
     &nbsp;
-    <pp-search-box style="font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
+    <pp-search-box style="font-size: 16px;" [searchString]="searchQuery"
+      (searchStringChange)="changeSearchQuery($event)" *ngIf="!mobileQuery.matches"></pp-search-box>
 
     <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches">
     </mat-divider>
@@ -31,13 +34,15 @@
   <div class="spacer"></div>
   <mat-divider [vertical]=" true " class="divider">
   </mat-divider>
-  <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''" attr.aria-label="{{ 'Items.Download' | pptranslate }}"
-    (click)="downloadItem()" [matTooltip]="'Items.Download' | pptranslate">
+  <button mat-mini-fab color="basic" class="download" *ngIf="itemId !== ''"
+    attr.aria-label="{{ 'Items.Download' | pptranslate }}" (click)="downloadItem()"
+    [matTooltip]="'Items.Download' | pptranslate">
     <mat-icon attr.aria-label="{{ 'Items.DownloadItem' | pptranslate }}">get_app</mat-icon>
   </button>
   <button mat-mini-fab [color]="isInBasket ? 'accent': 'basic'" (click)="addToBasket()"
-  [matTooltip]="(isInBasket ? 'Items.RemoveFromBasket' : 'Items.AddToBasket') | pptranslate">
-  <mat-icon *ngIf="!isInBasket; else removeIcon" attr.aria-label="{{ 'Items.AddToBasket' | pptranslate }}">add</mat-icon>
+    [matTooltip]="(isInBasket ? 'Items.RemoveFromBasket' : 'Items.AddToBasket') | pptranslate">
+    <mat-icon *ngIf="!isInBasket; else removeIcon" attr.aria-label="{{ 'Items.AddToBasket' | pptranslate }}">add
+    </mat-icon>
     <ng-template #removeIcon>
       <mat-icon attr.aria-label="{{ 'Items.RemoveFromBasket' | pptranslate }}">remove</mat-icon>
     </ng-template>
@@ -47,41 +52,45 @@
 <div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
   <ng-container *ngIf="!errorMessage; else onError">
     <mat-sidenav-container style="width:100%">
-      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" disableClose="true" [fixedInViewport]="mobileQuery.matches" fixedTopGap="80"
-        [opened]="mobileQuery.matches ? false : true" style="width: 375px;">
+      <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" disableClose="true"
+        [fixedInViewport]="mobileQuery.matches" fixedTopGap="80" [opened]="mobileQuery.matches ? false : true"
+        style="width: 375px;">
         <mat-toolbar-row *ngIf="mobileQuery.matches">
-          <button style="width: 100%" mat-button class="demo-button" (click)="openDialog($event)">{{ 'Items.DemoInfo' | pptranslate }}</button>
+          <button style="width: 100%" mat-button class="demo-button"
+            (click)="openDialog($event)">{{ 'Items.DemoInfo' | pptranslate }}</button>
         </mat-toolbar-row>
         <mat-toolbar-row *ngIf="mobileQuery.matches && showChannels">
-          <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)" (channelsChange)="channelsChange($event)"></pp-channel-picker>
+          <pp-channel-picker style="width: 100%" [channel]="channel" (channelChange)="changeChannel($event)"
+            (channelsChange)="channelsChange($event)"></pp-channel-picker>
         </mat-toolbar-row>
-  
+
         <mat-toolbar-row *ngIf="mobileQuery.matches">
-          <pp-search-box style="width: 100%; font-size: 16px;" [searchString]="searchQuery" (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
+          <pp-search-box style="width: 100%; font-size: 16px;" [searchString]="searchQuery"
+            (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
         </mat-toolbar-row>
-  
+
         <mat-tab-group class="content-panel">
           <mat-tab label="Filters">
-            <pp-content-aggregation-list [baseFilter]="baseFilter" [channelId]="channel?.id" [aggregators]="channel?.aggregations" [aggregationFilters]="aggregationFilters"
-              (aggregationFiltersChange)="changeAggregationFilters($event)" [searchString]="searchQuery" (filterChange)="filter=$event"></pp-content-aggregation-list>
+            <pp-aggregation-list [facade]="facade"></pp-aggregation-list>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-            <span class="basket-count" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1" matBadgeOverlap="false">{{ 'Items.Basket' | pptranslate }}</span>
+              <span class="basket-count" [matBadge]="basketItems.length" [matBadgeHidden]="basketItems.length < 1"
+                matBadgeOverlap="false">{{ 'Items.Basket' | pptranslate }}</span>
             </ng-template>
             <pp-basket (previewItemChange)="previewItem($event)"></pp-basket>
           </mat-tab>
         </mat-tab-group>
       </mat-sidenav>
-  
+
       <mat-sidenav-content>
-        <pp-content-browser class="content-browser" [baseFilter]="baseFilter" [channel]="channel" [filter]="filter" [searchString]="searchQuery"
-          (previewItemChange)="previewItem($event)"></pp-content-browser>
+        <pp-content-browser class="content-browser" [channel]="channel" (previewItemChange)="previewItem($event)">
+        </pp-content-browser>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </ng-container>
   <ng-template #onError>
-    <p class="error-message" >{{errorMessage}}</p>
+    <p class="error-message">{{errorMessage}}</p>
   </ng-template>
 
 </div>
