@@ -7,14 +7,14 @@ import {
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, Input, Output, EventEmitter, SimpleChanges, OnChanges, Query } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
 import { PageBase } from '../page-base';
-import { map, distinctUntilChanged, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
 
@@ -78,15 +78,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     this.itemId = this.route.snapshot.params['itemId'] || '';
 
     // subscribe on search changes from header component, not needed for search-suggest-box
-    const searchQuery$ = this.route.queryParamMap
-      .pipe(
-        map((paramMap) => paramMap.get('search')),
-        distinctUntilChanged()
-      )
-      .subscribe((searchQuery) => {
-        const searchString = searchQuery;
-        this.facade.patchRequestState({ searchString });
-      });
+    const searchQuery$ = this.facade.searchRequest$.subscribe( request => {
+      this.searchQuery = request.searchString;
+    });
 
     this.subscription.add(searchQuery$);
   }
@@ -147,17 +141,8 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   }
 
   public changeSearchQuery(query: string) {
+    this.facade.patchRequestState({searchString: query})
     this.searchQuery = query;
-
-    const queryParams = this.QueryParams;
-
-    if (this.searchQuery) {
-      queryParams['search'] = this.searchQuery;
-    } else {
-      delete queryParams['search'];
-    }
-
-    this.emitParamsUpdate(queryParams);
   }
 
   public downloadItem() {

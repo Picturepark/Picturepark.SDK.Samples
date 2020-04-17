@@ -31,6 +31,7 @@ import { Translations } from './utilities/translations';
 import { InfoComponent } from './components/info/info.component';
 import { PresskitComponent } from './components/presskit/presskit.component';
 import { ContentManagerComponent } from './components/content-manager/content-manager.component';
+import { AppInfoDialogComponent } from './components/info/info-dialog.component';
 
 const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
@@ -77,7 +78,8 @@ export function pictureparkConfigurationFactory(){
     DemoInfoDialogComponent,
     ContentManagerComponent,
     LanguageComponent,
-	InfoComponent,
+    AppInfoDialogComponent,
+	  InfoComponent,
   ],
   entryComponents: [DemoInfoDialogComponent],
   imports: [
