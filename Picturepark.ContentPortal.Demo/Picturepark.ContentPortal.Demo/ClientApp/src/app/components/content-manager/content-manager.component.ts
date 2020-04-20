@@ -3,7 +3,7 @@ import {
 } from '@picturepark/sdk-v1-angular';
 
 import {
-  BasketService, ContentDownloadDialogService, ContentModel
+  BasketService, ContentDownloadDialogService
 } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -108,9 +108,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     }
   }
 
-  public previewItem(item: ContentModel<Content>) {
-    this.itemId = item.item.id;
-    this.isInBasket = item.isInBasket;
+  public previewItem(item: Content) {
+    this.itemId = item.id;
+    this.isInBasket = this.basketItems.some(i => i === this.itemId);
     this.emitParamsUpdate(this.QueryParams);
   }
 
