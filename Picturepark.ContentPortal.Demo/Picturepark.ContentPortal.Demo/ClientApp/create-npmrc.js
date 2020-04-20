@@ -18,10 +18,7 @@ if (packagejson && packagejson.dependencies && packagejson.dependencies['@pictur
   });
 
   if (versionRegex.test(sdkng)) {
-    var args = process.argv.slice(2);
-    var npmrcContent =
-      `registry=https://npm.pkg.github.com/picturepark
-_authToken=` + args[0];
+    var npmrcContent = 'registry=https://npm.pkg.github.com/picturepark';
 
     fs.writeFile('.npmrc', npmrcContent, (err) => {
       if (err) {
