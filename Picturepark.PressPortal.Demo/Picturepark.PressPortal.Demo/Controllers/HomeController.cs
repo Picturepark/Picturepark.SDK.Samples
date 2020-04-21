@@ -56,9 +56,9 @@ namespace Picturepark.PressPortal.Demo.Controllers
 		[ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
 		public async Task<IActionResult> ImageResized(string id, [FromQuery] int width, [FromQuery] int height)
 		{
-            if (string.IsNullOrEmpty(id) || width <= 0 || height <= 0)
-            {
-                return BadRequest("Invalid request");
+			if (string.IsNullOrEmpty(id) || width <= 0 || height <= 0)
+			{
+				return BadRequest("Invalid request");
 			}
 
 			var fileResponse = await _client.Content.DownloadAsync(id, "Preview", width, height);
