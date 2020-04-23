@@ -13,7 +13,7 @@ import {
   ContentResolveBehavior,
   BrokenDependenciesFilter,
   SortInfo,
-  SortDirection
+  SortDirection,
 } from '@picturepark/sdk-v1-angular';
 import { Subscription } from 'rxjs';
 import { PageBase } from '../page-base';
@@ -23,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent extends PageBase implements OnDestroy {
   public items: DashboardItem[] = [];
@@ -37,49 +37,55 @@ export class DashboardComponent extends PageBase implements OnDestroy {
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog) {
+    dialog: MatDialog
+  ) {
     super(media, changeDetectorRef, dialog);
     this.items = [];
     this.load();
   }
 
   public async load(): Promise<void> {
-    const contents = await this.contentService.search(new ContentSearchRequest({
-      limit: 20,
-      lifeCycleFilter: LifeCycleFilter.ActiveOnly,
-      brokenDependenciesFilter: BrokenDependenciesFilter.All,
-      searchType: ContentSearchType.Metadata,
-      debugMode: false,
-      filter: new TermFilter ({
-        field: 'contentSchemaId',
-        term: 'FeaturedContent'
-      }),
-      sort: [
-        new SortInfo({ field: 'featuredContent.headline', direction: SortDirection.Asc })
-      ]
-    })).toPromise();
+    const contents = await this.contentService
+      .search(
+        new ContentSearchRequest({
+          limit: 20,
+          lifeCycleFilter: LifeCycleFilter.ActiveOnly,
+          brokenDependenciesFilter: BrokenDependenciesFilter.All,
+          searchType: ContentSearchType.Metadata,
+          debugMode: false,
+          filter: new TermFilter({
+            field: 'contentSchemaId',
+            term: 'FeaturedContent',
+          }),
+          sort: [new SortInfo({ field: 'featuredContent.headline', direction: SortDirection.Asc })],
+        })
+      )
+      .toPromise();
 
-    const details = await this.contentService.getMany(
-      contents.results.map(i => i.id),
-      [ContentResolveBehavior.Content]
-    ).toPromise();
+    const details = await this.contentService
+      .getMany(
+        contents.results.map((i) => i.id),
+        [ContentResolveBehavior.Content]
+      )
+      .toPromise();
 
-    details.forEach(i => {
+    details.forEach((i) => {
       this.items.push({
         imageId: i.content['teaserImage']._targetId,
         title: i.content['headline']['x-default'],
         description: i.content['abstract']['x-default'],
-        path: i.content['resourceLink']
+        path: i.content['resourceLink'],
       });
     });
 
     this.items.forEach((item, index) => {
-      const downloadSubscription = this.contentService.downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null)
-      .subscribe(result => {
-        if (result !== null) {
-          this.images[index] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(result.data));
-        }
-      });
+      const downloadSubscription = this.contentService
+        .downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null)
+        .subscribe((result) => {
+          if (result !== null) {
+            this.images[index] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(result.data));
+          }
+        });
 
       this.subscription.add(downloadSubscription);
     });

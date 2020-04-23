@@ -6,7 +6,7 @@ import { ClientConfiguration } from '../../models/client-configuration.model';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html'
+  templateUrl: './profile.component.html',
 })
 export class ProfileComponent implements OnInit {
   public config: ClientConfiguration;
