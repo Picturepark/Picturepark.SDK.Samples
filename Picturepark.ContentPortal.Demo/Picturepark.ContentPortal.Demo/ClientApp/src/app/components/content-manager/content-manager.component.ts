@@ -1,13 +1,29 @@
 import {
-  Channel, FilterBase, Content, ContentService, ContentResolveBehavior, ChannelService, ContentSearchFacade
+  Channel,
+  FilterBase,
+  Content,
+  ContentService,
+  ContentResolveBehavior,
+  ChannelService,
+  ContentSearchFacade,
 } from '@picturepark/sdk-v1-angular';
 
-import {
-  BasketService, ContentDownloadDialogService
-} from '@picturepark/sdk-v1-angular-ui';
+import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
 
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild, Input, Output, EventEmitter, SimpleChanges, OnChanges, Query } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges,
+  Query,
+} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { Subscription } from 'rxjs';
@@ -18,15 +34,12 @@ import { take } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
 
-
-
 @Component({
   selector: 'app-content-manager',
   templateUrl: './content-manager.component.html',
-  styleUrls: ['./content-manager.component.scss']
+  styleUrls: ['./content-manager.component.scss'],
 })
 export class ContentManagerComponent extends PageBase implements OnInit, OnDestroy, OnChanges {
-
   @Input() baseFilter: FilterBase;
   @Input() showChannels = true;
   @Input() errorMessage: string;
@@ -53,13 +66,13 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     private contentDownloadDialogService: ContentDownloadDialogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog) {
-
+    dialog: MatDialog
+  ) {
     super(media, changeDetectorRef, dialog);
 
-    const basketChangeSubscription = this.basketService.basketChange.subscribe(items => {
+    const basketChangeSubscription = this.basketService.basketChange.subscribe((items) => {
       this.basketItems = items;
-      this.isInBasket = this.basketItems.some(item => item === this.itemId);
+      this.isInBasket = this.basketItems.some((item) => item === this.itemId);
     });
 
     this.subscription.add(basketChangeSubscription);
@@ -69,7 +82,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     if (this.showChannels) {
       this.channelId = this.route.snapshot.params['channelId'] || '';
     } else {
-      this.channelService.get(this.configService.config.channelId).subscribe( channel => {
+      this.channelService.get(this.configService.config.channelId).subscribe((channel) => {
         this.channel = channel;
         this.channelId = this.channel.id;
       });
@@ -78,7 +91,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     this.itemId = this.route.snapshot.params['itemId'] || '';
 
     // subscribe on search changes from header component, not needed for search-suggest-box
-    const searchQuery$ = this.facade.searchRequest$.subscribe( request => {
+    const searchQuery$ = this.facade.searchRequest$.subscribe((request) => {
       this.searchQuery = request.searchString;
     });
 
@@ -87,11 +100,10 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['baseFilter']) {
-      this.facade.patchRequestState({ baseFilter: this.baseFilter})
+      this.facade.patchRequestState({ baseFilter: this.baseFilter });
     }
-    
   }
-  
+
   public ngOnDestroy(): void {
     super.ngOnDestroy();
 
@@ -110,7 +122,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
 
   public previewItem(item: Content) {
     this.itemId = item.id;
-    this.isInBasket = this.basketItems.some(i => i === this.itemId);
+    this.isInBasket = this.basketItems.some((i) => i === this.itemId);
     this.emitParamsUpdate(this.QueryParams);
   }
 
@@ -124,7 +136,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   }
 
   public channelsChange(channels: Channel[]) {
-    const channelIndex = channels.findIndex(c => c.id === this.channelId);
+    const channelIndex = channels.findIndex((c) => c.id === this.channelId);
 
     if (channelIndex > -1) {
       this.changeChannel(channels[channelIndex]);
@@ -133,7 +145,6 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     }
   }
 
-
   public changeChannel(channel: Channel) {
     this.channelId = channel.id;
     this.channel = channel;
@@ -141,17 +152,18 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   }
 
   public changeSearchQuery(query: string) {
-    this.facade.patchRequestState({searchString: query})
+    this.facade.patchRequestState({ searchString: query });
     this.searchQuery = query;
   }
 
   public downloadItem() {
-    this.contentService.get(this.itemId, [ContentResolveBehavior.Content])
-    .pipe(take(1))
-    .subscribe(async content => {
+    this.contentService
+      .get(this.itemId, [ContentResolveBehavior.Content])
+      .pipe(take(1))
+      .subscribe(async (content) => {
         this.contentDownloadDialogService.showDialog({
           mode: 'multi',
-          contents: [content as any]
+          contents: [content as any],
         });
       });
   }
@@ -166,8 +178,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     this.updateParams.emit({
       queryParams,
       channelId: this.channelId,
-      itemId: this.itemId
+      itemId: this.itemId,
     });
-
   }
 }
