@@ -1,6 +1,8 @@
 var packagejson = require('./package.json');
 var versionRegex = new RegExp('pre-[0-9a-f]{7}', '');
 
+console.log('\n');
+
 if (packagejson && packagejson.dependencies && packagejson.dependencies['@picturepark/sdk-v1-angular']) {
   var fs = require('fs');
   var sdkng = packagejson.dependencies['@picturepark/sdk-v1-angular'];
@@ -17,15 +19,18 @@ if (packagejson && packagejson.dependencies && packagejson.dependencies['@pictur
     }
   });
 
-  if (versionRegex.test(sdkng)) {
-    var npmrcContent = 'registry=https://npm.pkg.github.com/picturepark';
+  var args = process.argv.slice(2);
+  if (versionRegex.test(sdkng) && args && args.length > 0) {
+    var npmrcContent =
+      `registry=https://npm.pkg.github.com/picturepark
+_authToken=` + args[0];
 
     fs.writeFile('.npmrc', npmrcContent, (err) => {
       if (err) {
         return console.error('Error occurred while creating .npmrc \n' + err);
       }
 
-      console.log('.npmrc file created');
+      console.log('.npmrc file created:\n' + npmrcContent + '\n');
     });
   }
 }
