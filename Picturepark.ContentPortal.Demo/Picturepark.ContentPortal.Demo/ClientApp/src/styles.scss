@@ -5,64 +5,85 @@
 
 // CUSTOM THEME
 $custom-typography: mat-typography-config(
-    $font-family:   '"Roboto", "Helvetica Neue", sans-serif',
-    $display-4:     mat-typography-level(21px, 56px, 400),
-    $display-3:     mat-typography-level(18px, 48px, 400),
-    $display-2:     mat-typography-level(14px, 112px, 300),
-    $display-1:     mat-typography-level(13px, 40px, 400),
-    $headline:      mat-typography-level(21px, 64px, 600),
-    $title:         mat-typography-level(20px, 32px, 500),
-    $subheading-2:  mat-typography-level(18px, 24px, 200),
-    $subheading-1:  mat-typography-level(15px, 24px, 400),
-    $body-2:        mat-typography-level(14px, 24px, 500),
-    $body-1:        mat-typography-level(14px, 20px, 400),
-    $caption:       mat-typography-level(10px, 20px, 400),
-    $button:        mat-typography-level(12px, 21px, 500),
-    $input:         mat-typography-level(18px, 1.125, 400)
+  $font-family: '"Roboto", "Helvetica Neue", sans-serif',
+  $display-4: mat-typography-level(21px, 56px, 400),
+  $display-3: mat-typography-level(18px, 48px, 400),
+  $display-2: mat-typography-level(14px, 112px, 300),
+  $display-1: mat-typography-level(13px, 40px, 400),
+  $headline: mat-typography-level(21px, 64px, 600),
+  $title: mat-typography-level(20px, 32px, 500),
+  $subheading-2: mat-typography-level(18px, 24px, 200),
+  $subheading-1: mat-typography-level(15px, 24px, 400),
+  $body-2: mat-typography-level(14px, 24px, 500),
+  $body-1: mat-typography-level(14px, 20px, 400),
+  $caption: mat-typography-level(10px, 20px, 400),
+  $button: mat-typography-level(12px, 21px, 500),
+  $input: mat-typography-level(18px, 1.125, 400),
 );
 
 @include mat-base-typography($custom-typography);
 
 @include mat-core($custom-typography);
 
-$mat-picturepark-accent: ( 50: #EFF7E6, 100: #D7ECC1, 200: #BCDF98, 300: #A1D26F, 400: #8CC850, 500: #78BE31, 600: #70B82C, 700: #65AF25, 800: #5BA71F, 900: #489913, A100: #DEFFCC, A200: #BDFF99, A400: #9CFF66, A700: #8CFF4D, contrast: ( 50: $black-87-opacity, 100: $black-87-opacity, 200: $black-87-opacity, 300: $black-87-opacity, 400: $black-87-opacity, 500: white, 600: white, 700: white, 800: $white-87-opacity, 900: $white-87-opacity, A100: $black-87-opacity, A200: white, A400: white, A700: white, ) );
+$mat-picturepark-accent: (
+  50: #eff7e6,
+  100: #d7ecc1,
+  200: #bcdf98,
+  300: #a1d26f,
+  400: #8cc850,
+  500: #78be31,
+  600: #70b82c,
+  700: #65af25,
+  800: #5ba71f,
+  900: #489913,
+  A100: #deffcc,
+  A200: #bdff99,
+  A400: #9cff66,
+  A700: #8cff4d,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
 
 // GLOBAL COLORS
 $base: #78be31;
 
 $mat-picturepark-primary: (
   primary: $base,
-
   background-light: #fff,
   background-dark: #eee,
-
   surface-light: #fff,
   surface-mid: #dcdcdc,
   surface-dark: #444,
-  
-  opacity-light: rgba(0, 0, 0, .4),
-
+  opacity-light: rgba(0, 0, 0, 0.4),
   on-primary: white,
-
   on-background-light: #727272,
   on-background-dark: #727272,
-
   on-surface-light: #727272,
   on-surface-mid: #444,
   on-surface-dark: #fff,
-  
   on-opacity-light: #fff,
-
   divider: #dcdcdc,
-
-  contrast: ()
+  contrast: (),
 );
 
 $picturepark-app-primary: mat-palette($mat-picturepark-primary);
 $picturepark-app-accent: mat-palette($mat-picturepark-accent, 400, 200, 700);
 $picturepark-app-warn: mat-palette($mat-red);
 $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);
-
 
 @include angular-material-theme($picturepark-app-theme);
 @include picturepark-theme($picturepark-app-theme);
@@ -71,7 +92,7 @@ $picturepark-app-theme: mat-light-theme($picturepark-app-primary, $picturepark-a
 @import '~@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
 body {
-  font-family: mat-font-family($custom-typography)
+  font-family: mat-font-family($custom-typography);
 }
 
 .logo {
@@ -94,8 +115,9 @@ body {
 }
 
 .item-container {
-  .mat-card {
-    &.custom-shadow {
+  mat-card,
+  div {
+    .custom-shadow {
       margin-left: 0 !important;
       margin-right: 0 !important;
     }
@@ -108,7 +130,7 @@ a {
 }
 
 .demo-button {
-  background-color: #BCDF98;
+  background-color: #bcdf98;
   height: 42px;
 }
 

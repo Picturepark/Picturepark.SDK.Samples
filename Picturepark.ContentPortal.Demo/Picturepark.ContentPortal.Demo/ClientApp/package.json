@@ -9,8 +9,8 @@
     "build:ssr": "npm run build -- --app=ssr --output-hashing=media",
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
-    "format:check": "prettier --config ./.prettierrc --list-different \"src/{app,assets,environments}/**/*{.ts,.js,.json,.css,.scss,.html}\"",
-    "format:write": "prettier --config ./.prettierrc --write \"src/{app,assets,environments}/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "format:check": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "format:write": "prettier --config ./.prettierrc --write \"src/**/*{.ts,.js,.json,.css,.scss,.html}\"",
     "precommit": "run-s format:fix lint"
   },
   "private": true,
