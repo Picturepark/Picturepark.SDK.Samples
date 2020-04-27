@@ -11,8 +11,7 @@
     "format:fix": "pretty-quick --staged",
     "format:check": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json,.css,.scss,.html}\"",
     "format:write": "prettier --config ./.prettierrc --write \"src/**/*{.ts,.js,.json,.css,.scss,.html}\"",
-    "precommit": "run-s format:fix lint",
-    "npmrc": "node create-npmrc.js"
+    "precommit": "run-s format:fix lint"
   },
   "private": true,
   "dependencies": {
