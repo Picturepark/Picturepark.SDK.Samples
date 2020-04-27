@@ -50,8 +50,8 @@
         class="custom-shadow"
       >
         <img *ngIf="images[idx]" [src]="images[idx]" mat-card-image alt="" />
-        <mat-card-title>{{ item.title }}</mat-card-title>
-        <mat-card-content>{{ item.description }}</mat-card-content>
+        <mat-card-title>{{ item.title | pptranslate }}</mat-card-title>
+        <mat-card-content>{{ item.description | pptranslate }}</mat-card-content>
       </mat-card>
     </div>
 

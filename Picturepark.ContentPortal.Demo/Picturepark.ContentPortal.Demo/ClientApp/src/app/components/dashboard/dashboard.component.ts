@@ -14,6 +14,7 @@ import {
   BrokenDependenciesFilter,
   SortInfo,
   SortDirection,
+  TranslatedStringDictionary,
 } from '@picturepark/sdk-v1-angular';
 import { Subscription } from 'rxjs';
 import { PageBase } from '../page-base';
@@ -71,14 +72,17 @@ export class DashboardComponent extends PageBase implements OnDestroy {
 
     details.forEach((i) => {
       this.items.push({
-        imageId: i.content['teaserImage']._targetId,
-        title: i.content['headline']['x-default'],
-        description: i.content['abstract']['x-default'],
+        imageId: i.content['teaserImage']?._targetId,
+        title: TranslatedStringDictionary.fromJS(i.content['headline']),
+        description: TranslatedStringDictionary.fromJS(i.content['abstract']),
         path: i.content['resourceLink'],
       });
     });
 
     this.items.forEach((item, index) => {
+      if (!item.imageId) {
+        return;
+      }
       const downloadSubscription = this.contentService
         .downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null)
         .subscribe((result) => {
