@@ -94,8 +94,9 @@ body {
 }
 
 .item-container {
-  .mat-card {
-    &.custom-shadow {
+  mat-card,
+  div {
+    .custom-shadow {
       margin-left: 0 !important;
       margin-right: 0 !important;
     }
