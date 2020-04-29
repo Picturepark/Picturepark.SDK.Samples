@@ -64,12 +64,12 @@ $base: #78be31;
 $mat-picturepark-primary: (
   primary: $base,
   background-light: #fff,
-  background-dark: #eee,
+  background-dark: #f8f8f8,
   surface-light: #fff,
-  surface-mid: #dcdcdc,
+  surface-mid: #eee,
   surface-dark: #444,
   opacity-light: rgba(0, 0, 0, 0.4),
-  on-primary: white,
+  on-primary: #fff,
   on-background-light: #727272,
   on-background-dark: #727272,
   on-surface-light: #727272,
@@ -132,13 +132,4 @@ a {
 .demo-button {
   background-color: #bcdf98;
   height: 42px;
-}
-
-.browser-item__image-virtual-item-container {
-  color: #eeeeee !important;
-  background-color: #6f6f6f;
-
-  .virtual-content-footer {
-    display: none;
-  }
 }
