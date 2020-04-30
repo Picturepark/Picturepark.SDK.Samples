@@ -62,7 +62,10 @@ namespace Picturepark.ContentPortal.Demo
 
             await EnsureUserIsReviewed(user);
 
-            await EnsureUserRoles(user);
+            if (!user.IsFederated)
+            {
+                await EnsureUserRoles(user);
+            }
         }
 
         private async Task EnsureUserRoles(UserDetail user)
@@ -89,6 +92,11 @@ namespace Picturepark.ContentPortal.Demo
         private async Task<UserDetail> GetUserDetails(TokenValidatedContext context)
         {
             var email = context.Principal.Identity.Name;
+
+            if (string.IsNullOrEmpty(email) || !email.Contains('@'))
+            {
+                throw new Exception($"Invalid or empty user email: '{email}'");
+            }
 
             var results = await _pictureparkClient.User.SearchAsync(new UserSearchRequest
             {
