@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ParamsUpdate } from '../../models/params-update.model';
-import { FilterBase, TermFilter } from '@picturepark/sdk-v1-angular';
+import { FilterBase, TermFilter, AggregationFilter } from '@picturepark/sdk-v1-angular';
 
 @Component({
   selector: 'app-presskit',
@@ -19,7 +19,7 @@ export class PresskitComponent implements OnInit {
       const baseFilterJson = this.route.snapshot.queryParamMap.get('baseFilter');
       if (baseFilterJson) {
         const parsedBaseFilter = FilterBase.fromJS(JSON.parse(baseFilterJson));
-        if (parsedBaseFilter instanceof FilterBase) {
+        if ((parsedBaseFilter instanceof FilterBase) && !(parsedBaseFilter instanceof AggregationFilter)) {
           this.baseFilter = parsedBaseFilter;
           return;
         }
