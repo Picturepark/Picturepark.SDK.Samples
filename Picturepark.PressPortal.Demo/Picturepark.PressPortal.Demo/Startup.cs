@@ -90,7 +90,7 @@ namespace Picturepark.PressPortal.Demo
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        NameClaimType = "name",
+                        NameClaimType = "preferred_username",
                         RoleClaimType = "role"
                     };
                 });

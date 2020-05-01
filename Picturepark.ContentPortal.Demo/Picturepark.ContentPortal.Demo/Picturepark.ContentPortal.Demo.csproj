@@ -15,7 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.2" />
-    <PackageReference Include="Picturepark.SDK.V1" Version="1.5.65" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="1.6.55" />
     <PackageReference Include="ProxyKit" Version="2.3.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
