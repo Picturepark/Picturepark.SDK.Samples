@@ -6,7 +6,7 @@ import {
   ContentResolveBehavior,
   SchemaService,
   SchemaDetail,
-  SYSTEM_CONTENT_SCHEMAS_IDS,
+  SYSTEM_LAYER_SCHEMA_IDS,
 } from '@picturepark/sdk-v1-angular';
 import { Subscription } from 'rxjs';
 import { RelationFieldInfo } from '@picturepark/sdk-v1-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
@@ -30,7 +30,7 @@ export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy 
 
   public schemas: SchemaDetail[];
 
-  public systemContentSchemaIds = SYSTEM_CONTENT_SCHEMAS_IDS;
+  public systemLayerSchemaIds = SYSTEM_LAYER_SCHEMA_IDS;
 
   private subscription: Subscription = new Subscription();
 
