@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef, Injector } from '@angular/core';
 import { LiquidRenderingService, ContentDetailsDialogComponent } from '@picturepark/sdk-v1-angular-ui';
 import {
   ContentService,
@@ -8,7 +8,6 @@ import {
   SchemaDetail,
   SYSTEM_LAYER_SCHEMA_IDS,
 } from '@picturepark/sdk-v1-angular';
-import { Subscription } from 'rxjs';
 import { RelationFieldInfo } from '@picturepark/sdk-v1-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
 import { MatDialog } from '@angular/material/dialog';
 import { ContentDetailDialogOptions } from '@picturepark/sdk-v1-angular-ui/lib/features-module/content-details-dialog/ContentDetailDialogOptions';
@@ -20,7 +19,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss'],
 })
-export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy {
+export class ItemDetailsComponent extends PageBase implements OnInit {
   @Input()
   public itemId: string;
 
@@ -32,21 +31,20 @@ export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy 
 
   public systemLayerSchemaIds = SYSTEM_LAYER_SCHEMA_IDS;
 
-  private subscription: Subscription = new Subscription();
-
   constructor(
     private contentService: ContentService,
     private schemaService: SchemaService,
     private liquidRenderingService: LiquidRenderingService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog
+    dialog: MatDialog,
+    injector: Injector
   ) {
-    super(media, changeDetectorRef, dialog);
+    super(injector, media, changeDetectorRef, dialog);
   }
 
   public ngOnInit() {
-    const contentSubscription = this.contentService
+    this.sub = this.contentService
       .get(this.itemId, [
         ContentResolveBehavior.Content,
         ContentResolveBehavior.Metadata,
@@ -66,8 +64,6 @@ export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy 
           .toPromise();
         this.loading = false;
       });
-
-    this.subscription.add(contentSubscription);
   }
 
   public relationClick(relation: RelationFieldInfo) {
@@ -82,11 +78,5 @@ export class ItemDetailsComponent extends PageBase implements OnInit, OnDestroy 
       maxWidth: '98vw',
       maxHeight: '99vh',
     });
-  }
-
-  public ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }
