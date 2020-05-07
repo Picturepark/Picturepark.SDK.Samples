@@ -24,8 +24,8 @@ import {
   ContentSearchInputState,
   ContentService,
   FilterBase,
-  getState,
-  updateUrlFromState,
+  getSearchState,
+  updateUrlFromSearchState,
 } from '@picturepark/sdk-v1-angular';
 import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
 import { combineLatest } from 'rxjs';
@@ -114,7 +114,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
         take(1)
       )
       .subscribe((searchInfo) => {
-        const patchState: Partial<ContentSearchInputState> = getState(searchInfo);
+        const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
 
         const channelId = searchInfo.channelId;
         if (channelId) {
@@ -128,7 +128,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
         this.facade.patchRequestState(patchState);
       });
 
-    this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromState(i, this.queryParams, this.router));
+    this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
