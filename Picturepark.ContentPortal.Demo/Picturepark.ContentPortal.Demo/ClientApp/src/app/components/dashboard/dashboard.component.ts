@@ -16,7 +16,6 @@ import {
   SortDirection,
   TranslatedStringDictionary,
 } from '@picturepark/sdk-v1-angular';
-import { Subscription } from 'rxjs';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';

@@ -157,6 +157,10 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   }
 
   public changeChannel(channel: Channel) {
+    // Clears aggregation Filters if there is a channelChange
+    if (this.channel?.id !== channel.id) {
+      this.facade.patchRequestState({ aggregationFilters: [] })
+    }
     this.channel = channel;
     this.emitParamsUpdate(this.queryParams);
   }
