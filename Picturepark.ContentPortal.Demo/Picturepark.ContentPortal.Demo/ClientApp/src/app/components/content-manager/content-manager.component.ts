@@ -179,10 +179,8 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   }
 
   private emitParamsUpdate(queryParams: Params) {
-    if (this.mobileQuery.matches) {
-      if (this.sideNav.opened) {
-        this.sideNav.toggle();
-      }
+    if (this.mobileQuery.matches && this.sideNav?.opened) {
+      this.sideNav.toggle();
     }
 
     this.updateParams.emit({

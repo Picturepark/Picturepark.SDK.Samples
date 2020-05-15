@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <button
       mat-icon-button
-      (click)="snav.toggle()"
+      (click)="snav?.toggle()"
       *ngIf="mobileQuery.matches"
       class="menu"
       [matBadge]="basketItems.length"
@@ -73,22 +73,22 @@
 </mat-toolbar>
 
 <div class="content" [style.top.px]="mobileQuery.matches ? 80 : 64">
-  <ng-container *ngIf="!errorMessage; else onError">
-    <mat-sidenav-container style="width: 100%;">
-      <mat-sidenav
-        #snav
-        [mode]="mobileQuery.matches ? 'over' : 'side'"
-        disableClose="true"
-        [fixedInViewport]="mobileQuery.matches"
-        fixedTopGap="80"
-        [opened]="mobileQuery.matches ? false : true"
-        style="width: 375px;"
-      >
-        <mat-toolbar-row *ngIf="mobileQuery.matches">
-          <button style="width: 100%;" mat-button class="demo-button" (click)="openDialog($event)">
-            {{ 'Items.DemoInfo' | pptranslate }}
-          </button>
-        </mat-toolbar-row>
+  <mat-sidenav-container style="width: 100%;">
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      disableClose="true"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="80"
+      [opened]="mobileQuery.matches ? false : true"
+      style="width: 375px;"
+    >
+      <mat-toolbar-row *ngIf="mobileQuery.matches">
+        <button style="width: 100%;" mat-button class="demo-button" (click)="openDialog($event)">
+          {{ 'Items.DemoInfo' | pptranslate }}
+        </button>
+      </mat-toolbar-row>
+      <ng-container *ngIf="!errorMessage">
         <mat-toolbar-row *ngIf="mobileQuery.matches && showChannels">
           <pp-channel-picker
             style="width: 100%;"
@@ -97,7 +97,6 @@
             (channelsChange)="channelsChange($event)"
           ></pp-channel-picker>
         </mat-toolbar-row>
-
         <mat-toolbar-row *ngIf="mobileQuery.matches">
           <pp-search-box
             style="width: 100%; font-size: 16px;"
@@ -105,7 +104,6 @@
             (searchStringChange)="changeSearchQuery($event)"
           ></pp-search-box>
         </mat-toolbar-row>
-
         <mat-tab-group class="content-panel">
           <mat-tab label="Filters">
             <pp-aggregation-list *ngIf="channel" [facade]="facade"></pp-aggregation-list>
@@ -123,17 +121,18 @@
             <pp-basket (previewItemChange)="previewItem($event)"></pp-basket>
           </mat-tab>
         </mat-tab-group>
-      </mat-sidenav>
-
-      <mat-sidenav-content>
+      </ng-container>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <ng-container *ngIf="!errorMessage; else onError">
         <pp-content-browser class="content-browser" [channel]="channel" (previewItemChange)="previewItem($event)">
         </pp-content-browser>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </ng-container>
-  <ng-template #onError>
-    <p class="error-message">{{ errorMessage }}</p>
-  </ng-template>
+      </ng-container>
+      <ng-template #onError>
+        <p class="error-message">{{ errorMessage }}</p>
+      </ng-template>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
 
 <div class="item" *ngIf="itemId !== ''" [style.top.px]="mobileQuery.matches ? 56 : 80">
