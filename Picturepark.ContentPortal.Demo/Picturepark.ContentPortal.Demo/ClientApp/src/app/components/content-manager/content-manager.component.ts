@@ -101,32 +101,24 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       });
 
     // subscribe on initial query string params and update search state
-    this.sub = combineLatest([this.route.paramMap, this.route.queryParamMap])
-      .pipe(
-        map(([paramMap, queryParamMap]) => {
-          return {
-            searchString: queryParamMap.get('searchString') || '',
-            searchMode: queryParamMap.get('searchMode'),
-            filter: queryParamMap.getAll('filter').map((fq) => AggregationFilter.fromJS(JSON.parse(fq))),
-            channelId: queryParamMap.get('channelId') || paramMap.get('channelId'),
-          };
-        }),
-        take(1)
-      )
-      .subscribe((searchInfo) => {
-        const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
+    this.sub = this.route.queryParamMap.pipe(
+      map((queryParamMap) => {
+        return {
+          searchString: queryParamMap.get('searchString') || '',
+          searchMode: queryParamMap.get('searchMode'),
+          filter: queryParamMap.getAll('filter').map((fq) => AggregationFilter.fromJS(JSON.parse(fq))),
+        };
+      }),
+      take(1)
+    ).subscribe((searchInfo) => {
+      const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
 
-        const channelId = searchInfo.channelId;
-        if (channelId) {
-          patchState.channelId = channelId;
-        }
+      if (patchState.searchString) {
+        this.searchQuery = patchState.searchString;
+      }
 
-        if (patchState.searchString) {
-          this.searchQuery = patchState.searchString;
-        }
-
-        this.facade.patchRequestState(patchState);
-      });
+      this.facade.patchRequestState(patchState);
+    });
 
     this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
   }
