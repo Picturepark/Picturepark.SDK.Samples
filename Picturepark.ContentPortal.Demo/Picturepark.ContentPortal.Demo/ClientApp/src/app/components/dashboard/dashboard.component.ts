@@ -98,7 +98,7 @@ export class DashboardComponent extends PageBase {
     }
 
     this.searchQuery = query;
-    this.router.navigate(['/items'], { queryParams: { searchString: query } });
+    this.router.navigate(['/items', 'portal'], { queryParams: { searchString: query } });
   }
 
   public navigate(url: string) {
