@@ -27,6 +27,8 @@
     "@angular/router": "^9.1.4",
     "@picturepark/sdk-v1-angular": "^1.6.0-pre-5faf787.0",
     "@picturepark/sdk-v1-angular-ui": "^1.6.0-pre-5faf787.0",
+    "@picturepark/sdk-v1-angular": "^1.6.0-pre-f20bf37.0",
+    "@picturepark/sdk-v1-angular-ui": "^1.6.0-pre-f20bf37.0",
     "core-js": "^2.6.11",
     "liquidjs": "8.2.1",
     "normalize.css": "8.0.0",
