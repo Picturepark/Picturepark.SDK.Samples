@@ -34,9 +34,9 @@
     ></pp-search-box>
 
     <mat-divider [vertical]="true" class="divider" *ngIf="!mobileQuery.matches"> </mat-divider>
-    <app-language></app-language>
+    <app-language *ngIf="!mobileQuery.matches"></app-language>
     <app-profile></app-profile>
-    <app-info></app-info>
+    <app-info *ngIf="!mobileQuery.matches"></app-info>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -96,6 +96,8 @@
             (channelChange)="changeChannel($event)"
             (channelsChange)="channelsChange($event)"
           ></pp-channel-picker>
+          <app-language *ngIf="mobileQuery.matches"></app-language>
+          <app-info *ngIf="mobileQuery.matches"></app-info>
         </mat-toolbar-row>
         <mat-toolbar-row *ngIf="mobileQuery.matches">
           <pp-search-box
