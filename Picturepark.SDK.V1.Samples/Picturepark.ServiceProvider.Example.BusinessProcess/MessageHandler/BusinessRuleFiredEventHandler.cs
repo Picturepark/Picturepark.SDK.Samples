@@ -22,7 +22,7 @@ namespace Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler
 
         protected override void Handle(BusinessRuleFiredEvent applicationEvent)
         {
-            var triggeredFor = applicationEvent.Details.Where(d => d.DocumentType == "ContentDoc" && d.RuleIds.Contains(_config.Value.TriggeringBusinessRuleId))
+            var triggeredFor = applicationEvent.Details.Where(d => d.DocumentType == "Content" && d.RuleIds.Contains(_config.Value.TriggeringBusinessRuleId))
                 .Select(d => d.DocumentId).ToArray();
 
             if (triggeredFor.Any())
