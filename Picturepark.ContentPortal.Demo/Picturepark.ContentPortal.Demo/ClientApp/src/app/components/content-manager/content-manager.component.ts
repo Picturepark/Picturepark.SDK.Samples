@@ -1,63 +1,67 @@
-import {
-  Channel,
-  FilterBase,
-  Content,
-  ContentService,
-  ContentResolveBehavior,
-  ChannelService,
-  ContentSearchFacade,
-} from '@picturepark/sdk-v1-angular';
-
-import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
-
 import { MediaMatcher } from '@angular/cdk/layout';
 import {
-  Component,
-  OnInit,
   ChangeDetectorRef,
-  OnDestroy,
-  ViewChild,
-  Input,
-  Output,
+  Component,
   EventEmitter,
-  SimpleChanges,
+  Injector,
+  Input,
   OnChanges,
-  Query,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { ItemDetailsComponent } from '../item-details/item-details.component';
-import { Subscription } from 'rxjs';
-import { MatSidenav } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
-import { PageBase } from '../page-base';
-import { take } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+  AggregationFilter,
+  Channel,
+  ChannelService,
+  Content,
+  ContentResolveBehavior,
+  ContentSearchFacade,
+  ContentSearchInputState,
+  ContentService,
+  FilterBase,
+  getSearchState,
+  updateUrlFromSearchState,
+} from '@picturepark/sdk-v1-angular';
+import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
+import { combineLatest } from 'rxjs';
+import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
+import { ItemDetailsComponent } from '../item-details/item-details.component';
+import { PageBase } from '../page-base';
 
 @Component({
   selector: 'app-content-manager',
   templateUrl: './content-manager.component.html',
   styleUrls: ['./content-manager.component.scss'],
 })
-export class ContentManagerComponent extends PageBase implements OnInit, OnDestroy, OnChanges {
+export class ContentManagerComponent extends PageBase implements OnInit, OnChanges {
   @Input() baseFilter: FilterBase;
   @Input() showChannels = true;
   @Input() errorMessage: string;
   @Output() updateParams = new EventEmitter<ParamsUpdate>();
 
   @ViewChild(ItemDetailsComponent) public itemDetailsComponent: ItemDetailsComponent;
-  public channelId: string;
-  public channel: Channel = null;
-  public searchQuery: string = null;
-  public itemId: string;
-  public basketItems: string[] = [];
-  public isInBasket = true;
   @ViewChild('snav', { static: true }) public sideNav: MatSidenav;
 
-  private subscription: Subscription = new Subscription();
+  public channel: Channel = null;
+  public searchQuery = '';
+  public itemId = '';
+  public basketItems: string[] = [];
+  public isInBasket: boolean;
+
+  private get queryParams(): Params {
+    return Object.assign({}, this.route.snapshot.queryParams);
+  }
 
   public constructor(
     private route: ActivatedRoute,
+    public router: Router,
     private channelService: ChannelService,
     private basketService: BasketService,
     private configService: ConfigService,
@@ -66,49 +70,62 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
     private contentDownloadDialogService: ContentDownloadDialogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog
+    dialog: MatDialog,
+    injector: Injector
   ) {
-    super(media, changeDetectorRef, dialog);
+    super(injector, media, changeDetectorRef, dialog);
 
-    const basketChangeSubscription = this.basketService.basketChange.subscribe((items) => {
+    this.sub = this.basketService.basketChange.subscribe((items) => {
       this.basketItems = items;
       this.isInBasket = this.basketItems.some((item) => item === this.itemId);
     });
-
-    this.subscription.add(basketChangeSubscription);
   }
 
   public ngOnInit() {
-    if (this.showChannels) {
-      this.channelId = this.route.snapshot.params['channelId'] || '';
-    } else {
-      this.channelService.get(this.configService.config.channelId).subscribe((channel) => {
-        this.channel = channel;
-        this.channelId = this.channel.id;
+    // Redirect channel
+    this.sub = this.route.paramMap
+      .pipe(
+        tap((i) => (this.itemId = i.get('itemId') || '')),
+        map((i) => i.get('channelId')),
+        distinctUntilChanged(),
+        switchMap((i) =>
+          this.showChannels && (i || this.configService.config.channelId)
+            ? this.channelService.get(i || this.configService.config.channelId)
+            : this.channelService.getAll().pipe(map((channels) => channels[0]))
+        )
+      )
+      .subscribe((channel) => {
+        if (this.channel?.id !== channel.id) {
+          this.channel = channel;
+        }
       });
-    }
 
-    this.itemId = this.route.snapshot.params['itemId'] || '';
+    // subscribe on initial query string params and update search state
+    this.sub = this.route.queryParamMap.pipe(
+      map((queryParamMap) => {
+        return {
+          searchString: queryParamMap.get('searchString') || '',
+          searchMode: queryParamMap.get('searchMode'),
+          filter: queryParamMap.getAll('filter').map((fq) => AggregationFilter.fromJS(JSON.parse(fq))),
+        };
+      }),
+      take(1)
+    ).subscribe((searchInfo) => {
+      const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
 
-    // subscribe on search changes from header component, not needed for search-suggest-box
-    const searchQuery$ = this.facade.searchRequest$.subscribe((request) => {
-      this.searchQuery = request.searchString;
+      if (patchState.searchString) {
+        this.searchQuery = patchState.searchString;
+      }
+
+      this.facade.patchRequestState(patchState);
     });
 
-    this.subscription.add(searchQuery$);
+    this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['baseFilter']) {
       this.facade.patchRequestState({ baseFilter: this.baseFilter });
-    }
-  }
-
-  public ngOnDestroy(): void {
-    super.ngOnDestroy();
-
-    if (this.subscription) {
-      this.subscription.unsubscribe();
     }
   }
 
@@ -123,32 +140,29 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   public previewItem(item: Content) {
     this.itemId = item.id;
     this.isInBasket = this.basketItems.some((i) => i === this.itemId);
-    this.emitParamsUpdate(this.QueryParams);
+    this.emitParamsUpdate(this.queryParams);
   }
 
   public closeItem() {
     this.itemId = '';
-    this.emitParamsUpdate(this.QueryParams);
-  }
-
-  public get QueryParams(): Params {
-    return Object.assign({}, this.route.snapshot.queryParams);
+    this.emitParamsUpdate(this.queryParams);
   }
 
   public channelsChange(channels: Channel[]) {
-    const channelIndex = channels.findIndex((c) => c.id === this.channelId);
+    const channelIndex = channels.findIndex((c) => c.id === this.channel?.id);
 
     if (channelIndex > -1) {
       this.changeChannel(channels[channelIndex]);
-    } else {
-      // TODO: not found
     }
   }
 
   public changeChannel(channel: Channel) {
-    this.channelId = channel.id;
+    // Clears aggregation Filters if there is a channelChange
+    if (this.channel?.id !== channel.id) {
+      this.facade.patchRequestState({ aggregationFilters: [] })
+    }
     this.channel = channel;
-    this.emitParamsUpdate(this.QueryParams);
+    this.emitParamsUpdate(this.queryParams);
   }
 
   public changeSearchQuery(query: string) {
@@ -169,15 +183,13 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnDestr
   }
 
   private emitParamsUpdate(queryParams: Params) {
-    if (this.mobileQuery.matches) {
-      if (this.sideNav.opened) {
-        this.sideNav.toggle();
-      }
+    if (this.mobileQuery.matches && this.sideNav?.opened) {
+      this.sideNav.toggle();
     }
 
     this.updateParams.emit({
       queryParams,
-      channelId: this.channelId,
+      channelId: this.channel?.id,
       itemId: this.itemId,
     });
   }

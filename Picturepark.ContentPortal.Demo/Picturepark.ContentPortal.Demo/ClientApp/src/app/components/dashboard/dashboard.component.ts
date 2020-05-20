@@ -1,5 +1,5 @@
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { Component, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DashboardItem } from './../../models/dashboard-item.model';
@@ -16,7 +16,6 @@ import {
   SortDirection,
   TranslatedStringDictionary,
 } from '@picturepark/sdk-v1-angular';
-import { Subscription } from 'rxjs';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';
@@ -26,10 +25,9 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent extends PageBase implements OnDestroy {
+export class DashboardComponent extends PageBase {
   public items: DashboardItem[] = [];
   public images: SafeUrl[] = [];
-  private subscription: Subscription = new Subscription();
   public searchQuery: string = null;
 
   constructor(
@@ -38,10 +36,10 @@ export class DashboardComponent extends PageBase implements OnDestroy {
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog
+    dialog: MatDialog,
+    injector: Injector
   ) {
-    super(media, changeDetectorRef, dialog);
-    this.items = [];
+    super(injector, media, changeDetectorRef, dialog);
     this.load();
   }
 
@@ -83,15 +81,13 @@ export class DashboardComponent extends PageBase implements OnDestroy {
       if (!item.imageId) {
         return;
       }
-      const downloadSubscription = this.contentService
+      this.sub = this.contentService
         .downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null)
         .subscribe((result) => {
           if (result !== null) {
             this.images[index] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(result.data));
           }
         });
-
-      this.subscription.add(downloadSubscription);
     });
   }
 
@@ -101,18 +97,11 @@ export class DashboardComponent extends PageBase implements OnDestroy {
     }
 
     this.searchQuery = query;
-    this.router.navigate(['/items', 'rootChannel'], { queryParams: { search: this.searchQuery } });
+    this.router.navigate(['/items', 'portal'], { queryParams: { searchString: query } });
   }
 
   public navigate(url: string) {
     this.router.navigateByUrl(url);
-  }
-
-  public ngOnDestroy(): void {
-    super.ngOnDestroy();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   public trackByItem(index, item: DashboardItem) {
