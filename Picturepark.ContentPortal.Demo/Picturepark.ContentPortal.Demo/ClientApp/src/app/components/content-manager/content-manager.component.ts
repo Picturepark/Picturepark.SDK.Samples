@@ -28,7 +28,6 @@ import {
   updateUrlFromSearchState,
 } from '@picturepark/sdk-v1-angular';
 import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
-import { combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
@@ -101,24 +100,26 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       });
 
     // subscribe on initial query string params and update search state
-    this.sub = this.route.queryParamMap.pipe(
-      map((queryParamMap) => {
-        return {
-          searchString: queryParamMap.get('searchString') || '',
-          searchMode: queryParamMap.get('searchMode'),
-          filter: queryParamMap.getAll('filter').map((fq) => AggregationFilter.fromJS(JSON.parse(fq))),
-        };
-      }),
-      take(1)
-    ).subscribe((searchInfo) => {
-      const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
+    this.sub = this.route.queryParamMap
+      .pipe(
+        map((queryParamMap) => {
+          return {
+            searchString: queryParamMap.get('searchString') || '',
+            searchMode: queryParamMap.get('searchMode'),
+            filter: queryParamMap.getAll('filter').map((fq) => AggregationFilter.fromJS(JSON.parse(fq))),
+          };
+        }),
+        take(1)
+      )
+      .subscribe((searchInfo) => {
+        const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
 
-      if (patchState.searchString) {
-        this.searchQuery = patchState.searchString;
-      }
+        if (patchState.searchString) {
+          this.searchQuery = patchState.searchString;
+        }
 
-      this.facade.patchRequestState(patchState);
-    });
+        this.facade.patchRequestState(patchState);
+      });
 
     this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
   }
@@ -159,8 +160,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   public changeChannel(channel: Channel) {
     // Clears aggregation Filters if there is a channelChange
     if (this.channel?.id !== channel.id) {
-      this.facade.patchRequestState({ aggregationFilters: [] })
+      this.facade.patchRequestState({ aggregationFilters: [], channelId: channel.id });
     }
+
     this.channel = channel;
     this.emitParamsUpdate(this.queryParams);
   }
