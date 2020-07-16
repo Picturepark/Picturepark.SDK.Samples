@@ -24,6 +24,9 @@ Bin/
 obj/
 Obj/
 
+# Exception for the widgets build results
+!**/picturepark-sdk-v1-widgets/pdfjs/build/
+
 # Visual Studio 2015 cache/options directory
 .vs/
 
