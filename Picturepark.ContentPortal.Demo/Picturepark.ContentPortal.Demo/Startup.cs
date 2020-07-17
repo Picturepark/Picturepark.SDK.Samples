@@ -16,6 +16,7 @@ using Picturepark.ContentPortal.Demo.Controllers;
 using Picturepark.SDK.V1;
 using Picturepark.SDK.V1.Authentication;
 using Picturepark.SDK.V1.Contract;
+using System;
 
 namespace Picturepark.ContentPortal.Demo
 {
@@ -46,7 +47,11 @@ namespace Picturepark.ContentPortal.Demo
             ));
 
             // Configure authentication
-            services.AddAuthentication("Cookies")
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultScheme = "Cookies";
+                    options.DefaultChallengeScheme = "oidc";
+                })
                 .AddCookie("Cookies", options =>
                 {
                     options.LoginPath = AccountController.LoginPath;
@@ -75,12 +80,23 @@ namespace Picturepark.ContentPortal.Demo
                         options.Scope.Add(scope);
                     }
 
+                    if (!options.Scope.Contains("offline_access"))
+                    {
+                        options.Scope.Add("offline_access");
+                    }
+
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         NameClaimType = "preferred_username",
                         RoleClaimType = "role"
                     };
                 });
+
+            // add automatic token management
+            services.AddAccessTokenManagement(options =>
+            {
+                options.User.RefreshBeforeExpiration = TimeSpan.FromMinutes(5);
+            });
 
             services.AddResponseCompression();
             services.AddProxy();
@@ -132,7 +148,7 @@ namespace Picturepark.ContentPortal.Demo
                     var forwardContext = context.ForwardTo(PictureparkConfiguration.ApiServer);
                     forwardContext.UpstreamRequest.Headers.Add("Picturepark-CustomerAlias", PictureparkConfiguration.CustomerAlias);
 
-                    var accessToken = await context.GetTokenAsync("access_token");
+                    var accessToken = await context.GetUserAccessTokenAsync();
                     forwardContext.UpstreamRequest.Headers.Authorization = string.IsNullOrEmpty(accessToken) ?
                         new AuthenticationHeaderValue("Bearer", PictureparkConfiguration.AccessToken) :
                         new AuthenticationHeaderValue("Bearer", accessToken);
