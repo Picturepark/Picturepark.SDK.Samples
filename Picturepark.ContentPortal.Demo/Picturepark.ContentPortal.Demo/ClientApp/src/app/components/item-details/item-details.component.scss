@@ -8,25 +8,6 @@
   padding: 16px 16px 0 16px;
 }
 
-::ng-deep .content-image-preview-content {
-  justify-content: center !important;
-  display: flex !important;
-  flex-direction: row !important;
-  overflow: hidden !important;
-
-  img {
-    display: block;
-    margin: 0 auto;
-    width: unset !important;
-  }
-}
-
-::ng-deep .pp-content-image-preview-mobile {
-  img {
-    width: 100% !important;
-  }
-}
-
 .preview-image {
   background-color: #4a634a;
   padding: 0;
