@@ -10,6 +10,7 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -39,7 +40,7 @@ import { PageBase } from '../page-base';
   templateUrl: './content-manager.component.html',
   styleUrls: ['./content-manager.component.scss'],
 })
-export class ContentManagerComponent extends PageBase implements OnInit, OnChanges {
+export class ContentManagerComponent extends PageBase implements OnInit, OnChanges, OnDestroy {
   @Input() baseFilter: FilterBase;
   @Input() showChannels = true;
   @Input() errorMessage: string;
@@ -118,7 +119,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
           this.searchQuery = patchState.searchString;
         }
 
-        this.facade.patchRequestState(patchState);
+        this.patchRequestState(patchState);
       });
 
     this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
@@ -126,7 +127,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['baseFilter']) {
-      this.facade.patchRequestState({ baseFilter: this.baseFilter });
+      this.patchRequestState({ baseFilter: this.baseFilter });
     }
   }
 
@@ -159,22 +160,22 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
 
   public changeChannel(channel: Channel) {
     if (this.channel?.id !== channel.id) {
-      // Clears aggregation Filters, resets the aggregators sets the channel id
-      this.facade.patchRequestState({
+      this.channel = channel;
+
+      // Clears aggregation Filters, resets the aggregators
+      this.patchRequestState({
         aggregationFilters: [],
         aggregators: channel.aggregations,
-        channelId: channel.id,
       });
 
       const params = this.queryParams;
       delete params.filter;
-      this.channel = channel;
       this.emitParamsUpdate(params);
     }
   }
 
   public changeSearchQuery(query: string) {
-    this.facade.patchRequestState({ searchString: query });
+    this.patchRequestState({ searchString: query });
     this.searchQuery = query;
   }
 
@@ -200,5 +201,17 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       channelId: this.channel?.id,
       itemId: this.itemId,
     });
+  }
+
+  private patchRequestState(patchState: Partial<ContentSearchInputState>) {
+    if (!patchState.channelId || patchState.channelId !== this.channel?.id) {
+      patchState.channelId = this.channel.id;
+    }
+
+    this.facade.patchRequestState(patchState);
+  }
+
+  ngOnDestroy(): void {
+    this.facade.resetRequestState();
   }
 }
