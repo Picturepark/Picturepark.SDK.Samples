@@ -159,19 +159,21 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   }
 
   public changeChannel(channel: Channel) {
-    if (this.channel?.id !== channel.id) {
-      this.channel = channel;
+    const params = this.queryParams;
 
+    if (this.channel?.id !== channel.id) {
       // Clears aggregation Filters, resets the aggregators
       this.patchRequestState({
         aggregationFilters: [],
         aggregators: channel.aggregations,
+        channelId: channel.id,
       });
 
-      const params = this.queryParams;
       delete params.filter;
-      this.emitParamsUpdate(params);
+      this.channel = channel;
     }
+
+    this.emitParamsUpdate(params);
   }
 
   public changeSearchQuery(query: string) {
@@ -204,7 +206,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   }
 
   private patchRequestState(patchState: Partial<ContentSearchInputState>) {
-    if (!patchState.channelId || patchState.channelId !== this.channel?.id) {
+    if (this.channel?.id && (!patchState.channelId || patchState.channelId !== this.channel?.id)) {
       patchState.channelId = this.channel.id;
     }
 
