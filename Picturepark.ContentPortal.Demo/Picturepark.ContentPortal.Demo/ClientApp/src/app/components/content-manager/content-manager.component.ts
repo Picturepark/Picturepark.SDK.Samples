@@ -95,10 +95,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       )
     );
 
-    const [validChannel$, noChannel$] = partition(channel$, (i) => {
-      console.log(i);
-      return i && i.id !== '';
-    });
+    const [validChannel$, noChannel$] = partition(channel$, (i) => i && i.id !== '');
 
     this.sub = validChannel$.subscribe((channel) => {
       if (this.channel?.id !== channel?.id) {
