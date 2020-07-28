@@ -34,6 +34,7 @@ import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { PageBase } from '../page-base';
+import { of, partition } from 'rxjs';
 
 @Component({
   selector: 'app-content-manager',
@@ -83,22 +84,31 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
 
   public ngOnInit() {
     // Redirect channel
-    this.sub = this.route.paramMap
-      .pipe(
-        tap((i) => (this.itemId = i.get('itemId') || '')),
-        map((i) => i.get('channelId')),
-        distinctUntilChanged(),
-        switchMap((i) =>
-          this.showChannels && (i || this.configService.config.channelId)
-            ? this.channelService.get(i || this.configService.config.channelId)
-            : this.channelService.getAll().pipe(map((channels) => channels[0]))
-        )
+    const channel$ = this.route.paramMap.pipe(
+      tap((i) => (this.itemId = i.get('itemId') || '')),
+      map((i) => i.get('channelId')),
+      distinctUntilChanged(),
+      switchMap((i) =>
+        this.showChannels && (i || this.configService.config.channelId)
+          ? this.channelService.get(i || this.configService.config.channelId)
+          : of(undefined)
       )
-      .subscribe((channel) => {
-        if (this.channel?.id !== channel.id) {
-          this.channel = channel;
-        }
-      });
+    );
+
+    const [validChannel$, noChannel$] = partition(channel$, (i) => i && i.id !== '');
+
+    this.sub = validChannel$.subscribe((channel) => {
+      if (this.channel?.id !== channel?.id) {
+        this.channel = channel;
+      }
+    });
+
+    this.sub = noChannel$.pipe(switchMap(() => this.channelService.getAll())).subscribe((channels) => {
+      if (channels && this.channel?.id !== channels[0]?.id) {
+        this.channel = channels[0];
+        this.emitParamsUpdate(this.queryParams);
+      }
+    });
 
     // subscribe on initial query string params and update search state
     this.sub = this.route.queryParamMap
@@ -161,7 +171,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   public changeChannel(channel: Channel) {
     const params = this.queryParams;
 
-    if (this.channel?.id !== channel.id) {
+    if (this.channel?.id !== channel?.id) {
+      this.channel = channel;
+
       // Clears aggregation Filters, resets the aggregators
       this.patchRequestState({
         aggregationFilters: [],
@@ -170,15 +182,15 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       });
 
       delete params.filter;
-      this.channel = channel;
+      this.emitParamsUpdate(params);
     }
-
-    this.emitParamsUpdate(params);
   }
 
   public changeSearchQuery(query: string) {
-    this.patchRequestState({ searchString: query });
-    this.searchQuery = query;
+    if (this.searchQuery !== query) {
+      this.patchRequestState({ searchString: query });
+      this.searchQuery = query;
+    }
   }
 
   public downloadItem() {
@@ -214,6 +226,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   }
 
   ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.facade.resetRequestState();
   }
 }
