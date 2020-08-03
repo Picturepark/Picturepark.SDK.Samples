@@ -75,17 +75,17 @@ namespace Picturepark.PressPortal.Demo
 
         private async Task EnsureUserRoles(UserDetail user)
         {
-            user.UserRoles = user.UserRoles ?? new List<UserRole>();
+            user.UserRoles = user.UserRoles ?? new List<UserRoleAssignment>();
 
             var toAssign = await GetAutoUserRoleIds();
 
-            foreach (var userRole in toAssign.Select(id => new UserRole {Id = id}))
+            foreach (var userRole in toAssign.Select(id => new UserRole { Id = id }))
             {
-                if (user.UserRoles.All(ur => ur.Id != userRole.Id))
-                    user.UserRoles.Add(userRole);
+                if (user.UserRoles.All(ur => ur?.UserRole?.Id != userRole.Id))
+                    user.UserRoles.Add(new UserRoleAssignment { UserRole = userRole });
             }
 
-            await _cpClient.User.UpdateAsync(user.Id, user);
+            await _cpClient.User.UpdateAsync(user.Id, user.AsUpdateRequest());
         }
 
         private async Task EnsureUserIsReviewed(UserDetail user)
