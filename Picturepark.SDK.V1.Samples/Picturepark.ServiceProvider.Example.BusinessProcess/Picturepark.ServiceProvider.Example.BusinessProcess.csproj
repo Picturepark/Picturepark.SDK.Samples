@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Picturepark.SDK.V1" Version="1.7.11" />
-    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="1.7.11" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="1.7.73" />
+    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="1.7.73" />
   </ItemGroup>
 
   <ItemGroup>
