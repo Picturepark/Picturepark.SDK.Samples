@@ -59,20 +59,12 @@ namespace Picturepark.ContentPortal.Demo
         public override async Task TokenValidated(TokenValidatedContext context)
         {
             var user = await GetUserDetails(context);
-            if (user == null)
-            {
-                var localUrl = context.Properties.Items["localUrl"];
-                context.Response.Redirect(BuildTermsNewUserUri(_cpConfig, localUrl));
-                context.HandleResponse();
-            }
-            else
-            {
-                await EnsureUserIsReviewed(user);
 
-                if (!user.IsFederated)
-                {
-                    await EnsureUserRoles(user);
-                }
+            await EnsureUserIsReviewed(user);
+
+            if (!user.IsFederated)
+            {
+                await EnsureUserRoles(user);
             }
         }
 
@@ -112,9 +104,7 @@ namespace Picturepark.ContentPortal.Demo
             });
 
             if (results.Results.Count != 1)
-            {
-                return null;
-            }
+                throw new Exception("Unable to find the logged-in user in CP");
 
             var userId = results.Results.Single().Id;
 
@@ -136,8 +126,5 @@ namespace Picturepark.ContentPortal.Demo
 
             return userRoles;
         }
-
-        private static string BuildTermsNewUserUri(PictureparkConfiguration cpConfig, string localUrl)
-           => new Uri(new Uri(cpConfig.ApplicationBaseUrl), $"/terms?newUser=true&redirect={localUrl}{AccountController.LoginPath}").AbsoluteUri;
     }
 }
