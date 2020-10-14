@@ -65,11 +65,20 @@ namespace Picturepark.PressPortal.Demo
         {
             var user = await GetUserDetails(context);
 
-            await EnsureUserIsReviewed(user);
 
-            if (!user.IsFederated)
+            if (user == null)
             {
-                await EnsureUserRoles(user);
+                var localUrl = context.Properties.Items["localUrl"];
+                context.Response.Redirect(BuildTermsNewUserUri(_cpConfig, localUrl));
+                context.HandleResponse();
+            }
+            else
+            {
+                await EnsureUserIsReviewed(user);
+                if (!user.IsFederated)
+                {
+                    await EnsureUserRoles(user);
+                }
             }
         }
 
@@ -109,7 +118,9 @@ namespace Picturepark.PressPortal.Demo
             });
 
             if (results.Results.Count != 1)
-                throw new Exception("Unable to find the logged-in user in CP");
+            {
+                return null;
+            }
 
             var userId = results.Results.Single().Id;
 
@@ -131,5 +142,8 @@ namespace Picturepark.PressPortal.Demo
 
             return userRoles;
         }
+
+        private static string BuildTermsNewUserUri(PictureparkConfiguration cpConfig, string localUrl)
+           => new Uri(new Uri(cpConfig.ApplicationBaseUrl), $"/terms?newUser=true&redirect={localUrl}{AccountController.LoginPath}").AbsoluteUri;
     }
 }
