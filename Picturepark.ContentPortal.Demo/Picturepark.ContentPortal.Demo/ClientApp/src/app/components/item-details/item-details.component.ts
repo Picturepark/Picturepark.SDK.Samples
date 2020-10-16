@@ -10,7 +10,7 @@ import {
 } from '@picturepark/sdk-v1-angular';
 import { RelationFieldInfo } from '@picturepark/sdk-v1-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
 import { MatDialog } from '@angular/material/dialog';
-import { ContentDetailDialogOptions } from '@picturepark/sdk-v1-angular-ui/lib/features-module/content-details-dialog/ContentDetailDialogOptions';
+import { ContentDetailsDialogOptions } from '@picturepark/sdk-v1-angular-ui/lib/features-module/content-details-dialog/content-details-dialog-options';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
 
@@ -68,7 +68,7 @@ export class ItemDetailsComponent extends PageBase implements OnInit {
 
   public relationClick(relation: RelationFieldInfo) {
     this.dialog.open(ContentDetailsDialogComponent, {
-      data: <ContentDetailDialogOptions>{
+      data: <ContentDetailsDialogOptions>{
         id: relation.contentId,
         showMetadata: true,
       },
