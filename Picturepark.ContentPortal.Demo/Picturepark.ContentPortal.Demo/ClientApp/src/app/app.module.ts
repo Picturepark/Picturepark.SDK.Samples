@@ -89,7 +89,7 @@ export function pictureparkConfigurationFactory() {
     PictureparkUiModule,
     CommonModule,
     MaterialModule,
-    LocaleModule.forRoot(),
+    LocaleModule.forRoot('system'),
   ],
   providers: [
     ConfigService,
