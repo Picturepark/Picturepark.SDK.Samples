@@ -19,7 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Picturepark.SDK.V1" Version="1.8.54-g5e072aeea9" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="1.8.61" />
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.3" />
