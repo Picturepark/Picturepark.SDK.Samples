@@ -21,6 +21,7 @@ export abstract class PageBase extends BaseComponent implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    super.ngOnDestroy();
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 

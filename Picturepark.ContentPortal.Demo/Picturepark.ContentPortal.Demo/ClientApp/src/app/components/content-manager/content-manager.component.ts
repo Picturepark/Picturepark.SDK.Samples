@@ -56,7 +56,6 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   public itemId = '';
   public basketItems: string[] = [];
   public isInBasket: boolean;
-  private searchRequestSub: any;
 
   private get queryParams(): Params {
     return Object.assign({}, this.route.snapshot.queryParams);
@@ -115,6 +114,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
     // subscribe on initial query string params and update search state
     this.sub = this.route.queryParamMap
       .pipe(
+        distinctUntilChanged(),
         map((queryParamMap) => {
           return {
             searchString: queryParamMap.get('searchString') || '',
@@ -134,12 +134,10 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
         this.patchRequestState(patchState);
       });
 
-    if (!this.searchRequestSub) {
-      this.searchRequestSub = this.facade.searchRequest$.subscribe((i) => {
-        const newSearchState = this.updateAggregationFilters(i);
-        updateUrlFromSearchState(newSearchState, this.queryParams, this.router);
-      });
-    }
+    this.sub = this.facade.searchRequest$.pipe(distinctUntilChanged()).subscribe((i) => {
+      const newSearchState = this.updateAggregationFilters(i);
+      updateUrlFromSearchState(newSearchState, this.queryParams, this.router);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -235,7 +233,6 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.facade.resetRequestState();
-    this.searchRequestSub.unsubscribe();
   }
 
   private filterDisabledAggregators(items: AggregatorBase[]) {
