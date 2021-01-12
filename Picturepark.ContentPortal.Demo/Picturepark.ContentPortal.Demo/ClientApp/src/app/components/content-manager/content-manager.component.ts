@@ -135,7 +135,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       });
 
     this.sub = this.facade.searchRequest$.pipe(distinctUntilChanged()).subscribe((i) => {
-      const newSearchState = this.updateAggregationFilters(i);
+      const newSearchState = this.removeAggregationFilters(i);
       updateUrlFromSearchState(newSearchState, this.queryParams, this.router);
     });
   }
@@ -239,7 +239,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
     return items.filter((item) => item.uiBehavior?.enableFilter);
   }
 
-  private updateAggregationFilters(state: ContentSearchInputState) {
+  private removeAggregationFilters(state: ContentSearchInputState) {
     if (!this.channel) {
       return state;
     }
