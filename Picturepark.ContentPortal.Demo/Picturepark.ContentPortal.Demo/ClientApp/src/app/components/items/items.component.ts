@@ -11,7 +11,12 @@ export class ItemsComponent {
   public constructor(private router: Router, private route: ActivatedRoute) {}
 
   public onParamsUpdate(updatedParams: ParamsUpdate) {
-    this.router.navigate(['/items', updatedParams.channelId, updatedParams.itemId], {
+    const commands = ['/items', updatedParams.channelId];
+    if (updatedParams.itemId) {
+      commands.push(updatedParams.itemId);
+    }
+
+    this.router.navigate(commands, {
       queryParams: updatedParams.queryParams,
     });
   }

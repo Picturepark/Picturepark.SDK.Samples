@@ -6,17 +6,18 @@ import {
   Injector,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
   ViewChild,
-  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   AggregationFilter,
+  AggregatorBase,
   Channel,
   ChannelService,
   Content,
@@ -29,12 +30,12 @@ import {
   updateUrlFromSearchState,
 } from '@picturepark/sdk-v1-angular';
 import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
+import { of, partition } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { PageBase } from '../page-base';
-import { of, partition } from 'rxjs';
 
 @Component({
   selector: 'app-content-manager',
@@ -113,6 +114,7 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
     // subscribe on initial query string params and update search state
     this.sub = this.route.queryParamMap
       .pipe(
+        distinctUntilChanged(),
         map((queryParamMap) => {
           return {
             searchString: queryParamMap.get('searchString') || '',
@@ -132,7 +134,10 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
         this.patchRequestState(patchState);
       });
 
-    this.sub = this.facade.searchRequest$.subscribe((i) => updateUrlFromSearchState(i, this.queryParams, this.router));
+    this.sub = this.facade.searchRequest$.pipe(distinctUntilChanged()).subscribe((i) => {
+      const newSearchState = this.removeAggregationFilters(i);
+      updateUrlFromSearchState(newSearchState, this.queryParams, this.router);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -228,5 +233,22 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
   ngOnDestroy(): void {
     super.ngOnDestroy();
     this.facade.resetRequestState();
+  }
+
+  private filterDisabledAggregators(items: AggregatorBase[]) {
+    return items.filter((item) => item.uiBehavior?.enableFilter);
+  }
+
+  private removeAggregationFilters(state: ContentSearchInputState) {
+    if (!this.channel) {
+      return state;
+    }
+
+    const enabledAggregators = this.filterDisabledAggregators(this.channel.aggregations);
+    state.aggregationFilters = state.aggregationFilters.filter((af) =>
+      enabledAggregators.some((da) => af.aggregationName === da.name)
+    );
+
+    return state;
   }
 }
