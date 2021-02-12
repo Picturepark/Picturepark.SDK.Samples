@@ -180,11 +180,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       this.channel = channel;
 
       // Clears aggregation Filters, resets the aggregators
-      this.patchRequestState({
-        aggregationFilters: [],
-        aggregators: channel.aggregations,
-        channelId: channel.id,
-      });
+      this.facade.searchRequestState.aggregationFilters = [];
+      this.facade.searchRequestState.aggregators = [...channel.aggregations];
+      this.facade.searchRequestState.channelId = channel.id;
 
       delete params.filter;
       this.emitParamsUpdate(params);
