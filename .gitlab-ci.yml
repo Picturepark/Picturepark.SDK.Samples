@@ -39,7 +39,7 @@ press-portal:build:
 content-portal:deploy:
   stage: deploy
   tags:
-    - build-shell-windows
+    - build-powershell-windows
   needs: [ "press-portal:build" ]
   when: manual
   variables:
