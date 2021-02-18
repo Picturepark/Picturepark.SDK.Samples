@@ -38,9 +38,8 @@ press-portal:build:
 
 content-portal:deploy:
   stage: deploy
-  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
-    - build-docker-windows
+    - build-shell-windows
   needs: [ "press-portal:build" ]
   when: manual
   variables:
