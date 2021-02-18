@@ -4,7 +4,8 @@ stages:
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
 
-content-portal:build
+content-portal:build:
+  stage: build
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
     - build-docker-windows
