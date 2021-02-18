@@ -36,7 +36,7 @@ press-portal:build:
       - Build/**
       - cake/**
 
-content-portal:deploy:
+press-portal:deploy:
   stage: deploy
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
@@ -48,6 +48,23 @@ content-portal:deploy:
     serviceName: "Picturepark CPQA01 DemoPressPortal"
     server: "PP9QASVC01.ad.vit.ch"
     serverDirectory: "\\\\pp9qasvc01.ad.vit.ch\\Integrations\\CPQA01\\Microsites\\DemoPressPortal\\"
+  script:
+    - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
+    - cd cake
+    - powershell ./build.ps1 --target="DeployPressPortal"
+  
+content-portal:deploy:
+  stage: deploy
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  needs: [ "content-portal:build" ]
+  when: manual
+  variables:
+    sourceDirectory: "../Build"
+    serviceName: "Picturepark CPQA01 DemoContentPortal"
+    server: "PP9QASVC01.ad.vit.ch"
+    serverDirectory: "\\\\pp9qasvc01.ad.vit.ch\\Integrations\\CPQA01\\Microsites\\DemoContentPortal\\"
   script:
     - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
