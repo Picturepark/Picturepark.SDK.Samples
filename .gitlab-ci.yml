@@ -10,5 +10,7 @@ content-portal:build:
   tags:
     - build-docker-windows
   script:
-    - cd cake
+    - cd Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo/ClientApp
+    - node create-npmrc.js $gitpat
+    - cd ../../../cake
     - powershell ./build.ps1 --target="PublishContentPortal"
