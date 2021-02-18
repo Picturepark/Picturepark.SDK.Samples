@@ -11,4 +11,4 @@ content-portal:build:
     - build-docker-windows
   script:
     - cd cake
-    - powershell build.ps1 --target="PublishContentPortal"
+    - powershell ./build.ps1 --target="PublishContentPortal"
