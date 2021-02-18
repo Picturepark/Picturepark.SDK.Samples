@@ -42,10 +42,11 @@ content-portal:deploy:
   tags:
     - build-docker-windows
   needs: [ "press-portal:build" ]
+  when: manual
   variables:
     sourceDirectory: "../Build"
     serviceName: "Picturepark CPQA01 DemoPressPortal"
-    server: "PP9QASVC01"
+    server: "PP9QASVC01.ad.vit.ch"
     serverDirectory: "\\\\pp9qasvc01\\Integrations\\CPQA01\\Microsites\\DemoPressPortal\\"
   script:
     - cd cake
