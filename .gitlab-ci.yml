@@ -44,6 +44,7 @@ press-portal:deploy:
   needs: [ "press-portal:build" ]
   when: manual
   variables:
+    GIT_STRATEGY: none
     sourceDirectory: "../Build"
     serviceName: "Picturepark CPQA01 DemoPressPortal"
     server: "PP9QASVC01.ad.vit.ch"
@@ -61,6 +62,7 @@ content-portal:deploy:
   needs: [ "content-portal:build" ]
   when: manual
   variables:
+    GIT_STRATEGY: none
     sourceDirectory: "../Build"
     serviceName: "Picturepark CPQA01 DemoContentPortal"
     server: "PP9QASVC01.ad.vit.ch"
@@ -68,5 +70,5 @@ content-portal:deploy:
   script:
     - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
-    - powershell ./build.ps1 --target="DeployPressPortal"
+    - powershell ./build.ps1 --target="DeployContentPortal"
   
