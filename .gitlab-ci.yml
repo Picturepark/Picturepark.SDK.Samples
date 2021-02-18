@@ -1,0 +1,13 @@
+stages:
+  - build
+
+variables:
+  GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
+
+content-portal:build
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  script:
+    - cd cake
+    - .\build.ps1 --target="PublishContentPortal"
