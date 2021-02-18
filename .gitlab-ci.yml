@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
@@ -33,3 +34,20 @@ press-portal:build:
   artifacts:
     paths:
       - Build/**
+      - cake/**
+
+content-portal:deploy:
+  stage: deploy
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  needs: [ "press-portal:build" ]
+  variables:
+    sourceDirectory: "../Build"
+    serviceName: "Picturepark CPQA01 DemoPressPortal"
+    server: "PP9QASVC01"
+    serverDirectory: "\\\\pp9qasvc01\\Integrations\\CPQA01\\Microsites\\DemoPressPortal\\"
+  script:
+    - cd cake
+    - powershell ./build.ps1 --target="DeployPressPortal"
+  
