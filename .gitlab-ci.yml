@@ -48,6 +48,7 @@ content-portal:deploy:
     server: "PP9QASVC01.ad.vit.ch"
     serverDirectory: "\\\\pp9qasvc01\\Integrations\\CPQA01\\Microsites\\DemoPressPortal\\"
   script:
+    - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
     - powershell ./build.ps1 --target="DeployPressPortal"
   
