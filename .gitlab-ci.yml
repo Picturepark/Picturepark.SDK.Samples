@@ -47,12 +47,14 @@ press-portal:deploy:
     GIT_STRATEGY: none
     sourceDirectory: "../Build"
     serviceName: "Picturepark CPQA01 DemoPressPortal"
-    server: "PP9QASVC01.ad.vit.ch"
-    serverDirectory: "\\\\pp9qasvc01.ad.vit.ch\\Integrations\\CPQA01\\Microsites\\DemoPressPortal\\"
+    server: "$DEPLOY_TARGET"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoPressPortal\\"
   script:
-    - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
+    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
     - powershell ./build.ps1 --target="DeployPressPortal"
+  environment:
+    name: CPQA01 - Press Portal
   
 content-portal:deploy:
   stage: deploy
@@ -65,10 +67,12 @@ content-portal:deploy:
     GIT_STRATEGY: none
     sourceDirectory: "../Build"
     serviceName: "Picturepark CPQA01 DemoContentPortal"
-    server: "PP9QASVC01.ad.vit.ch"
-    serverDirectory: "\\\\pp9qasvc01.ad.vit.ch\\Integrations\\CPQA01\\Microsites\\DemoContentPortal\\"
+    server: "$DEPLOY_TARGET"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoContentPortal\\"
   script:
-    - net use \\pp9qasvc01.ad.vit.ch /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
+    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
     - powershell ./build.ps1 --target="DeployContentPortal"
+  environment:
+    name: CPQA01 - Content Portal
   
