@@ -45,10 +45,11 @@ press-portal:deploy:
   when: manual
   variables:
     GIT_STRATEGY: none
+    PLATFORM: CPQA01
     sourceDirectory: "../Build"
-    serviceName: "Picturepark $CI_ENVIRONMENT_NAME DemoPressPortal"
+    serviceName: "Picturepark $PLATFORM DemoPressPortal"
     server: "$DEPLOY_TARGET"
-    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoPressPortal\\"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$PLATFORM\\Microsites\\DemoPressPortal\\"
   script:
     - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
@@ -65,10 +66,11 @@ content-portal:deploy:
   when: manual
   variables:
     GIT_STRATEGY: none
+    PLATFORM: CPQA01
     sourceDirectory: "../Build"
-    serviceName: "Picturepark $CI_ENVIRONMENT_NAME DemoContentPortal"
+    serviceName: "Picturepark $PLATFORM DemoContentPortal"
     server: "$DEPLOY_TARGET"
-    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoContentPortal\\"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$PLATFORM\\Microsites\\DemoContentPortal\\"
   script:
     - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
