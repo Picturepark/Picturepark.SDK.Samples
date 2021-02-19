@@ -1,0 +1,78 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
+
+content-portal:build:
+  stage: build
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  variables:
+    sourceDirectory: "../Build"
+  script:
+    - cd Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo/ClientApp
+    - node create-npmrc.js $gitpat
+    - cd ../../../cake
+    - powershell ./build.ps1 --target="PublishContentPortal"
+  artifacts:
+    paths:
+      - Build/**
+
+press-portal:build:
+  stage: build
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  variables:
+    sourceDirectory: "../Build"
+  script:
+    - cd cake
+    - powershell ./build.ps1 --target="PublishPressPortal"
+  artifacts:
+    paths:
+      - Build/**
+      - cake/**
+
+press-portal:deploy:
+  stage: deploy
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  needs: [ "press-portal:build" ]
+  when: manual
+  variables:
+    GIT_STRATEGY: none
+    sourceDirectory: "../Build"
+    serviceName: "Picturepark $CI_ENVIRONMENT_NAME DemoPressPortal"
+    server: "$DEPLOY_TARGET"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoPressPortal\\"
+  script:
+    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
+    - cd cake
+    - powershell ./build.ps1 --target="DeployPressPortal"
+  environment:
+    name: CPQA01 - Press Portal
+  
+content-portal:deploy:
+  stage: deploy
+  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  tags:
+    - build-docker-windows
+  needs: [ "content-portal:build" ]
+  when: manual
+  variables:
+    GIT_STRATEGY: none
+    sourceDirectory: "../Build"
+    serviceName: "Picturepark $CI_ENVIRONMENT_NAME DemoContentPortal"
+    server: "$DEPLOY_TARGET"
+    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$CI_ENVIRONMENT_NAME\\Microsites\\DemoContentPortal\\"
+  script:
+    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
+    - cd cake
+    - powershell ./build.ps1 --target="DeployContentPortal"
+  environment:
+    name: CPQA01 - Content Portal
+  
