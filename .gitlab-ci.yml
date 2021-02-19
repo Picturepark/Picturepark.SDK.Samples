@@ -36,7 +36,7 @@ press-portal:build:
       - Build/**
       - cake/**
 
-press-portal:deploy:
+press-portal:deploy:QA01:
   stage: deploy
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
@@ -57,7 +57,7 @@ press-portal:deploy:
   environment:
     name: CPQA01 - Press Portal
   
-content-portal:deploy:
+content-portal:deploy:QA01:
   stage: deploy
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
