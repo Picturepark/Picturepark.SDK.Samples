@@ -67,11 +67,11 @@ Use the example rule that triggers whenever a new image has been uploaded as a s
         }
     ],
     "id": "ImageUploaded",
-    "triggerPoint": {
+    "triggerPoints": [{
         "executionScope": "MainDoc",
         "documentType": "Content",
         "action": "Create"
-    },
+    }],
     "isEnabled": true,
     "names": {
         "en": "Image uploaded trigger"
