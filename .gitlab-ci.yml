@@ -44,7 +44,6 @@ press-portal:deploy:QA01:
   needs: [ "press-portal:build" ]
   when: manual
   variables:
-    GIT_STRATEGY: none
     PLATFORM: CPQA01
     sourceDirectory: "../Build"
     serviceName: "Picturepark $PLATFORM DemoPressPortal"
@@ -65,7 +64,6 @@ content-portal:deploy:QA01:
   needs: [ "content-portal:build" ]
   when: manual
   variables:
-    GIT_STRATEGY: none
     PLATFORM: CPQA01
     sourceDirectory: "../Build"
     serviceName: "Picturepark $PLATFORM DemoContentPortal"
