@@ -36,15 +36,13 @@ press-portal:build:
       - Build/**
       - cake/**
 
-press-portal:deploy:QA01:
+.press-portal:deploy:
   stage: deploy
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
     - build-docker-windows
   needs: [ "press-portal:build" ]
-  when: manual
   variables:
-    PLATFORM: CPQA01
     sourceDirectory: "../Build"
     serviceName: "Picturepark $PLATFORM DemoPressPortal"
     server: "$DEPLOY_TARGET"
@@ -53,18 +51,14 @@ press-portal:deploy:QA01:
     - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
     - powershell ./build.ps1 --target="DeployPressPortal"
-  environment:
-    name: CPQA01 - Press Portal
-  
-content-portal:deploy:QA01:
+    
+.content-portal:deploy:
   stage: deploy
   image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
   tags:
     - build-docker-windows
   needs: [ "content-portal:build" ]
-  when: manual
   variables:
-    PLATFORM: CPQA01
     sourceDirectory: "../Build"
     serviceName: "Picturepark $PLATFORM DemoContentPortal"
     server: "$DEPLOY_TARGET"
@@ -73,6 +67,35 @@ content-portal:deploy:QA01:
     - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
     - cd cake
     - powershell ./build.ps1 --target="DeployContentPortal"
+
+press-portal:deploy:QA01:
+  extends: .press-portal:deploy
+  when: manual
+  variables:
+    PLATFORM: CPQA01
+  environment:
+    name: CPQA01 - Press Portal
+    
+press-portal:deploy:QA04:
+  extends: .press-portal:deploy
+  when: manual
+  variables:
+    PLATFORM: CPQA04
+  environment:
+    name: CPQA04 - Press Portal
+  
+content-portal:deploy:QA01:
+  extends: .content-portal:deploy
+  when: manual
+  variables:
+    PLATFORM: CPQA01
   environment:
     name: CPQA01 - Content Portal
   
+content-portal:deploy:QA04:
+  extends: .content-portal:deploy
+  when: manual
+  variables:
+    PLATFORM: CPQA04
+  environment:
+    name: CPQA04 - Content Portal
