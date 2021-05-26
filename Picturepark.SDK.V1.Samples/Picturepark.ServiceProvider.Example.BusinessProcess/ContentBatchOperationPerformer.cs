@@ -177,7 +177,8 @@ namespace Picturepark.ServiceProvider.Example.BusinessProcess
                             {
                                 EventType = cancelled ? NotificationEventType.Warning : NotificationEventType.Success,
                                 Title = GetTitle(cancelled ? "cancelled" : "finished"),
-                                Message = GetProgress(done)
+                                Message = GetProgress(done),
+                                NavigationLink = "https://www.picturepark.com"
                             }
                         }).ConfigureAwait(false);
                 }
