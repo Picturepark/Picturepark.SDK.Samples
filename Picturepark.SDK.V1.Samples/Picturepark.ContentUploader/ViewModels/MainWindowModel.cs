@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Security;
@@ -122,6 +123,7 @@ namespace Picturepark.ContentUploader.ViewModels
                 if (File.Exists(FilePath))
                 {
                     var fileName = Path.GetFileName(FilePath);
+                    var timeout = TimeSpan.FromMinutes(2);
 
                     var accessToken = await GetAccessTokenAsync();
                     var authClient = new AccessTokenAuthClient(ApiServer.TrimEnd('/'), accessToken, CustomerAlias);
@@ -129,11 +131,20 @@ namespace Picturepark.ContentUploader.ViewModels
                     {
                         try
                         {
-                            await client.Transfer.UploadFilesAsync(fileName, new[] { (FileLocations) FilePath },
-                                new UploadOptions { ChunkSize = 1024 * 1024 });
-                            MessageBox.Show("The image has been successfully uploaded.", "Image uploaded");
+                            var createTransferResult = await client.Transfer.UploadFilesAsync(fileName, new[] { (FileLocations) FilePath },
+                                new UploadOptions {});
+                            var importRequest = new ImportTransferRequest
+                            {
+                                ContentPermissionSetIds = new List<string>(),
+                                Metadata = null,
+                                LayerSchemaIds = new List<string>()
+                            };
+
+                            await client.Transfer.ImportAndWaitForCompletionAsync(createTransferResult.Transfer, importRequest, timeout).ConfigureAwait(false);
+
+                            MessageBox.Show("The image has been successfully uploaded and imported.", "Image uploaded");
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             MessageBox.Show("Error occurred while uploading your file", "Error");
                         }
