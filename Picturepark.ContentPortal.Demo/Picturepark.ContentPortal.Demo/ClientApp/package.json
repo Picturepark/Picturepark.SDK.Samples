@@ -30,7 +30,7 @@
     "core-js": "^2.6.11",
     "hammerjs": "^2.0.8",
     "liquidjs": "9.11.11",
-    "markdown-it": "^11.0.1",
+    "markdown-it": "^12.3.2",
     "normalize.css": "8.0.0",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
