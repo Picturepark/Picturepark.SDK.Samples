@@ -1,0 +1,13 @@
+<button *ngIf="!config.isAuthenticated; else elseBlock" mat-button (click)="login()">
+  {{ 'Profile.Login' | pptranslate }}
+</button>
+
+<ng-template #elseBlock>
+  <button mat-button [matMenuTriggerFor]="menu">{{ 'Profile.Profile' | pptranslate }}</button>
+</ng-template>
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item [href]="config.identityServer" target="_blank">{{ 'Profile.ManageAccount' | pptranslate }}</a>
+  <a mat-menu-item [href]="'mailto:' + config.contactEmail">{{ 'Profile.ContactAdmin' | pptranslate }}</a>
+  <button mat-menu-item (click)="logout()">{{ 'Profile.Logout' | pptranslate }}</button>
+</mat-menu>
