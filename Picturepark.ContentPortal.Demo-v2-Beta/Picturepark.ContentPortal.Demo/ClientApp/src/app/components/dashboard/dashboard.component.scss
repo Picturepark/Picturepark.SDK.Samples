@@ -1,0 +1,92 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.content-wrap {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  align-items: center;
+}
+
+.content {
+  @media screen and (min-width: 600px) {
+    width: 900px;
+  }
+
+  margin: auto;
+}
+
+.content-mobile {
+  padding: 0 16px;
+}
+
+@media screen and (max-width: 600px) {
+  h3 {
+    font-size: 12px;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+mat-card {
+  margin: 5px;
+  margin-top: 20px;
+  width: 350px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-color: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.search-box-wrap {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.button-wrap {
+  text-align: right;
+
+  app-language,
+  app-profile {
+    padding-left: 10px;
+  }
+}
+
+.button-wrap-mobile {
+  position: absolute;
+  right: 6px;
+}
+
+.mat-toolbar.mat-primary {
+  color: black;
+}
+
+.title-mobile {
+  text-align: center;
+  font-weight: 600;
+}
