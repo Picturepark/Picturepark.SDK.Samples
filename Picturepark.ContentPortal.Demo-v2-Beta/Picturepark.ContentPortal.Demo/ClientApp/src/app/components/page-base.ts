@@ -1,9 +1,10 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, OnDestroy, Injector } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, Injector, Directive } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseComponent } from '@picturepark/sdk-v1-angular-ui';
 import { DemoInfoDialogComponent } from './demo-info-dialog/demo-info-dialog.component';
 
+@Directive()
 export abstract class PageBase extends BaseComponent implements OnDestroy {
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
