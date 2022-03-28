@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
-import { ProfileService, UserProfile } from '@picturepark/sdk-v1-angular';
+import { ProfileService, UserProfile } from '@picturepark/sdk-v2-angular';
 import { Observable } from 'rxjs';
 import { ClientConfiguration } from '../../models/client-configuration.model';
 

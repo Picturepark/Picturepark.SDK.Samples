@@ -9,13 +9,13 @@ import {
   LocaleModule,
   PictureparkConfiguration,
   PICTUREPARK_CONFIGURATION,
-} from '@picturepark/sdk-v1-angular';
+} from '@picturepark/sdk-v2-angular';
 import {
   PictureparkUiModule,
   PICTUREPARK_UI_CONFIGURATION,
   PictureparkUIConfiguration,
   TRANSLATIONS,
-} from '@picturepark/sdk-v1-angular-ui';
+} from '@picturepark/sdk-v2-angular-ui';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -81,7 +81,6 @@ export function pictureparkConfigurationFactory() {
     AppInfoDialogComponent,
     InfoComponent,
   ],
-  entryComponents: [DemoInfoDialogComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
@@ -103,6 +102,6 @@ export function pictureparkConfigurationFactory() {
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
     { provide: AuthService, useClass: AccessTokenAuthService },
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

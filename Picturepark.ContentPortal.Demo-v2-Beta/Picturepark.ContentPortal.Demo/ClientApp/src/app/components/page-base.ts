@@ -1,7 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, OnDestroy, Injector, Directive } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BaseComponent } from '@picturepark/sdk-v1-angular-ui';
+import { BaseComponent } from '@picturepark/sdk-v2-angular-ui';
 import { DemoInfoDialogComponent } from './demo-info-dialog/demo-info-dialog.component';
 
 @Directive()

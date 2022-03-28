@@ -3,11 +3,11 @@ var versionRegex = new RegExp('pre-[0-9a-f]{7}', '');
 
 console.log('\n');
 
-if (packagejson && packagejson.dependencies && packagejson.dependencies['@picturepark/sdk-v1-angular']) {
+if (packagejson && packagejson.dependencies && packagejson.dependencies['@picturepark/sdk-v2-angular']) {
   var fs = require('fs');
-  var sdkng = packagejson.dependencies['@picturepark/sdk-v1-angular'];
+  var sdkng = packagejson.dependencies['@picturepark/sdk-v2-angular'];
 
-  console.log('@picturepark/sdk-v1-angular    version' + sdkng);
+  console.log('@picturepark/sdk-v2-angular    version' + sdkng);
 
   fs.unlink('.npmrc', (err) => {
     if (err && err.code == 'ENOENT') {
@@ -35,7 +35,7 @@ _authToken=` + args[0];
   }
 }
 
-if (packagejson && packagejson.dependencies && packagejson.dependencies['@picturepark/sdk-v1-angular-ui']) {
-  var sdkngui = packagejson.dependencies['@picturepark/sdk-v1-angular-ui'];
-  console.log('@picturepark/sdk-v1-angular-ui   version' + sdkngui);
+if (packagejson && packagejson.dependencies && packagejson.dependencies['@picturepark/sdk-v2-angular-ui']) {
+  var sdkngui = packagejson.dependencies['@picturepark/sdk-v2-angular-ui'];
+  console.log('@picturepark/sdk-v2-angular-ui   version' + sdkngui);
 }

@@ -15,7 +15,7 @@ import {
   SortInfo,
   SortDirection,
   TranslatedStringDictionary,
-} from '@picturepark/sdk-v1-angular';
+} from '@picturepark/sdk-v2-angular';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material/dialog';

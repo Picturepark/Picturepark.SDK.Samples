@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ParamsUpdate } from '../../models/params-update.model';
-import { FilterBase, TermFilter, AggregationFilter } from '@picturepark/sdk-v1-angular';
+import { FilterBase, TermFilter, AggregationFilter } from '@picturepark/sdk-v2-angular';
 
 @Component({
   selector: 'app-presskit',

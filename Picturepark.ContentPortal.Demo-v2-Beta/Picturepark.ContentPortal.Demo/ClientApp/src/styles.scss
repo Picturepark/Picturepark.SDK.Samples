@@ -1,8 +1,8 @@
 // LIBRARY GLOBAL STYLES (keep on top)
-@use '~@angular/material' as mat;
-@import '~@picturepark/sdk-v1-angular-ui/lib/styles/styles_lib.scss';
-@import '~@angular/material/theming';
-@import '~@picturepark/sdk-v1-angular-ui/theming';
+@use '@angular/material' as mat;
+@import '@picturepark/sdk-v2-angular-ui/lib/styles/styles_lib.scss';
+@import '@angular/material/theming';
+@import '@picturepark/sdk-v2-angular-ui/theming';
 
 // CUSTOM THEME
 $custom-typography: mat.define-typography-config(
@@ -22,9 +22,8 @@ $custom-typography: mat.define-typography-config(
   $input: mat.define-typography-level(18px, 1.125, 400),
 );
 
-@include mat.typography-hierarchy($custom-typography);
-
 @include mat.core($custom-typography);
+@include mat.typography-hierarchy($custom-typography);
 
 $mat-picturepark-accent: (
   50: #eff7e6,
@@ -59,11 +58,8 @@ $mat-picturepark-accent: (
   ),
 );
 
-// GLOBAL COLORS
-$base: #78be31;
-
 $mat-picturepark-primary: (
-  primary: $base,
+  primary: #78be31,
   background-light: #fff,
   background-dark: #f8f8f8,
   surface-light: #fff,
@@ -81,16 +77,21 @@ $mat-picturepark-primary: (
   contrast: (),
 );
 
-$picturepark-app-primary: mat.define-palette($mat-picturepark-primary);
-$picturepark-app-accent: mat.define-palette($mat-picturepark-accent, 400, 200, 700);
-$picturepark-app-warn: mat.define-palette(mat.$red-palette);
-$picturepark-app-theme: mat.define-light-theme($picturepark-app-primary, $picturepark-app-accent, $picturepark-app-warn);
+// $picturepark-app-primary: mat.define-palette($mat-picturepark-primary);
+// $picturepark-app-primary: mat.define-palette(mat.$indigo-palette);
+// $picturepark-app-accent: mat.define-palette($mat-picturepark-accent, 400, 200, 700);
+// $picturepark-app-warn: mat.define-palette(mat.$red-palette);
+// $picturepark-app-theme: mat.define-light-theme((
+//  color: (
+//    primary: $picturepark-app-primary,
+//    accent: $picturepark-app-accent,
+//    warn: $picturepark-app-warn,
+//  )
+// ));
 
 @include mat.all-component-themes($picturepark-app-theme);
 @include picturepark-theme($picturepark-app-theme);
 
-// GLOBAL STYLES (keep at bottom)
-@import '~@picturepark/sdk-v1-angular-ui/lib/styles/global_styles.scss';
 
 body {
   font-family: mat.font-family($custom-typography);
@@ -114,9 +115,6 @@ body {
 }
 
 .mat-card {
-  &.custom-shadow {
-    @include mat.elevation(2, mat.get-color-from-palette($picturepark-app-accent, 800), 2);
-  }
 }
 
 .item-container {

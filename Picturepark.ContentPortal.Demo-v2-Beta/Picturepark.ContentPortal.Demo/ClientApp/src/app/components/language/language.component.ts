@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Language, LanguageService } from '@picturepark/sdk-v1-angular';
+import { Language, LanguageService } from '@picturepark/sdk-v2-angular';
 
 @Component({
   selector: 'app-language',
