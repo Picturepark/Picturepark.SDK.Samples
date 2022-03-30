@@ -1,8 +1,8 @@
 // LIBRARY GLOBAL STYLES (keep on top)
 @use '@angular/material' as mat;
-@import '@picturepark/sdk-v2-angular-ui/lib/styles/styles_lib.scss';
+@import 'node_modules/@picturepark/sdk-v2-angular-ui/lib/styles/styles_lib.scss';
 @import '@angular/material/theming';
-@import '@picturepark/sdk-v2-angular-ui/theming';
+@import 'node_modules/@picturepark/sdk-v2-angular-ui/theming';
 
 // CUSTOM THEME
 $custom-typography: mat.define-typography-config(
@@ -59,6 +59,9 @@ $mat-picturepark-accent: (
 );
 
 $mat-picturepark-primary: (
+  100: #c5e8e8,
+  500: #31a3a1,
+  700: #31a3a1,
   primary: #78be31,
   background-light: #fff,
   background-dark: #f8f8f8,
@@ -91,7 +94,6 @@ $mat-picturepark-primary: (
 
 @include mat.all-component-themes($picturepark-app-theme);
 @include picturepark-theme($picturepark-app-theme);
-
 
 body {
   font-family: mat.font-family($custom-typography);
