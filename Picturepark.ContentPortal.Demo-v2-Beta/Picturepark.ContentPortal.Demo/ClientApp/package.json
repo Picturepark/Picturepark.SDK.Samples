@@ -34,7 +34,9 @@
     "lazy-get-decorator": "2.2.0",
     "rxjs": "^7.5.5",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "moment": "2.24.0",
+    "ts-md5": "^1.2.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.0",

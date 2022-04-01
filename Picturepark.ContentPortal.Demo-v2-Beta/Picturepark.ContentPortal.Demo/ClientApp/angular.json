@@ -35,7 +35,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["markdown-it"],
+            "allowedCommonJsDependencies": ["markdown-it", "tslib", "ts-md5", "moment", "lazy-get-decorator"],
             "preserveSymlinks": true,
             "outputPath": "dist",
             "index": "src/index.html",
