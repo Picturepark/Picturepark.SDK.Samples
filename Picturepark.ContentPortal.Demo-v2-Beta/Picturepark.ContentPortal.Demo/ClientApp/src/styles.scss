@@ -25,14 +25,18 @@ $custom-typography: mat.define-typography-config(
 @include mat.core($custom-typography);
 @include mat.typography-hierarchy($custom-typography);
 
-$mat-picturepark-accent: (
+$mat-picturepark-primary: (
+  0: #eeeeee,
   50: #eff7e6,
   100: #d7ecc1,
   200: #bcdf98,
   300: #a1d26f,
   400: #8cc850,
+  450: #f8f8f8,
   500: #78be31,
+  550: #eeeeee,
   600: #70b82c,
+  650: #aaa,
   700: #65af25,
   800: #5ba71f,
   900: #489913,
@@ -40,28 +44,7 @@ $mat-picturepark-accent: (
   A200: #bdff99,
   A400: #9cff66,
   A700: #8cff4d,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: white,
-    A400: white,
-    A700: white,
-  ),
-);
-
-$mat-picturepark-primary: (
-  100: #c5e8e8,
-  500: #31a3a1,
-  700: #31a3a1,
+  A800: #2f2f2f,
   primary: #78be31,
   background-light: #fff,
   background-dark: #f8f8f8,
@@ -77,11 +60,67 @@ $mat-picturepark-primary: (
   on-surface-dark: #fff,
   on-opacity-light: #fff,
   divider: #dcdcdc,
-  contrast: (),
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #727272,
+    300: #000000,
+    400: #ffffff,
+    450: #727272,
+    500: #ffffff,
+    550: #2f2f2f,
+    600: #727272,
+    650: #fff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+    A800: #eee,
+  ),
 );
 
-$picturepark-app-primary: mat.define-palette($mat-picturepark-primary);
-$picturepark-app-accent: mat.define-palette($mat-picturepark-accent, 400, 200, 700);
+$mat-picturepark-accent: (
+  100: #fff,
+  200: #fff,
+  300: #fff,
+  400: #f8f8f8,
+  450: #f8f8f8,
+  500: #eeeeee,
+  550: #eeeeee,
+  600: #d8d8d8,
+  650: #aaa,
+  680: #707070,
+  700: #444,
+  800: #444,
+  A400: #dcdcdc,
+  A500: #dcdcdc,
+  A800: #2f2f2f,
+  overlay: rgba(0, 0, 0, 0.4),
+  contrast: (
+    100: #aaaaaa,
+    200: #727272,
+    300: #444444,
+    400: #2f2f2f,
+    450: #727272,
+    500: #727272,
+    550: #2f2f2f,
+    600: #727272,
+    650: #fff,
+    680: #fff,
+    700: #aaaaaa,
+    800: #d8d8d8,
+    A400: #727272,
+    A500: #727272,
+    A800: #eee,
+    overlay: #eee,
+  ),
+);
+
+$picturepark-app-primary: mat.define-palette($mat-picturepark-primary, 600, 300, 800);
+$picturepark-app-accent: mat.define-palette($mat-picturepark-accent, 500, 100, 700);
 $picturepark-app-warn: mat.define-palette(mat.$red-palette);
 $picturepark-app-theme: mat.define-light-theme((
  color: (
