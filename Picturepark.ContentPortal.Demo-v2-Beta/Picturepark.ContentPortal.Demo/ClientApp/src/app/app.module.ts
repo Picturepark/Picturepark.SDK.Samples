@@ -68,10 +68,6 @@ export function pictureparkConfigurationFactory() {
   };
 }
 
-function getCdnUrl(): string | null {
-  return 'https://stadev001.01.k8s.qa-picturepark.com';
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +101,7 @@ function getCdnUrl(): string | null {
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
-    { provide: PICTUREPARK_CDN_URL, useFactory: getCdnUrl },
+    { provide: PICTUREPARK_CDN_URL, useValue: undefined },
     { provide: AuthService, useClass: AccessTokenAuthService },
   ],
   bootstrap: [AppComponent]
