@@ -86,13 +86,11 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Picturepark.SDK.V1, Version=11.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Picturepark.SDK.V1.11.2.35-g485619a639\lib\net45\Picturepark.SDK.V1.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Picturepark.SDK.V1, Version=11.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Picturepark.SDK.V1.11.3.28-g41035e9559\lib\net45\Picturepark.SDK.V1.dll</HintPath>
     </Reference>
-    <Reference Include="Picturepark.SDK.V1.Contract, Version=11.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Picturepark.SDK.V1.Contract.11.2.35-g485619a639\lib\net45\Picturepark.SDK.V1.Contract.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Picturepark.SDK.V1.Contract, Version=11.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Picturepark.SDK.V1.Contract.11.3.28-g41035e9559\lib\net45\Picturepark.SDK.V1.Contract.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
