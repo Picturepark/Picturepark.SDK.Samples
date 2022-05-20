@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import {
   AuthService,
-  AccessTokenAuthService,
+  NoopAuthService,
   LocaleModule,
   PictureparkConfiguration,
   PICTUREPARK_CONFIGURATION,
@@ -102,7 +102,7 @@ export function pictureparkConfigurationFactory() {
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
     { provide: PICTUREPARK_CDN_URL, useValue: undefined },
-    { provide: AuthService, useClass: AccessTokenAuthService },
+    { provide: AuthService, useClass: NoopAuthService },
   ],
   bootstrap: [AppComponent]
 })
