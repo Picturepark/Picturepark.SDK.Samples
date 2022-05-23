@@ -5,17 +5,17 @@ import { CommonModule } from '@angular/common';
 
 import {
   AuthService,
-  AccessTokenAuthService,
+  NoopAuthService,
   LocaleModule,
   PictureparkConfiguration,
   PICTUREPARK_CONFIGURATION,
-} from '@picturepark/sdk-v1-angular';
+} from '@picturepark/sdk-v2-angular';
 import {
   PictureparkUiModule,
   PICTUREPARK_UI_CONFIGURATION,
   PictureparkUIConfiguration,
   TRANSLATIONS,
-} from '@picturepark/sdk-v1-angular-ui';
+} from '@picturepark/sdk-v2-angular-ui';
 
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -32,6 +32,7 @@ import { InfoComponent } from './components/info/info.component';
 import { PresskitComponent } from './components/presskit/presskit.component';
 import { ContentManagerComponent } from './components/content-manager/content-manager.component';
 import { AppInfoDialogComponent } from './components/info/info-dialog.component';
+import { PICTUREPARK_CDN_URL } from '@picturepark/sdk-v2-angular';
 
 const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
@@ -81,7 +82,6 @@ export function pictureparkConfigurationFactory() {
     AppInfoDialogComponent,
     InfoComponent,
   ],
-  entryComponents: [DemoInfoDialogComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
@@ -101,8 +101,9 @@ export function pictureparkConfigurationFactory() {
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
-    { provide: AuthService, useClass: AccessTokenAuthService },
+    { provide: PICTUREPARK_CDN_URL, useValue: undefined },
+    { provide: AuthService, useClass: NoopAuthService },
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

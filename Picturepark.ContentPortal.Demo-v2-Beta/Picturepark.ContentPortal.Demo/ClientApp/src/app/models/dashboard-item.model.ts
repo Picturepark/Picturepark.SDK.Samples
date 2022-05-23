@@ -1,4 +1,4 @@
-import { TranslatedStringDictionary } from '@picturepark/sdk-v1-angular';
+import { TranslatedStringDictionary } from '@picturepark/sdk-v2-angular';
 
 export interface DashboardItem {
   path: string;

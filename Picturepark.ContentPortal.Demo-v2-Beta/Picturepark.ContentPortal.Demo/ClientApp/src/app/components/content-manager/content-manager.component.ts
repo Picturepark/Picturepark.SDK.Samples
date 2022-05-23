@@ -28,8 +28,8 @@ import {
   FilterBase,
   getSearchState,
   updateUrlFromSearchState,
-} from '@picturepark/sdk-v1-angular';
-import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v1-angular-ui';
+} from '@picturepark/sdk-v2-angular';
+import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v2-angular-ui';
 import { of, partition } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
