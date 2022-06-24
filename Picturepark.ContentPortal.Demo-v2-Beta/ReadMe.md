@@ -6,7 +6,7 @@ This example should give developers an easy entry point.
 - Prerequisites
     - Visual Studio Code or another Editor
     - Node JS v10 or newer installed
-    - .Net Core 3.1 installed
+    - .Net 6 installed
     - Customer instance provided by Picturepark available in advance and access must be granted
     - User must be flagged as developer (Please check with your Picturepark representative)
     - To enable to complete experience, some pre-configuration in your customer instance must be applied, such as Channels, Filters and Virtual Items. Please check this with you Picturepark representative or remove the Dashboard configuration (see below)

@@ -1,0 +1,33 @@
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+EXPOSE 5000
+EXPOSE 5001
+
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+ARG NPM_AUTH_TOKEN
+
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y \
+        nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+COPY ["Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj", "Picturepark.ContentPortal.Demo/"]
+RUN dotnet restore "Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj"
+COPY . .
+WORKDIR "/src/Picturepark.ContentPortal.Demo/ClientApp"
+RUN node create-npmrc.js "$NPM_AUTH_TOKEN"
+RUN npm install
+WORKDIR "/src/Picturepark.ContentPortal.Demo"
+RUN dotnet build "Picturepark.ContentPortal.Demo.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Picturepark.ContentPortal.Demo.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Picturepark.ContentPortal.Demo.dll"]
