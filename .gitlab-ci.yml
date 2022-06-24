@@ -4,6 +4,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
+  CP_VERSION: "11.3"
 
 content-portal:build:
   stage: build
@@ -20,6 +21,27 @@ content-portal:build:
   artifacts:
     paths:
       - Build/**
+
+content-portal-v2:build:
+  stage: build
+  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
+  services:
+    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
+      alias: docker
+  tags:
+    - build-docker-image
+  script:
+    - cd Picturepark.ContentPortal.Demo-v2-Beta
+    - export DOCKER_CONFIG=$(mktemp -d)
+    - export CONTAINER_IMAGE=gitlab-registry.vit.ch/picturepark/sdk-samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo/Dockerfile --build-arg --build-arg NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN
+    - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}")
+    - echo "CONTAINER_SHA=$hash" > images.dotenv
+  artifacts:
+    reports:
+      dotenv: images.dotenv
+
 
 press-portal:build:
   stage: build
