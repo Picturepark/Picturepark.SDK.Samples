@@ -5,7 +5,7 @@ EXPOSE 5001
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-ARG NPM_AUTH_TOKEN
+ARG PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
 
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
@@ -19,7 +19,7 @@ COPY ["Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj", "P
 RUN dotnet restore "Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj"
 COPY . .
 WORKDIR "/src/Picturepark.ContentPortal.Demo/ClientApp"
-RUN node create-npmrc.js "$NPM_AUTH_TOKEN"
+RUN node create-npmrc.js "$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN"
 RUN npm install
 WORKDIR "/src/Picturepark.ContentPortal.Demo"
 RUN dotnet build "Picturepark.ContentPortal.Demo.csproj" -c Release -o /app/build
