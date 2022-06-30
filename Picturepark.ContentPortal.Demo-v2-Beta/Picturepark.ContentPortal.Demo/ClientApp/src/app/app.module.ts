@@ -32,7 +32,6 @@ import { InfoComponent } from './components/info/info.component';
 import { PresskitComponent } from './components/presskit/presskit.component';
 import { ContentManagerComponent } from './components/content-manager/content-manager.component';
 import { AppInfoDialogComponent } from './components/info/info-dialog.component';
-import { PICTUREPARK_CDN_URL } from '@picturepark/sdk-v2-angular';
 
 const uiTranslations = TRANSLATIONS;
 Object.assign(uiTranslations, Translations);
@@ -101,7 +100,6 @@ export function pictureparkConfigurationFactory() {
     },
     { provide: PICTUREPARK_UI_CONFIGURATION, useFactory: pictureparkUIConfigurationFactory, deps: [ConfigService] },
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
-    { provide: PICTUREPARK_CDN_URL, useValue: undefined },
     { provide: AuthService, useClass: NoopAuthService },
   ],
   bootstrap: [AppComponent]
