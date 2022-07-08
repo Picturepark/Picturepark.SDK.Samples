@@ -5,7 +5,7 @@ This example should give developers an easy entry point.
 
 - Prerequisites
     - Visual Studio Code or another Editor
-    - Node JS v10 or newer installed
+    - Node JS v14 or newer installed
     - .Net 6 installed
     - Customer instance provided by Picturepark available in advance and access must be granted
     - User must be flagged as developer (Please check with your Picturepark representative)

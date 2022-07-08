@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Picturepark.ContentPortal.Demo
@@ -13,8 +14,12 @@ namespace Picturepark.ContentPortal.Demo
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .ReadFrom.Configuration(hostingContext.Configuration)
-                ).UseStartup<Startup>();
+                .ConfigureLogging(
+                    (hostBuilderContext, logging) =>
+                    {
+                        logging.AddConfiguration(hostBuilderContext.Configuration);
+                        logging.AddSerilog(Log.Logger);
+                    })
+                .UseStartup<Startup>();
     }
 }
