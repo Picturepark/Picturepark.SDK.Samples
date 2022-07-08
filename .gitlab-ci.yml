@@ -33,7 +33,7 @@ content-portal-v2:build:
   script:
     - cd Picturepark.ContentPortal.Demo-v2-Beta
     - export DOCKER_CONFIG=$(mktemp -d)
-    - export CONTAINER_IMAGE=gitlab-registry.vit.ch/picturepark/sdk-samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    - export CONTAINER_IMAGE=gitlab-registry.vit.ch/picturepark/Picturepark.SDK.Samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
     - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}")
