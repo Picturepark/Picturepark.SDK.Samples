@@ -37,7 +37,7 @@ content-portal-v2:build:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
     - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}")
-    - echo "CONTAINER_SHA=$hash" > images.dotenv
+    - echo "CONTAINER_SHA=$hash" > ../images.dotenv
   artifacts:
     reports:
       dotenv: images.dotenv
