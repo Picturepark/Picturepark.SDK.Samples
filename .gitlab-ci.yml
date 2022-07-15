@@ -33,6 +33,7 @@ content-portal-v2:build:
     - build-docker-image
   script:
     - cd Picturepark.ContentPortal.Demo-v2-Beta
+    - cp ../version.json ./Picturepark.ContentPortal.Demo/
     - export DOCKER_CONFIG=$(mktemp -d)
     - export CONTAINER_IMAGE=$HARBOR_URL/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
