@@ -1,0 +1,5 @@
+ingress:
+  class: ""
+  host: ""
+image:
+  service: ""

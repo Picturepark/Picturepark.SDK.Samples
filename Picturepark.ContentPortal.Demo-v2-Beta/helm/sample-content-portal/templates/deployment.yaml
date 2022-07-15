@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sample-content-portal.fullname" . }}
+  labels:
+    {{- include "sample-content-portal.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "sample-content-portal.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "sample-content-portal.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.service }}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: configuration
+              mountPath: /etc/cp
+              readOnly: true
+      volumes:
+        - name: configuration
+          configMap:
+            name: {{ include "sample-content-portal.fullname" . }}-config

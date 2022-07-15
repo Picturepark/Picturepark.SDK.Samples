@@ -1,9 +1,11 @@
 stages:
   - build
+  - publish
   - deploy
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
+  CP_VERSION: "11.3"
 
 content-portal:build:
   stage: build
@@ -20,6 +22,27 @@ content-portal:build:
   artifacts:
     paths:
       - Build/**
+
+content-portal-v2:build:
+  stage: build
+  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
+  services:
+    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
+      alias: docker
+  tags:
+    - build-docker-image
+  script:
+    - cd Picturepark.ContentPortal.Demo-v2-Beta
+    - export DOCKER_CONFIG=$(mktemp -d)
+    - export CONTAINER_IMAGE=$HARBOR_URL/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
+    - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
+    - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}");
+    - echo "CONTAINER_SHA=$hash" > ../images.dotenv
+  artifacts:
+    reports:
+      dotenv: images.dotenv
+
 
 press-portal:build:
   stage: build
@@ -99,3 +122,23 @@ content-portal:deploy:QA04:
     PLATFORM: CPQA04
   environment:
     name: CPQA04 - Content Portal
+
+content-portal-v2:publish-helm-chart:
+  stage: publish
+  image:
+    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+  tags:
+    - build-docker-linux
+  script:
+    - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
+    - helm-set.sh
+      --set image.service="harbor.vit.ch:9443/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA@$CONTAINER_SHA"
+      ./sample-content-portal
+    - helm package
+      --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"
+      --version "$CP_VERSION.0+$CI_COMMIT_REF_SLUG"
+      ./sample-content-portal
+    - mv *.tgz ../..
+  artifacts:
+    paths:
+      - ./*.tgz
