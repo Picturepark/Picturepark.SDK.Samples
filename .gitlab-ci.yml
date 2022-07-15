@@ -1,5 +1,6 @@
 stages:
   - build
+  - publish
   - deploy
 
 variables:
@@ -121,3 +122,21 @@ content-portal:deploy:QA04:
     PLATFORM: CPQA04
   environment:
     name: CPQA04 - Content Portal
+
+content-portal-v2:publish-helm-chart:
+  stage: publish
+  image:
+    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+  script:
+    - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
+    - helm-set.sh
+      --set image.service="harbor.vit.ch:9443/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA@$CONTAINER_SHA"
+      ./sample-content-portal
+    - helm package
+      --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"
+      --version "$CP_VERSION.0+$CI_COMMIT_REF_SLUG"
+      ./sample-content-portal
+    - mv *.tgz ../..
+  artifacts:
+    paths:
+      - ./*.tgz
