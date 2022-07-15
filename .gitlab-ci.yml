@@ -127,6 +127,8 @@ content-portal-v2:publish-helm-chart:
   stage: publish
   image:
     name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+  tags:
+    - build-docker-linux
   script:
     - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
     - helm-set.sh
