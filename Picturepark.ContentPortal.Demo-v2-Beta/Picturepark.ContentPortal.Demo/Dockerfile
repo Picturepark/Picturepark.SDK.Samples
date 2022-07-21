@@ -14,10 +14,12 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
+ADD ./.git /.git
+ADD ./version.json /version.json
 
-COPY ["Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj", "Picturepark.ContentPortal.Demo/"]
+COPY ["Picturepark.ContentPortal.Demo-v2-Beta/Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj", "Picturepark.ContentPortal.Demo/"]
 RUN dotnet restore "Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj"
-COPY . .
+COPY Picturepark.ContentPortal.Demo-v2-Beta/ .
 WORKDIR "/src/Picturepark.ContentPortal.Demo/ClientApp"
 RUN node create-npmrc.js "$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN"
 RUN npm install
