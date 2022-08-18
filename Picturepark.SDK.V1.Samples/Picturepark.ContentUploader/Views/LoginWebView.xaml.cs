@@ -240,9 +240,7 @@ namespace Picturepark.ContentUploader.Views
 
         private static List<Claim> ValidateIdentityToken(string identityToken, OidcSettings settings, OpenIdConnectConfiguration config)
         {
-            var tokens = new List<X509SecurityToken>(
-                from key in config.JsonWebKeySet.Keys
-                select new X509SecurityToken(new X509Certificate2(Convert.FromBase64String(key.X5c.First()))));
+            var tokens = config.JsonWebKeySet.GetSigningTokens();
 
             var parameter = new TokenValidationParameters
             {
