@@ -22,7 +22,8 @@ RUN dotnet restore "Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Dem
 COPY Picturepark.ContentPortal.Demo-v2-Beta/ .
 WORKDIR "/src/Picturepark.ContentPortal.Demo/ClientApp"
 RUN node create-npmrc.js "$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN"
-RUN npm install
+RUN npm install -g yarn
+RUN yarn install
 WORKDIR "/src/Picturepark.ContentPortal.Demo"
 RUN dotnet build "Picturepark.ContentPortal.Demo.csproj" -c Release -o /app/build
 
