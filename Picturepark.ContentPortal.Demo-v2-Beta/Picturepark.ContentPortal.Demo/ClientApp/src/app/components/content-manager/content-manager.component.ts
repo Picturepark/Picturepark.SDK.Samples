@@ -27,6 +27,7 @@ import {
   ContentService,
   FilterBase,
   getSearchState,
+  StorageKey,
   updateUrlFromSearchState,
 } from '@picturepark/sdk-v2-angular';
 import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v2-angular-ui';
@@ -89,11 +90,10 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
       tap((i) => (this.itemId = i.get('itemId') || '')),
       map((i) => i.get('channelId')),
       distinctUntilChanged(),
-      switchMap((i) =>
-        this.showChannels && (i || this.configService.config.channelId)
-          ? this.channelService.get(i || this.configService.config.channelId)
-          : of(undefined)
-      )
+      switchMap(channelId => {
+        channelId = channelId || this.localStorageService.get(StorageKey.ActiveChannel) || this.configService.config.channelId;
+        return this.showChannels && channelId ? this.channelService.get(channelId) : of(undefined);
+      })
     );
 
     const [validChannel$, noChannel$] = partition(channel$, (i) => i && i.id !== '');
@@ -124,18 +124,11 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
         }),
         take(1)
       )
-      .subscribe((searchInfo) => {
-        const patchState: Partial<ContentSearchInputState> = getSearchState(searchInfo);
-
-        if (patchState.searchString) {
-          this.searchQuery = patchState.searchString;
-        }
-
-        this.patchRequestState(patchState);
-      });
+      .subscribe(params => this.facade.searchRequestState = { ...this.facade.searchRequestState, ...getSearchState(params) });
 
     this.sub = this.facade.searchRequest$.pipe(distinctUntilChanged()).subscribe((i) => {
       const newSearchState = this.removeAggregationFilters(i);
+      this.searchQuery = newSearchState.searchString;
       updateUrlFromSearchState(newSearchState, this.queryParams, this.router);
     });
   }
