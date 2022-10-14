@@ -18,15 +18,18 @@ const routes: Routes = [
   {
     path: 'items',
     component: ItemsComponent,
-  },
-  {
-    path: 'items/:channelId',
-    component: ItemsComponent,
-  },
-  {
-    path: 'items/:channelId/:itemId',
-    component: ItemsComponent,
-    pathMatch: 'full',
+    children: [
+      {
+        path: ':channelId',
+        component: ItemsComponent,
+        children: [
+          {
+            path: ':itemId',
+            component: ItemsComponent,
+          },
+        ],
+      },
+    ],
   },
   {
     path: 'presskit',
