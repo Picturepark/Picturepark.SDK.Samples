@@ -1399,20 +1399,20 @@
     node-gyp "^8.2.0"
     read-package-json-fast "^2.0.1"
 
-"@picturepark/sdk-v2-angular-ui@11.4.0-pre-1de704b.0":
-  version "11.4.0-pre-1de704b.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.4.0-pre-1de704b.0/00e83abf01e8fc9ac5bae8bda83e3adb3187d3e8#00e83abf01e8fc9ac5bae8bda83e3adb3187d3e8"
-  integrity sha512-p6JnXbxuTcWrDuaCD/6datnWOcHFUHRV8+cNntAyxFmL4Obb4xiRJvyYSR111EtgjJrqcztqpSglpe/IntIjSg==
+"@picturepark/sdk-v2-angular-ui@11.5.0-pre-11aee54.0":
+  version "11.5.0-pre-11aee54.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.5.0-pre-11aee54.0/184838d73181b9d4f2e9e4c24527300ee30f16b2#184838d73181b9d4f2e9e4c24527300ee30f16b2"
+  integrity sha512-hfNT03BeyojgUYaQ9d3QitHWxVUIUs1t/OE5j0mcteoCzlSWVKcruZWBN1cSYd1GYr+fJQKNdMIoIp4MjE9fRg==
   dependencies:
     lazy-get-decorator "^2.2.0"
     moment "2.24.0"
     ts-md5 "^1.2.4"
     tslib "^2.3.0"
 
-"@picturepark/sdk-v2-angular@11.4.0-pre-1de704b.0":
-  version "11.4.0-pre-1de704b.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.4.0-pre-1de704b.0/cdebef2251ca32a413d8ac2a2dae9335f8086ba4#cdebef2251ca32a413d8ac2a2dae9335f8086ba4"
-  integrity sha512-WNc0R0B5t/jLmcz7HvDAzaaBUGWFyXUei2UYIzmcfhkg8NmLG4XqcJBluD3UXjsr5crKq1m2qyoOxg6+crlpSA==
+"@picturepark/sdk-v2-angular@11.5.0-pre-11aee54.0":
+  version "11.5.0-pre-11aee54.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.5.0-pre-11aee54.0/8e8d9130e327bc1d8a73819af9fe1f68a03c43c0#8e8d9130e327bc1d8a73819af9fe1f68a03c43c0"
+  integrity sha512-3w1pO9C6U10K0SMTv43R97yipFCiNguVwy4F07XHqi4HpPXKNHEaO+PLf39QiJfvaXPOTSSw5HZvm1KfwwLAdA==
   dependencies:
     tslib "^2.0.0"
 
@@ -3478,6 +3478,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.2.4, graceful-fs@^4.2.6, graceful-fs@^4.2.9:
   version "4.2.10"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==
 
 handle-thing@^2.0.0:
   version "2.0.1"
