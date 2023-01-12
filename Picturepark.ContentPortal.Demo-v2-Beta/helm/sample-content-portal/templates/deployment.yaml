@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.service }}"
+          image: "{{ .Values.registry }}/{{ .Values.image.service }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: configuration

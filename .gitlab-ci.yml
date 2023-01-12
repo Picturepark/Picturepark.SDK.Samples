@@ -5,7 +5,11 @@ stages:
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
-  CP_VERSION: "11.3"
+  CP_VERSION: "11.6"
+
+include:
+  - project: 'deploy/azure/registry'
+    file: '.gitlab-ci.template.yml'
 
 content-portal:build:
   stage: build
@@ -33,15 +37,9 @@ content-portal-v2:build:
     - build-docker-image
   script:
     - export DOCKER_CONFIG=$(mktemp -d)
-    - export CONTAINER_IMAGE=$HARBOR_URL/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
-    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
-    - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo-v2-Beta/Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
-    - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}");
-    - echo "CONTAINER_SHA=$hash" > images.dotenv
-  artifacts:
-    reports:
-      dotenv: images.dotenv
-
+    - export CONTAINER_IMAGE=picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    - !reference [.push-image-to-harbor, script]
+    - !reference [.push-image-to-azure, script]
 
 press-portal:build:
   stage: build
@@ -131,7 +129,7 @@ content-portal-v2:publish-helm-chart:
   script:
     - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
     - helm-set.sh
-      --set image.service="harbor.vit.ch:9443/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA@$CONTAINER_SHA"
+      --set image.service="picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
       ./sample-content-portal
     - helm package
       --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"

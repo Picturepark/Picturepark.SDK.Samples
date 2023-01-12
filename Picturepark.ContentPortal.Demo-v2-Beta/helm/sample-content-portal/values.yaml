@@ -1,5 +1,8 @@
 ingress:
   class: ""
   host: ""
+
+registry: ""
+
 image:
   service: ""
