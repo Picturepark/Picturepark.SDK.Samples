@@ -1,11 +1,23 @@
 stages:
+  - fetch
   - build
   - publish
   - deploy
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
-  CP_VERSION: "11.3"
+  CP_VERSION: "11.6"
+
+include:
+  - project: 'deploy/azure/registry'
+    file: '.gitlab-ci.template.yml'
+
+fetch-azure-registry-info:
+  stage: fetch
+  extends: .fetch-acr-login-data
+  image: $ACR_FETCH_IMAGE
+  tags:
+    - build-docker-linux
 
 content-portal:build:
   stage: build
@@ -33,15 +45,12 @@ content-portal-v2:build:
     - build-docker-image
   script:
     - export DOCKER_CONFIG=$(mktemp -d)
-    - export CONTAINER_IMAGE=$HARBOR_URL/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
-    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
+    - export CONTAINER_IMAGE=picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo-v2-Beta/Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
-    - hash=$(docker push $CONTAINER_IMAGE | grep -o "sha256\:[0-9a-z]\{64\}");
-    - echo "CONTAINER_SHA=$hash" > images.dotenv
-  artifacts:
-    reports:
-      dotenv: images.dotenv
-
+    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
+    - docker tag $CONTAINER_IMAGE $HARBOR_URL/$CONTAINER_IMAGE
+    - docker push $HARBOR_URL/$CONTAINER_IMAGE
+    - !reference [.push-image-to-azure, script]
 
 press-portal:build:
   stage: build
@@ -74,22 +83,6 @@ press-portal:build:
     - cd cake
     - powershell ./build.ps1 --target="DeployPressPortal"
     
-.content-portal:deploy:
-  stage: deploy
-  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
-  tags:
-    - build-docker-windows
-  needs: [ "content-portal:build" ]
-  variables:
-    sourceDirectory: "../Build"
-    serviceName: "Picturepark $PLATFORM DemoContentPortal"
-    server: "$DEPLOY_TARGET"
-    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$PLATFORM\\Microsites\\DemoContentPortal\\"
-  script:
-    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
-    - cd cake
-    - powershell ./build.ps1 --target="DeployContentPortal"
-
 press-portal:deploy:QA01:
   extends: .press-portal:deploy
   when: manual
@@ -105,22 +98,6 @@ press-portal:deploy:QA04:
     PLATFORM: CPQA04
   environment:
     name: CPQA04 - Press Portal
-  
-content-portal:deploy:QA01:
-  extends: .content-portal:deploy
-  when: manual
-  variables:
-    PLATFORM: CPQA01
-  environment:
-    name: CPQA01 - Content Portal
-  
-content-portal:deploy:QA04:
-  extends: .content-portal:deploy
-  when: manual
-  variables:
-    PLATFORM: CPQA04
-  environment:
-    name: CPQA04 - Content Portal
 
 content-portal-v2:publish-helm-chart:
   stage: publish
@@ -131,7 +108,7 @@ content-portal-v2:publish-helm-chart:
   script:
     - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
     - helm-set.sh
-      --set image.service="harbor.vit.ch:9443/picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA@$CONTAINER_SHA"
+      --set image.service="picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
       ./sample-content-portal
     - helm package
       --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"

@@ -14,9 +14,11 @@ spec:
       labels:
         {{- include "sample-content-portal.selectorLabels" . | nindent 8 }}
     spec:
+      nodeSelector:
+        kubernetes.io/os: linux
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.service }}"
+          image: "{{ .Values.registry }}/{{ .Values.image.service }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: configuration
