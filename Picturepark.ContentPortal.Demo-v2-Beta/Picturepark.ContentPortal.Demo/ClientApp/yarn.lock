@@ -1399,20 +1399,20 @@
     node-gyp "^8.2.0"
     read-package-json-fast "^2.0.1"
 
-"@picturepark/sdk-v2-angular-ui@11.5.0-pre-11aee54.0":
-  version "11.5.0-pre-11aee54.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.5.0-pre-11aee54.0/184838d73181b9d4f2e9e4c24527300ee30f16b2#184838d73181b9d4f2e9e4c24527300ee30f16b2"
-  integrity sha512-hfNT03BeyojgUYaQ9d3QitHWxVUIUs1t/OE5j0mcteoCzlSWVKcruZWBN1cSYd1GYr+fJQKNdMIoIp4MjE9fRg==
+"@picturepark/sdk-v2-angular-ui@11.6.0-pre-419ef09.0":
+  version "11.6.0-pre-419ef09.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.6.0-pre-419ef09.0/a6cfcdb65fa098aae37379a85a4afdf07c94c035#a6cfcdb65fa098aae37379a85a4afdf07c94c035"
+  integrity sha512-JxjBVt5hvIIoxMREoh3wMCtobXVlKWeXfeKt4ktxCTia5eD9j/SL/238O7/clgpLkMxHjYd2LdgkvSbe5O2L2g==
   dependencies:
     lazy-get-decorator "^2.2.0"
     moment "2.24.0"
     ts-md5 "^1.2.4"
     tslib "^2.3.0"
 
-"@picturepark/sdk-v2-angular@11.5.0-pre-11aee54.0":
-  version "11.5.0-pre-11aee54.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.5.0-pre-11aee54.0/8e8d9130e327bc1d8a73819af9fe1f68a03c43c0#8e8d9130e327bc1d8a73819af9fe1f68a03c43c0"
-  integrity sha512-3w1pO9C6U10K0SMTv43R97yipFCiNguVwy4F07XHqi4HpPXKNHEaO+PLf39QiJfvaXPOTSSw5HZvm1KfwwLAdA==
+"@picturepark/sdk-v2-angular@11.6.0-pre-419ef09.0":
+  version "11.6.0-pre-419ef09.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.6.0-pre-419ef09.0/d3d2ae9d5780135140299ede4ec728bb69f4b7ec#d3d2ae9d5780135140299ede4ec728bb69f4b7ec"
+  integrity sha512-Se2sgkGZDPEIh6d3Ud4pAjn2pLQGjwIYWpBhnB7TiC4fNh95gKQKqn0Nx2H6O5RszIvtlqb+6BqY6HPbV94LKA==
   dependencies:
     tslib "^2.0.0"
 
