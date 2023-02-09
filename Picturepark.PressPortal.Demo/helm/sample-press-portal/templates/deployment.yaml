@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "sample-content-portal.fullname" . }}
+  name: {{ include "sample-press-portal.fullname" . }}
   labels:
-    {{- include "sample-content-portal.labels" . | nindent 4 }}
+    {{- include "sample-press-portal.labels" . | nindent 4 }}
 spec:
   revisionHistoryLimit: 0
   replicas: 1
   selector:
     matchLabels:
-      {{- include "sample-content-portal.selectorLabels" . | nindent 6 }}
+      {{- include "sample-press-portal.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "sample-content-portal.selectorLabels" . | nindent 8 }}
+        {{- include "sample-press-portal.selectorLabels" . | nindent 8 }}
     spec:
       nodeSelector:
         kubernetes.io/os: linux
@@ -28,4 +28,4 @@ spec:
       volumes:
         - name: configuration
           configMap:
-            name: {{ include "sample-content-portal.fullname" . }}-config
+            name: {{ include "sample-press-portal.fullname" . }}-config
