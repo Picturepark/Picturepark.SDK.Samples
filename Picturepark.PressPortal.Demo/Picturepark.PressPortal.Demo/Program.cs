@@ -13,10 +13,14 @@ namespace Picturepark.PressPortal.Demo
 		    CreateWebHostBuilder(args).Build().Run();
         }
 
-	    public static IWebHostBuilder CreateWebHostBuilder(string[] args) 
-		{
+	    public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var basePath = File.Exists("/etc/cp/appsettings.json")
+                ? "/etc/cp"
+                : Directory.GetCurrentDirectory();
+
 			var configuration = new ConfigurationBuilder()
-				.SetBasePath(Directory.GetCurrentDirectory())
+				.SetBasePath(basePath)
 				.AddJsonFile("appsettings.json")
 				.AddJsonFile("hosting.json", optional: true)
 				.Build();

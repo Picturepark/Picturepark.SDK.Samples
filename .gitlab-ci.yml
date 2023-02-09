@@ -19,22 +19,6 @@ fetch-azure-registry-info:
   tags:
     - build-docker-linux
 
-content-portal:build:
-  stage: build
-  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
-  tags:
-    - build-docker-windows
-  variables:
-    sourceDirectory: "../Build"
-  script:
-    - cd Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo/ClientApp
-    - node create-npmrc.js $gitpat
-    - cd ../../../cake
-    - powershell ./build.ps1 --target="PublishContentPortal"
-  artifacts:
-    paths:
-      - Build/**
-
 content-portal-v2:build:
   stage: build
   image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
@@ -54,50 +38,20 @@ content-portal-v2:build:
 
 press-portal:build:
   stage: build
-  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
+  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
+  services:
+    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
+      alias: docker
   tags:
-    - build-docker-windows
-  variables:
-    sourceDirectory: "../Build"
+    - build-docker-image
   script:
-    - cd cake
-    - powershell ./build.ps1 --target="PublishPressPortal"
-  artifacts:
-    paths:
-      - Build/**
-      - cake/**
-
-.press-portal:deploy:
-  stage: deploy
-  image: gitlab-registry.vit.ch/picturepark/ci-containers/win-netcore-node-container
-  tags:
-    - build-docker-windows
-  needs: [ "press-portal:build" ]
-  variables:
-    sourceDirectory: "../Build"
-    serviceName: "Picturepark $PLATFORM DemoPressPortal"
-    server: "$DEPLOY_TARGET"
-    serverDirectory: "\\\\$DEPLOY_TARGET\\Integrations\\$PLATFORM\\Microsites\\DemoPressPortal\\"
-  script:
-    - net use \\$DEPLOY_TARGET /user:$SERVICE_MANAGER_USER $SERVICE_MANAGER_PASSWORD
-    - cd cake
-    - powershell ./build.ps1 --target="DeployPressPortal"
-    
-press-portal:deploy:QA01:
-  extends: .press-portal:deploy
-  when: manual
-  variables:
-    PLATFORM: CPQA01
-  environment:
-    name: CPQA01 - Press Portal
-    
-press-portal:deploy:QA04:
-  extends: .press-portal:deploy
-  when: manual
-  variables:
-    PLATFORM: CPQA04
-  environment:
-    name: CPQA04 - Press Portal
+    - export DOCKER_CONFIG=$(mktemp -d)
+    - export CONTAINER_IMAGE=picturepark/picturepark.sdk.samples/press-portal/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
+    - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.PressPortal.Demo/Picturepark.PressPortal.Demo/Dockerfile
+    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
+    - docker tag $CONTAINER_IMAGE $HARBOR_URL/$CONTAINER_IMAGE
+    - docker push $HARBOR_URL/$CONTAINER_IMAGE
+    - !reference [.push-image-to-azure, script]
 
 content-portal-v2:publish-helm-chart:
   stage: publish
@@ -114,6 +68,26 @@ content-portal-v2:publish-helm-chart:
       --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"
       --version "$CP_VERSION.0+$CI_COMMIT_REF_SLUG"
       ./sample-content-portal
+    - mv *.tgz ../..
+  artifacts:
+    paths:
+      - ./*.tgz
+
+press-portal:publish-helm-chart:
+  stage: publish
+  image:
+    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+  tags:
+    - build-docker-linux
+  script:
+    - cd Picturepark.PressPortal.Demo/helm
+    - helm-set.sh
+      --set image.service="picturepark/picturepark.sdk.samples/press-portal/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+      ./sample-press-portal
+    - helm package
+      --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"
+      --version "$CP_VERSION.0+$CI_COMMIT_REF_SLUG"
+      ./sample-press-portal
     - mv *.tgz ../..
   artifacts:
     paths:
