@@ -25,8 +25,8 @@
     "@angular/platform-browser": "^13.3.0",
     "@angular/platform-browser-dynamic": "^13.3.0",
     "@angular/router": "^13.3.0",
-    "@picturepark/sdk-v2-angular": "11.6.0-pre-419ef09.0",
-    "@picturepark/sdk-v2-angular-ui": "11.6.0-pre-419ef09.0",
+    "@picturepark/sdk-v2-angular": "11.7.0-pre-8a5b31e.0",
+    "@picturepark/sdk-v2-angular-ui": "11.7.0-pre-8a5b31e.0",
     "core-js": "^2.6.11",
     "lazy-get-decorator": "2.2.0",
     "liquidjs": "9.11.11",
@@ -37,7 +37,8 @@
     "rxjs": "^7.5.5",
     "ts-md5": "^1.2.7",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "@mdi/js": "7.2.96"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.3.0",
