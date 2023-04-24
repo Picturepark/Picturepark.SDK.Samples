@@ -1297,6 +1297,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@mdi/js@7.2.96":
+  version "7.2.96"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-7.2.96.tgz#a2a20be740a75e65c8b8b9e12a2b699c06a9208f"
+  integrity sha512-paR9M9ZT7rKbh2boksNUynuSZMHhqRYnEZOm/KrZTjQ4/FzyhjLHuvw/8XYzP+E7fS4+/Ms/82EN1pl/OFsiIA==
+
 "@ngtools/webpack@13.3.9":
   version "13.3.9"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-13.3.9.tgz#31618a43095f9dee96ece9014c3f10a097914633"
@@ -1399,20 +1404,20 @@
     node-gyp "^8.2.0"
     read-package-json-fast "^2.0.1"
 
-"@picturepark/sdk-v2-angular-ui@11.6.0-pre-419ef09.0":
-  version "11.6.0-pre-419ef09.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.6.0-pre-419ef09.0/a6cfcdb65fa098aae37379a85a4afdf07c94c035#a6cfcdb65fa098aae37379a85a4afdf07c94c035"
-  integrity sha512-JxjBVt5hvIIoxMREoh3wMCtobXVlKWeXfeKt4ktxCTia5eD9j/SL/238O7/clgpLkMxHjYd2LdgkvSbe5O2L2g==
+"@picturepark/sdk-v2-angular-ui@11.7.0-pre-8a5b31e.0":
+  version "11.7.0-pre-8a5b31e.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.7.0-pre-8a5b31e.0/4579f5782ba3b87284f9e5ccc6bc5cc4d3003c67#4579f5782ba3b87284f9e5ccc6bc5cc4d3003c67"
+  integrity sha512-qsLC+YBCU02mgtA5t7UVgiDKHYWTOWTLB39eIXEMWIo/O+pi0tB8Is8QVDqXzome9L3OfX1UZBuonYXt43Cwvg==
   dependencies:
     lazy-get-decorator "^2.2.0"
     moment "2.24.0"
     ts-md5 "^1.2.4"
     tslib "^2.3.0"
 
-"@picturepark/sdk-v2-angular@11.6.0-pre-419ef09.0":
-  version "11.6.0-pre-419ef09.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.6.0-pre-419ef09.0/d3d2ae9d5780135140299ede4ec728bb69f4b7ec#d3d2ae9d5780135140299ede4ec728bb69f4b7ec"
-  integrity sha512-Se2sgkGZDPEIh6d3Ud4pAjn2pLQGjwIYWpBhnB7TiC4fNh95gKQKqn0Nx2H6O5RszIvtlqb+6BqY6HPbV94LKA==
+"@picturepark/sdk-v2-angular@11.7.0-pre-8a5b31e.0":
+  version "11.7.0-pre-8a5b31e.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.7.0-pre-8a5b31e.0/e024a6eb8eeab9c55cd56fb070656365e9c1bc72#e024a6eb8eeab9c55cd56fb070656365e9c1bc72"
+  integrity sha512-/DglZ3OQrfoU1QQ6LFvamYL8e/ciabfZUxBI+xhL2vBSOnrAThRpO5FhdVs3TfpoCdriJOtzAeRJkXx+gZeHbg==
   dependencies:
     tslib "^2.0.0"
 
