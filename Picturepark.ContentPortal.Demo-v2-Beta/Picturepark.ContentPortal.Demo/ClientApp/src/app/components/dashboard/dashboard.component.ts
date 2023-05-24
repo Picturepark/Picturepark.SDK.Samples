@@ -18,7 +18,7 @@ import {
 } from '@picturepark/sdk-v2-angular';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard',

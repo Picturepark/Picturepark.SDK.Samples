@@ -1,6 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, OnDestroy, Directive } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BaseComponent } from '@picturepark/sdk-v2-angular-ui';
 import { DemoInfoDialogComponent } from './demo-info-dialog/demo-info-dialog.component';
 

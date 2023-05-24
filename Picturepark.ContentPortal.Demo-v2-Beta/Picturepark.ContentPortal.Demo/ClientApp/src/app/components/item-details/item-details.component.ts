@@ -9,7 +9,7 @@ import {
   SYSTEM_LAYER_SCHEMA_IDS,
 } from '@picturepark/sdk-v2-angular';
 import { RelationFieldInfo } from '@picturepark/sdk-v2-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ContentDetailsDialogOptions } from '@picturepark/sdk-v2-angular-ui/lib/features-module/content-details-dialog/content-details-dialog-options';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';

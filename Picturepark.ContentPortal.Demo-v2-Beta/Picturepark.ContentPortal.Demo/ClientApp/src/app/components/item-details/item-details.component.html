@@ -1,13 +1,13 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <div class="item-container" [class.item-container-mobile]="mobileQuery.matches">
   <div *ngIf="!loading" class="item mat-typography" [class.item-mobile]="mobileQuery.matches">
-    <mat-card class="custom-shadow">
+    <mat-card appearance="outlined" class="custom-shadow">
       <mat-card-title>
         {{ content.displayValues!['name'] }}
       </mat-card-title>
     </mat-card>
 
-    <mat-card class="custom-shadow preview-image" *ngIf="content.contentType !== 'Virtual'">
+    <mat-card appearance="outlined" class="custom-shadow preview-image" *ngIf="content.contentType !== 'Virtual'">
       <div>
         <pp-content-image-preview [content]="content"></pp-content-image-preview>
       </div>

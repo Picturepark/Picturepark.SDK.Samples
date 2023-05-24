@@ -44,6 +44,7 @@
 
     <div class="container">
       <mat-card
+        appearance="outlined"
         *ngFor="let item of items; let idx = index; trackBy: trackByItem"
         (click)="navigate(item.path)"
         class="custom-shadow"
