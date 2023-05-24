@@ -5,7 +5,7 @@
 @import '../node_modules/@picturepark/sdk-v2-angular-ui/theming';
 
 // CUSTOM THEME
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.define-legacy-typography-config(
   $font-family: '"Roboto", "Helvetica Neue", sans-serif',
   $display-4: mat.define-typography-level(21px, 56px, 400),
   $display-3: mat.define-typography-level(18px, 48px, 400),
@@ -22,8 +22,17 @@ $custom-typography: mat.define-typography-config(
   $input: mat.define-typography-level(18px, 1.125, 400),
 );
 
-@include mat.core($custom-typography);
-@include mat.typography-hierarchy($custom-typography);
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy($custom-typography);`
+@include mat.all-legacy-component-typographies($custom-typography);
+@include mat.legacy-core();
+@include mat.legacy-typography-hierarchy($custom-typography);
 
 $mat-picturepark-primary: (
   0: #eeeeee,
@@ -130,7 +139,7 @@ $picturepark-app-theme: mat.define-light-theme((
  )
 ));
 
-@include mat.all-component-themes($picturepark-app-theme);
+@include mat.all-legacy-component-themes($picturepark-app-theme);
 @include picturepark-theme($picturepark-app-theme);
 
 // GLOBAL STYLES (keep at bottom)

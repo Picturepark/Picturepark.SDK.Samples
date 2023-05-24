@@ -9,11 +9,7 @@
 
     <mat-card class="custom-shadow preview-image" *ngIf="content.contentType !== 'Virtual'">
       <div>
-        <pp-content-image-preview
-          [content]="content"
-          [width]="mobileQuery.matches ? null : 900"
-          [height]="mobileQuery.matches ? null : 600"
-        ></pp-content-image-preview>
+        <pp-content-image-preview [content]="content"></pp-content-image-preview>
       </div>
     </mat-card>
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ChangeDetectorRef, Injector } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { LiquidRenderingService, ContentDetailsDialogComponent } from '@picturepark/sdk-v2-angular-ui';
 import {
   ContentService,
@@ -9,7 +9,7 @@ import {
   SYSTEM_LAYER_SCHEMA_IDS,
 } from '@picturepark/sdk-v2-angular';
 import { RelationFieldInfo } from '@picturepark/sdk-v2-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ContentDetailsDialogOptions } from '@picturepark/sdk-v2-angular-ui/lib/features-module/content-details-dialog/content-details-dialog-options';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
@@ -37,10 +37,9 @@ export class ItemDetailsComponent extends PageBase implements OnInit {
     private liquidRenderingService: LiquidRenderingService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog,
-    injector: Injector
+    dialog: MatDialog
   ) {
-    super(injector, media, changeDetectorRef, dialog);
+    super(media, changeDetectorRef, dialog);
   }
 
   public ngOnInit() {

@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Injector,
   Input,
   OnChanges,
   OnDestroy,
@@ -12,7 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -72,10 +71,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
     private contentDownloadDialogService: ContentDownloadDialogService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog,
-    injector: Injector
+    dialog: MatDialog
   ) {
-    super(injector, media, changeDetectorRef, dialog);
+    super(media, changeDetectorRef, dialog);
 
     this.sub = this.basketService.basketChange.subscribe((items) => {
       this.basketItems = items;

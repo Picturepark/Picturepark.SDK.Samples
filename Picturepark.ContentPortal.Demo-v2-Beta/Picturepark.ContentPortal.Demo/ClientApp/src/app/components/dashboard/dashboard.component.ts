@@ -1,5 +1,5 @@
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { Component, ChangeDetectorRef, Injector } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DashboardItem } from './../../models/dashboard-item.model';
@@ -18,7 +18,7 @@ import {
 } from '@picturepark/sdk-v2-angular';
 import { PageBase } from '../page-base';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,10 +36,9 @@ export class DashboardComponent extends PageBase {
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    dialog: MatDialog,
-    injector: Injector
+    dialog: MatDialog
   ) {
-    super(injector, media, changeDetectorRef, dialog);
+    super(media, changeDetectorRef, dialog);
     this.load();
   }
 

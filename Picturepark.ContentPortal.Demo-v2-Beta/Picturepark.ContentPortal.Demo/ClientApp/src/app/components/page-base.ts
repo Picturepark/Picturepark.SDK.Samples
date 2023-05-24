@@ -1,6 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, OnDestroy, Injector, Directive } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { ChangeDetectorRef, OnDestroy, Directive } from '@angular/core';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BaseComponent } from '@picturepark/sdk-v2-angular-ui';
 import { DemoInfoDialogComponent } from './demo-info-dialog/demo-info-dialog.component';
 
@@ -9,13 +9,8 @@ export abstract class PageBase extends BaseComponent implements OnDestroy {
   public mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  public constructor(
-    injector: Injector,
-    media: MediaMatcher,
-    changeDetectorRef: ChangeDetectorRef,
-    public dialog: MatDialog
-  ) {
-    super(injector);
+  public constructor(media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, public dialog: MatDialog) {
+    super();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
