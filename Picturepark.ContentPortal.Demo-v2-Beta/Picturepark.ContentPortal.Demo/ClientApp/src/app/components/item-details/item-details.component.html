@@ -1,26 +1,27 @@
-<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<div class="item-container" [class.item-container-mobile]="mobileQuery.matches">
-  <div *ngIf="!loading" class="item mat-typography" [class.item-mobile]="mobileQuery.matches">
-    <mat-card appearance="outlined" class="custom-shadow">
-      <mat-card-title>
-        {{ content.displayValues!['name'] }}
-      </mat-card-title>
-    </mat-card>
+<ng-container *ngIf="state() as state">
+  <mat-progress-bar mode="indeterminate" *ngIf="state.loading"></mat-progress-bar>
+  <div class="item-container" [class.item-container-mobile]="mobileQuery.matches">
+    <div *ngIf="!state.loading" class="item mat-typography" [class.item-mobile]="mobileQuery.matches">
+      <mat-card appearance="raised" class="custom-shadow">
+        <mat-card-title>
+          {{ state.content.displayValues!['name'] }}
+        </mat-card-title>
+      </mat-card>
 
-    <mat-card appearance="outlined" class="custom-shadow preview-image" *ngIf="content.contentType !== 'Virtual'">
-      <div>
-        <pp-content-image-preview [content]="content"></pp-content-image-preview>
-      </div>
-    </mat-card>
+      <mat-card appearance="raised" class="custom-shadow preview-image" *ngIf="state.content.contentType !== 'Virtual'">
+        <div>
+          <pp-content-image-preview [content]="state.content"></pp-content-image-preview>
+        </div>
+      </mat-card>
 
-    <pp-layer-panels
-      *ngIf="schemas"
-      [content]="content"
-      [schemas]="schemas"
-      [showContentSchema]="content.contentType === 'Virtual'"
-      [excludedLayerSchemaIds]="systemLayerSchemaIds"
-      (relationClick)="relationClick($event)"
-    >
-    </pp-layer-panels>
+      <pp-layer-panels
+        [content]="state.content"
+        [schemas]="state.schemas"
+        [showContentSchema]="state.content.contentType === 'Virtual'"
+        [excludedLayerSchemaIds]="systemLayerSchemaIds"
+        (relationClick)="relationClick($event)"
+      >
+      </pp-layer-panels>
+    </div>
   </div>
-</div>
+</ng-container>

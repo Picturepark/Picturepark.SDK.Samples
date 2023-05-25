@@ -1,6 +1,4 @@
-import { MediaMatcher } from '@angular/cdk/layout';
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -11,7 +9,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -68,12 +65,9 @@ export class ContentManagerComponent extends PageBase implements OnInit, OnChang
     private configService: ConfigService,
     public facade: ContentSearchFacade,
     private contentService: ContentService,
-    private contentDownloadDialogService: ContentDownloadDialogService,
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    dialog: MatDialog
+    private contentDownloadDialogService: ContentDownloadDialogService
   ) {
-    super(media, changeDetectorRef, dialog);
+    super();
 
     this.sub = this.basketService.basketChange.subscribe((items) => {
       this.basketItems = items;

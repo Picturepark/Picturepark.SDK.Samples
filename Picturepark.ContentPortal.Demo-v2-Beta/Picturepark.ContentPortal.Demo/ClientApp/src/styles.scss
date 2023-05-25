@@ -7,7 +7,7 @@
 // CUSTOM THEME
 $custom-typography: mat.define-typography-config(
   $font-family: '"Roboto", "Helvetica Neue", sans-serif',
-  $headline-1: mat.define-typography-level(21px, 56px, 400),
+  $headline-1: mat.define-typography-level(16px, 25px, 300),
   $headline-2: mat.define-typography-level(18px, 48px, 400),
   $headline-3: mat.define-typography-level(14px, 112px, 300),
   $headline-4: mat.define-typography-level(13px, 40px, 400),
@@ -17,7 +17,7 @@ $custom-typography: mat.define-typography-config(
   $body-1: mat.define-typography-level(15px, 24px, 400),
   $subtitle-2: mat.define-typography-level(14px, 24px, 500),
   $body-2: mat.define-typography-level(14px, 20px, 400),
-  $caption: mat.define-typography-level(10px, 20px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
   $button: mat.define-typography-level(12px, 21px, 500),
 );
 
@@ -169,14 +169,11 @@ body {
   }
 }
 
-.mat-mdc-card {
-  &.custom-shadow {
-    @include mat.elevation(2, mat-color($picturepark-app-accent, 800), 2);
-  }
+.mat-mdc-card-title {
+  padding: 16px;
 }
 
 .item-container {
-  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
   mat-card,
   div {
     .custom-shadow {
@@ -192,6 +189,8 @@ a {
 }
 
 .demo-button {
-  background-color: #bcdf98;
-  height: 42px;
+  .mat-mdc-button-persistent-ripple {
+    background-color: #bcdf98;
+  }
+  height: 42px !important;
 }
