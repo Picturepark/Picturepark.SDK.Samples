@@ -75,9 +75,7 @@ export function pictureparkConfigurationFactory() {
     ItemDetailsComponent,
     ProfileComponent,
     DashboardComponent,
-    DemoInfoDialogComponent,
     ContentManagerComponent,
-    LanguageComponent,
     AppInfoDialogComponent,
     InfoComponent,
   ],
@@ -88,6 +86,7 @@ export function pictureparkConfigurationFactory() {
     PictureparkUiModule,
     CommonModule,
     MaterialModule,
+    LanguageComponent,
     LocaleModule.forRoot('system'),
   ],
   providers: [
@@ -102,6 +101,6 @@ export function pictureparkConfigurationFactory() {
     { provide: PICTUREPARK_CONFIGURATION, useFactory: pictureparkConfigurationFactory },
     { provide: AuthService, useClass: NoopAuthService },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
