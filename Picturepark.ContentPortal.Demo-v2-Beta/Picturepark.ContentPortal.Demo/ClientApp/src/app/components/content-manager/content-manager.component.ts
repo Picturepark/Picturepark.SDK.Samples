@@ -9,8 +9,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 import {
   AggregationFilter,
   AggregatorBase,
@@ -25,18 +25,61 @@ import {
   getSearchState,
   updateUrlFromSearchState,
 } from '@picturepark/sdk-v2-angular';
-import { BasketService, ContentDownloadDialogService } from '@picturepark/sdk-v2-angular-ui';
+import {
+  AggregationListComponent,
+  BasketComponent,
+  BasketService,
+  ChannelPickerComponent,
+  ContentBrowserComponent,
+  ContentDownloadDialogService,
+  SearchBoxComponent,
+  TranslatePipe,
+} from '@picturepark/sdk-v2-angular-ui';
 import { of, partition } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { ConfigService } from '../../services/config.service';
 import { ItemDetailsComponent } from '../item-details/item-details.component';
 import { PageBase } from '../page-base';
+import { MatTabsModule } from '@angular/material/tabs';
+import { InfoComponent } from '../info/info.component';
+import { ProfileComponent } from '../profile/profile.component';
+import { LanguageComponent } from '../language/language.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-content-manager',
   templateUrl: './content-manager.component.html',
   styleUrls: ['./content-manager.component.scss'],
+  standalone: true,
+  imports: [
+    MatToolbarModule,
+    NgIf,
+    MatButtonModule,
+    MatBadgeModule,
+    MatIconModule,
+    MatTooltipModule,
+    RouterLink,
+    MatDividerModule,
+    LanguageComponent,
+    ProfileComponent,
+    InfoComponent,
+    MatSidenavModule,
+    MatTabsModule,
+    ItemDetailsComponent,
+    TranslatePipe,
+    ChannelPickerComponent,
+    SearchBoxComponent,
+    AggregationListComponent,
+    BasketComponent,
+    ContentBrowserComponent,
+  ],
 })
 export class ContentManagerComponent extends PageBase implements OnInit, OnChanges, OnDestroy {
   @Input() baseFilter: FilterBase;

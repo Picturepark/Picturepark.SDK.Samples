@@ -1,6 +1,6 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DashboardItem } from './../../models/dashboard-item.model';
 import {
@@ -18,12 +18,34 @@ import {
 } from '@picturepark/sdk-v2-angular';
 import { PageBase } from '../page-base';
 import { forkJoin, map, mergeMap, of } from 'rxjs';
+import { SearchBoxComponent, TranslatePipe } from '@picturepark/sdk-v2-angular-ui';
+import { MatCardModule } from '@angular/material/card';
+import { InfoComponent } from '../info/info.component';
+import { ProfileComponent } from '../profile/profile.component';
+import { LanguageComponent } from '../language/language.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    MatToolbarModule,
+    RouterLink,
+    MatButtonModule,
+    LanguageComponent,
+    ProfileComponent,
+    InfoComponent,
+    NgFor,
+    MatCardModule,
+    TranslatePipe,
+    SearchBoxComponent,
+  ],
 })
 export class DashboardComponent extends PageBase {
   items = toSignal(this.load());

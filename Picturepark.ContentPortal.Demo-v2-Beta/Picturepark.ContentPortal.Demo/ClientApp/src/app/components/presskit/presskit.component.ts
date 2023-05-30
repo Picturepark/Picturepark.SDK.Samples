@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ParamsUpdate } from '../../models/params-update.model';
 import { FilterBase, TermFilter, AggregationFilter } from '@picturepark/sdk-v2-angular';
+import { ContentManagerComponent } from '../content-manager/content-manager.component';
 
 @Component({
-  selector: 'app-presskit',
-  templateUrl: './presskit.component.html',
-  styleUrls: ['./presskit.component.scss'],
+    selector: 'app-presskit',
+    templateUrl: './presskit.component.html',
+    styleUrls: ['./presskit.component.scss'],
+    standalone: true,
+    imports: [ContentManagerComponent],
 })
 export class PresskitComponent implements OnInit {
   public baseFilter: FilterBase;

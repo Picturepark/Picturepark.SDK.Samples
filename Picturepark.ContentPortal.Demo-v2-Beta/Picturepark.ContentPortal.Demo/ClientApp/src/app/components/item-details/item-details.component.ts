@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, inject, signal } from '@angular/core';
-import { ContentDetailsDialogComponent } from '@picturepark/sdk-v2-angular-ui';
+import {
+  ContentDetailsDialogComponent,
+  ContentImagePreviewComponent,
+  LayerPanelsComponent,
+} from '@picturepark/sdk-v2-angular-ui';
 import {
   ContentService,
   ContentDetail,
@@ -12,12 +16,17 @@ import { RelationFieldInfo } from '@picturepark/sdk-v2-angular-ui/lib/features-m
 import { ContentDetailsDialogOptions } from '@picturepark/sdk-v2-angular-ui/lib/features-module/content-details-dialog/content-details-dialog-options';
 import { PageBase } from '../page-base';
 import { map, mergeMap } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, MatProgressBarModule, MatCardModule, ContentImagePreviewComponent, LayerPanelsComponent],
 })
 export class ItemDetailsComponent extends PageBase implements OnInit {
   @Input() itemId: string;

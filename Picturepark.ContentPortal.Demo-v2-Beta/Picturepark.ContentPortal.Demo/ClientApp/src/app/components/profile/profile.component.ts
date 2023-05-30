@@ -3,10 +3,21 @@ import { ConfigService } from '../../services/config.service';
 import { ProfileService, UserProfile } from '@picturepark/sdk-v2-angular';
 import { Observable } from 'rxjs';
 import { ClientConfiguration } from '../../models/client-configuration.model';
+import { TranslatePipe } from '@picturepark/sdk-v2-angular-ui';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    standalone: true,
+    imports: [
+        NgIf,
+        MatButtonModule,
+        MatMenuModule,
+        TranslatePipe,
+    ],
 })
 export class ProfileComponent implements OnInit {
   public config: ClientConfiguration;
