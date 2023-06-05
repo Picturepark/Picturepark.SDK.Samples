@@ -1,5 +1,9 @@
-import { Component, Input, OnInit, ChangeDetectorRef, Injector } from '@angular/core';
-import { LiquidRenderingService, ContentDetailsDialogComponent } from '@picturepark/sdk-v2-angular-ui';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject, signal } from '@angular/core';
+import {
+  ContentDetailsDialogComponent,
+  ContentImagePreviewComponent,
+  LayerPanelsComponent,
+} from '@picturepark/sdk-v2-angular-ui';
 import {
   ContentService,
   ContentDetail,
@@ -9,39 +13,33 @@ import {
   SYSTEM_LAYER_SCHEMA_IDS,
 } from '@picturepark/sdk-v2-angular';
 import { RelationFieldInfo } from '@picturepark/sdk-v2-angular-ui/lib/features-module/layer-panels/models/relation-field-info';
-import { MatDialog } from '@angular/material/dialog';
 import { ContentDetailsDialogOptions } from '@picturepark/sdk-v2-angular-ui/lib/features-module/content-details-dialog/content-details-dialog-options';
 import { PageBase } from '../page-base';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { map, mergeMap } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, MatProgressBarModule, MatCardModule, ContentImagePreviewComponent, LayerPanelsComponent],
 })
 export class ItemDetailsComponent extends PageBase implements OnInit {
-  @Input()
-  public itemId: string;
+  @Input() itemId: string;
 
-  public loading = true;
+  private contentService = inject(ContentService);
+  private schemaService = inject(SchemaService);
 
-  public content: ContentDetail = null;
-
-  public schemas: SchemaDetail[];
-
-  public systemLayerSchemaIds = SYSTEM_LAYER_SCHEMA_IDS;
-
-  constructor(
-    private contentService: ContentService,
-    private schemaService: SchemaService,
-    private liquidRenderingService: LiquidRenderingService,
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    dialog: MatDialog,
-    injector: Injector
-  ) {
-    super(injector, media, changeDetectorRef, dialog);
-  }
+  systemLayerSchemaIds = SYSTEM_LAYER_SCHEMA_IDS;
+  state = signal({
+    loading: true,
+    content: null as ContentDetail | null,
+    schemas: null as SchemaDetail[] | null,
+  });
 
   public ngOnInit() {
     this.sub = this.contentService
@@ -55,14 +53,19 @@ export class ItemDetailsComponent extends PageBase implements OnInit {
         ContentResolveBehavior.InnerDisplayValueList,
         ContentResolveBehavior.InnerDisplayValueThumbnail,
       ])
-      .subscribe(async (content) => {
-        await this.liquidRenderingService.renderNestedDisplayValues(content);
-        this.content = content;
-
-        this.schemas = await this.schemaService
-          .getMany(this.content.layerSchemaIds.concat(this.content.contentSchemaId))
-          .toPromise();
-        this.loading = false;
+      .pipe(
+        mergeMap((content) =>
+          this.schemaService
+            .getMany(content.layerSchemaIds.concat(content.contentSchemaId))
+            .pipe(map((schemas) => ({ content, schemas })))
+        )
+      )
+      .subscribe(({ content, schemas }) => {
+        this.state.set({
+          loading: false,
+          content,
+          schemas,
+        });
       });
   }
 

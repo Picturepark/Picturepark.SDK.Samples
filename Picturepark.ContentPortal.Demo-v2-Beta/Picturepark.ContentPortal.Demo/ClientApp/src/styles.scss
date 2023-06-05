@@ -7,23 +7,19 @@
 // CUSTOM THEME
 $custom-typography: mat.define-typography-config(
   $font-family: '"Roboto", "Helvetica Neue", sans-serif',
-  $display-4: mat.define-typography-level(21px, 56px, 400),
-  $display-3: mat.define-typography-level(18px, 48px, 400),
-  $display-2: mat.define-typography-level(14px, 112px, 300),
-  $display-1: mat.define-typography-level(13px, 40px, 400),
-  $headline: mat.define-typography-level(21px, 64px, 600),
-  $title: mat.define-typography-level(20px, 32px, 500),
-  $subheading-2: mat.define-typography-level(18px, 24px, 200),
-  $subheading-1: mat.define-typography-level(15px, 24px, 400),
-  $body-2: mat.define-typography-level(14px, 24px, 500),
-  $body-1: mat.define-typography-level(14px, 20px, 400),
-  $caption: mat.define-typography-level(10px, 20px, 400),
+  $headline-1: mat.define-typography-level(16px, 25px, 300),
+  $headline-2: mat.define-typography-level(18px, 48px, 400),
+  $headline-3: mat.define-typography-level(14px, 112px, 300),
+  $headline-4: mat.define-typography-level(13px, 40px, 400),
+  $headline-5: mat.define-typography-level(21px, 64px, 600),
+  $headline-6: mat.define-typography-level(20px, 32px, 500),
+  $subtitle-1: mat.define-typography-level(18px, 24px, 200),
+  $body-1: mat.define-typography-level(15px, 24px, 400),
+  $subtitle-2: mat.define-typography-level(14px, 24px, 500),
+  $body-2: mat.define-typography-level(14px, 20px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
   $button: mat.define-typography-level(12px, 21px, 500),
-  $input: mat.define-typography-level(18px, 1.125, 400),
 );
-
-@include mat.core($custom-typography);
-@include mat.typography-hierarchy($custom-typography);
 
 $mat-picturepark-primary: (
   0: #eeeeee,
@@ -122,16 +118,32 @@ $mat-picturepark-accent: (
 $picturepark-app-primary: mat.define-palette($mat-picturepark-primary, 600, 300, 800);
 $picturepark-app-accent: mat.define-palette($mat-picturepark-accent, 500, 100, 700);
 $picturepark-app-warn: mat.define-palette(mat.$red-palette);
-$picturepark-app-theme: mat.define-light-theme((
- color: (
-   primary: $picturepark-app-primary,
-   accent: $picturepark-app-accent,
-   warn: $picturepark-app-warn,
- )
-));
+$picturepark-app-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $picturepark-app-primary,
+      accent: $picturepark-app-accent,
+      warn: $picturepark-app-warn,
+    ),
+    typography: $custom-typography,
+    density: -1,
+  )
+);
 
+@include mat.typography-hierarchy($custom-typography);
+@include mat.core();
+@include mat.core-theme($picturepark-app-theme);
 @include mat.all-component-themes($picturepark-app-theme);
-@include picturepark-theme($picturepark-app-theme);
+@include mat.checkbox-density(-3);
+@include mat.radio-density(-3);
+@include mat.list-density(-5);
+@include mat.icon-button-density(-2);
+@include mat.table-density(-1);
+@include mat.tree-density(-4);
+
+html.light-theme {
+  @include picturepark-theme($picturepark-app-theme);
+}
 
 // GLOBAL STYLES (keep at bottom)
 @import '../node_modules/@picturepark/sdk-v2-angular-ui/lib/styles/global_styles.scss';
@@ -157,10 +169,8 @@ body {
   }
 }
 
-.mat-card {
-  &.custom-shadow {
-    @include mat.elevation(2, mat-color($picturepark-app-accent, 800), 2);
-  }
+.mat-mdc-card-title {
+  padding: 16px;
 }
 
 .item-container {
@@ -179,6 +189,8 @@ a {
 }
 
 .demo-button {
-  background-color: #bcdf98;
-  height: 42px;
+  .mat-mdc-button-persistent-ripple {
+    background-color: #bcdf98;
+  }
+  height: 42px !important;
 }

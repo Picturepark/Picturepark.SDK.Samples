@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ParamsUpdate } from '../../models/params-update.model';
+import { ContentManagerComponent } from '../content-manager/content-manager.component';
 
 @Component({
-  selector: 'app-items',
-  templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss'],
+    selector: 'app-items',
+    templateUrl: './items.component.html',
+    styleUrls: ['./items.component.scss'],
+    standalone: true,
+    imports: [ContentManagerComponent],
 })
 export class ItemsComponent {
   public constructor(private router: Router, private route: ActivatedRoute) {}

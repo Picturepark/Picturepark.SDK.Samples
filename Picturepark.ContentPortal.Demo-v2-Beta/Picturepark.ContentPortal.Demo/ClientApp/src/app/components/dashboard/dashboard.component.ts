@@ -1,7 +1,7 @@
-import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
-import { Component, ChangeDetectorRef, Injector } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { DomSanitizer } from '@angular/platform-browser';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DashboardItem } from './../../models/dashboard-item.model';
 import {
   ThumbnailSize,
@@ -17,34 +17,45 @@ import {
   TranslatedStringDictionary,
 } from '@picturepark/sdk-v2-angular';
 import { PageBase } from '../page-base';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material/dialog';
+import { forkJoin, map, mergeMap, of } from 'rxjs';
+import { SearchBoxComponent, TranslatePipe } from '@picturepark/sdk-v2-angular-ui';
+import { MatCardModule } from '@angular/material/card';
+import { InfoComponent } from '../info/info.component';
+import { ProfileComponent } from '../profile/profile.component';
+import { LanguageComponent } from '../language/language.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    NgIf,
+    MatToolbarModule,
+    RouterLink,
+    MatButtonModule,
+    LanguageComponent,
+    ProfileComponent,
+    InfoComponent,
+    NgFor,
+    MatCardModule,
+    TranslatePipe,
+    SearchBoxComponent,
+  ],
 })
 export class DashboardComponent extends PageBase {
-  public items: DashboardItem[] = [];
-  public images: SafeUrl[] = [];
-  public searchQuery: string = null;
+  items = toSignal(this.load());
 
-  constructor(
-    private contentService: ContentService,
-    private sanitizer: DomSanitizer,
-    private router: Router,
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
-    dialog: MatDialog,
-    injector: Injector
-  ) {
-    super(injector, media, changeDetectorRef, dialog);
-    this.load();
+  constructor(private contentService: ContentService, private sanitizer: DomSanitizer, private router: Router) {
+    super();
   }
 
-  public async load(): Promise<void> {
-    const contents = await this.contentService
+  public load() {
+    return this.contentService
       .search(
         new ContentSearchRequest({
           limit: 20,
@@ -59,36 +70,42 @@ export class DashboardComponent extends PageBase {
           sort: [new SortInfo({ field: 'featuredContent.headline', direction: SortDirection.Asc })],
         })
       )
-      .toPromise();
+      .pipe(
+        mergeMap((contents) => {
+          return this.contentService
+            .getMany(
+              contents.results.map((i) => i.id),
+              [ContentResolveBehavior.Content]
+            )
+            .pipe(
+              map((details) =>
+                details.map(
+                  (i) =>
+                    ({
+                      imageId: i.content['teaserImage']?._targetId,
+                      title: TranslatedStringDictionary.fromJS(i.content['headline']),
+                      description: TranslatedStringDictionary.fromJS(i.content['abstract']),
+                      path: i.content['resourceLink'],
+                    } as DashboardItem)
+                )
+              )
+            );
+        }),
+        mergeMap((details) => {
+          const requests = details.map((item) =>
+            item.imageId
+              ? this.contentService.downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null).pipe(
+                  map((result) => ({
+                    ...item,
+                    imageUrl: this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(result.data)),
+                  }))
+                )
+              : of(item)
+          );
 
-    const details = await this.contentService
-      .getMany(
-        contents.results.map((i) => i.id),
-        [ContentResolveBehavior.Content]
-      )
-      .toPromise();
-
-    details.forEach((i) => {
-      this.items.push({
-        imageId: i.content['teaserImage']?._targetId,
-        title: TranslatedStringDictionary.fromJS(i.content['headline']),
-        description: TranslatedStringDictionary.fromJS(i.content['abstract']),
-        path: i.content['resourceLink'],
-      });
-    });
-
-    this.items.forEach((item, index) => {
-      if (!item.imageId) {
-        return;
-      }
-      this.sub = this.contentService
-        .downloadThumbnail(item.imageId, ThumbnailSize.Large, null, null)
-        .subscribe((result) => {
-          if (result !== null) {
-            this.images[index] = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(result.data));
-          }
-        });
-    });
+          return forkJoin(requests);
+        })
+      );
   }
 
   public changeSearchQuery(query: string) {
@@ -96,7 +113,6 @@ export class DashboardComponent extends PageBase {
       return;
     }
 
-    this.searchQuery = query;
     this.router.navigate(['/items', 'portal'], { queryParams: { searchString: query } });
   }
 
