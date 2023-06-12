@@ -2218,19 +2218,19 @@
     read-package-json-fast "^3.0.0"
     which "^3.0.0"
 
-"@picturepark/sdk-v2-angular-ui@11.8.0-pre-9a8ab0b.0":
-  version "11.8.0-pre-9a8ab0b.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.8.0-pre-9a8ab0b.0/188fdcd68b8aea8fe24d7b62d1e76807c2719a66#188fdcd68b8aea8fe24d7b62d1e76807c2719a66"
-  integrity sha512-GV0jY0m2aFH+2Lrmme1SSvcA1zAt7BjYMbQ3pNYicIEPPjcM0lvALGubKB9dLoqkzJ0xfzU4dLnMW12IFTHwxQ==
+"@picturepark/sdk-v2-angular-ui@11.8.0-pre-2db4894.0":
+  version "11.8.0-pre-2db4894.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.8.0-pre-2db4894.0/46a60c310e0f0f8e9b8a0a6ee81500c2931b0a9e#46a60c310e0f0f8e9b8a0a6ee81500c2931b0a9e"
+  integrity sha512-SDntxu6xPP/DRT+Ngro2P+k7xkLHjAzuDLUZMsMKVW77wtfnMOVnmbmUKoWjdqBjvr7eBxYRbePbUiCv4EfIBQ==
   dependencies:
     moment "2.24.0"
     ts-md5 "^1.2.4"
     tslib "^2.3.0"
 
-"@picturepark/sdk-v2-angular@11.8.0-pre-9a8ab0b.0":
-  version "11.8.0-pre-9a8ab0b.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.8.0-pre-9a8ab0b.0/6dc963e2d31f2ac2ad613b79b3ea28d52644b91d#6dc963e2d31f2ac2ad613b79b3ea28d52644b91d"
-  integrity sha512-yKI+MyixGYLLsnkPXPt0wxYyBzxvzrbWLJEl2K3xoaojZdfRMTGNW+xMFewjmbac2gZvsWFMbVCuxo0t1VVVQw==
+"@picturepark/sdk-v2-angular@11.8.0-pre-2db4894.0":
+  version "11.8.0-pre-2db4894.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.8.0-pre-2db4894.0/2e4289223a2217bbb6b24c8bf1cd3dfd7028fe06#2e4289223a2217bbb6b24c8bf1cd3dfd7028fe06"
+  integrity sha512-ZjaK0ESCEUFwlpPnkhAwWiufMgzCVLkw7s3mYc9NSIHJtQ5FNpWLlriIrfDsniUSM7uisKxtvyFNVFQxax1D8A==
   dependencies:
     tslib "^2.0.0"
 
@@ -4765,11 +4765,6 @@ launch-editor@^2.6.0:
   dependencies:
     picocolors "^1.0.0"
     shell-quote "^1.7.3"
-
-lazy-get-decorator@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/lazy-get-decorator/-/lazy-get-decorator-2.2.0.tgz"
-  integrity sha512-UhU+k+Wpkutdeg0y4TBbyCB3snHYfywe++FYDIYBJbO4rZUXevnAcgucq8MaervoXESYJt/lN9JASND5YhcFTg==
 
 less-loader@11.1.0:
   version "11.1.0"

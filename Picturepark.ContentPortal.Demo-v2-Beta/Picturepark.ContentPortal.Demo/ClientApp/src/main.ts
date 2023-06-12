@@ -12,6 +12,7 @@ import { PICTUREPARK_UI_CONFIGURATION, PictureparkUiModule } from '@picturepark/
 import { ConfigService, configFactory } from './app/services/config.service';
 import { provideRouter } from '@angular/router';
 import { APP_ROUTES } from './app/app-routing';
+import { MatNativeDateModule } from '@angular/material/core';
 
 if (environment.production) {
   enableProdMode();
@@ -19,7 +20,13 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(PictureparkUiModule, MatDialogModule, CommonModule, LocaleModule.forRoot('system')),
+    importProvidersFrom(
+      PictureparkUiModule,
+      MatDialogModule,
+      MatNativeDateModule,
+      CommonModule,
+      LocaleModule.forRoot('system')
+    ),
     ConfigService,
     {
       provide: APP_INITIALIZER,
