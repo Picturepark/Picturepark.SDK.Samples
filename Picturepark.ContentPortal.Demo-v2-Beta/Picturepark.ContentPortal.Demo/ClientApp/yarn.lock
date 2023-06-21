@@ -2218,19 +2218,19 @@
     read-package-json-fast "^3.0.0"
     which "^3.0.0"
 
-"@picturepark/sdk-v2-angular-ui@11.8.0-pre-2db4894.0":
-  version "11.8.0-pre-2db4894.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.8.0-pre-2db4894.0/46a60c310e0f0f8e9b8a0a6ee81500c2931b0a9e#46a60c310e0f0f8e9b8a0a6ee81500c2931b0a9e"
-  integrity sha512-SDntxu6xPP/DRT+Ngro2P+k7xkLHjAzuDLUZMsMKVW77wtfnMOVnmbmUKoWjdqBjvr7eBxYRbePbUiCv4EfIBQ==
+"@picturepark/sdk-v2-angular-ui@11.8.0-pre-0882132.0":
+  version "11.8.0-pre-0882132.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular-ui/11.8.0-pre-0882132.0/acf1c650527e6f41bb8e04950c523e053f7b335e#acf1c650527e6f41bb8e04950c523e053f7b335e"
+  integrity sha512-3tHd9sJjrNq5vwXvZf1ZUJyQ5Z6yqq+j791vwevZFV6b51BxotmFv2Rf28SfQUl9YGygnOZikd32honrS3rrRw==
   dependencies:
     moment "2.24.0"
     ts-md5 "^1.2.4"
     tslib "^2.3.0"
 
-"@picturepark/sdk-v2-angular@11.8.0-pre-2db4894.0":
-  version "11.8.0-pre-2db4894.0"
-  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.8.0-pre-2db4894.0/2e4289223a2217bbb6b24c8bf1cd3dfd7028fe06#2e4289223a2217bbb6b24c8bf1cd3dfd7028fe06"
-  integrity sha512-ZjaK0ESCEUFwlpPnkhAwWiufMgzCVLkw7s3mYc9NSIHJtQ5FNpWLlriIrfDsniUSM7uisKxtvyFNVFQxax1D8A==
+"@picturepark/sdk-v2-angular@11.8.0-pre-0882132.0":
+  version "11.8.0-pre-0882132.0"
+  resolved "https://npm.pkg.github.com/download/@Picturepark/sdk-v2-angular/11.8.0-pre-0882132.0/76490870e2ab9cef503fb2cb8e485861153fe19f#76490870e2ab9cef503fb2cb8e485861153fe19f"
+  integrity sha512-hoD5W/vNcuXXY0Lr/HasTjRgTRL22kRKVAZiIB5tG+ay357B4WlHj5GbcrsISDhrkANU/ShJk7bar9UhJlO4Pw==
   dependencies:
     tslib "^2.0.0"
 
