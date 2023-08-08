@@ -6,3 +6,8 @@ registry: ""
 
 image:
   service: ""
+
+resources:
+  requests:
+    cpu: 1m
+    memory: 256Mi
