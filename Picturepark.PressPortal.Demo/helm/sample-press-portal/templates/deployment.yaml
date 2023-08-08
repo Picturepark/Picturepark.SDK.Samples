@@ -21,6 +21,21 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.registry }}/{{ .Values.image.service }}"
           imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              {{- if .Values.resources.requests.cpu }}
+              cpu: {{ .Values.resources.requests.cpu }}
+              {{- end }}
+              {{- if .Values.resources.requests.memory }}
+              memory: {{ .Values.resources.requests.memory }}
+              {{- end }}
+            limits:
+              {{- if .Values.resources.limits.cpu }}
+              cpu: {{ .Values.resources.limits.cpu }}
+              {{- end }}
+              {{- if .Values.resources.limits.memory }}
+              memory: {{ .Values.resources.limits.memory }}
+              {{- end }}
           volumeMounts:
             - name: configuration
               mountPath: /etc/cp
