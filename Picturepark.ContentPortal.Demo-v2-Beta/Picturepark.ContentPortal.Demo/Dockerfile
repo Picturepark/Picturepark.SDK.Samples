@@ -16,7 +16,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 WORKDIR /src
 ADD ./.git /.git
 ADD ./version.json /version.json
-ADD ./NuGet.config /NuGet.config
 
 COPY ["Picturepark.ContentPortal.Demo-v2-Beta/Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj", "Picturepark.ContentPortal.Demo/"]
 RUN dotnet restore "Picturepark.ContentPortal.Demo/Picturepark.ContentPortal.Demo.csproj"

@@ -9,7 +9,6 @@ COPY ["Picturepark.PressPortal.Demo/Picturepark.PressPortal.Demo/Picturepark.Pre
 
 ADD ./.git /.git
 ADD ./version.json /version.json
-ADD ./NuGet.config /NuGet.config
 
 RUN dotnet restore "Picturepark.PressPortal.Demo/Picturepark.PressPortal.Demo.csproj"
 COPY Picturepark.PressPortal.Demo/ .
