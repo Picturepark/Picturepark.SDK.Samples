@@ -150,7 +150,8 @@ namespace Picturepark.ServiceProvider.Example.BusinessProcess
                         }
 
                         var response = await client.Content.DownloadAsync(contentId, "Original").ConfigureAwait(false);
-                        using (var fs = new FileStream(Path.Combine(_config.Value.OutputDownloadDirectory, contentId + ".jpg"), FileMode.CreateNew))
+
+                        await using (var fs = new FileStream(Path.Combine(_config.Value.OutputDownloadDirectory, contentId + $"{DateTime.Now:yy-MM-dd-HH-mm-ss}.jpg"), FileMode.CreateNew))
                         {
                             await response.Stream.CopyToAsync(fs).ConfigureAwait(false);
                         }
