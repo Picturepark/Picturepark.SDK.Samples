@@ -19,8 +19,8 @@ To create the service provider, run the following call against the CP management
 ```
 POST {{cloudmanager-url}}/service/serviceProvider:
 {
-    "externalId": "bpedemo",
-    "name": "Business Process Engine Provider (POC)",
+    "name": "bpedemo",
+    "description": "Business Process Engine Provider (POC)",
     "secret": "CHANGEME"
 }
 ```

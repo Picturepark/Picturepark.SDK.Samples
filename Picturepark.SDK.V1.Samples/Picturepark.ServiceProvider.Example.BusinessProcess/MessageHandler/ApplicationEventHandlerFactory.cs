@@ -1,26 +1,25 @@
 ﻿using System.Collections.Generic;
 using Picturepark.SDK.V1.Contract;
 
-namespace Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler
+namespace Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler;
+
+internal class ApplicationEventHandlerFactory : IApplicationEventHandlerFactory
 {
-    internal class ApplicationEventHandlerFactory : IApplicationEventHandlerFactory
+    private readonly IEnumerable<IApplicationEventHandler> _handlers;
+
+    public ApplicationEventHandlerFactory(IEnumerable<IApplicationEventHandler> handlers)
     {
-        private readonly IEnumerable<IApplicationEventHandler> _handlers;
+        _handlers = handlers;
+    }
 
-        public ApplicationEventHandlerFactory(IEnumerable<IApplicationEventHandler> handlers)
+    public IApplicationEventHandler Get(ApplicationEvent applicationEvent)
+    {
+        foreach (var handler in _handlers)
         {
-            _handlers = handlers;
+            if (handler.Accept(applicationEvent))
+                return handler;
         }
 
-        public IApplicationEventHandler Get(ApplicationEvent applicationEvent)
-        {
-            foreach (var handler in _handlers)
-            {
-                if (handler.Accept(applicationEvent))
-                    return handler;
-            }
-
-            return null;
-        }
+        return null;
     }
 }
