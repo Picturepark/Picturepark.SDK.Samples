@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -11,31 +11,32 @@ using Picturepark.SDK.V1.Contract;
 using Picturepark.ServiceProvider.Example.BusinessProcess.BusinessProcess;
 using Picturepark.ServiceProvider.Example.BusinessProcess.Config;
 using Picturepark.ServiceProvider.Example.BusinessProcess.Util;
+using Channel = System.Threading.Channels.Channel;
 
 namespace Picturepark.ServiceProvider.Example.BusinessProcess;
 
 internal class ContentBatchDownloadService : IHostedService, IDisposable
 {
     private readonly ILogger<ContentBatchDownloadService> _logger;
-    private readonly ContentIdQueue _queue;
+    private readonly ContentIdQueue _contentQueue;
     private readonly IOptions<SampleConfiguration> _config;
     private readonly Func<IPictureparkService> _clientFactory;
     private readonly IBusinessProcessCancellationManager _cancellationManager;
     private readonly CancellationTokenSource _taskCancellationTokenSource;
-    private readonly BlockingCollection<string[]> _batches = new BlockingCollection<string[]>();
+    private readonly Channel<string[]> _batches = Channel.CreateUnbounded<string[]>();
 
     private Task _batchingTask;
     private Task _downloadTask;
 
     public ContentBatchDownloadService(
         ILogger<ContentBatchDownloadService> logger,
-        ContentIdQueue queue,
+        ContentIdQueue contentQueue,
         IOptions<SampleConfiguration> config,
         Func<IPictureparkService> clientFactory,
         IBusinessProcessCancellationManager cancellationManager)
     {
         _logger = logger;
-        _queue = queue;
+        _contentQueue = contentQueue;
         _config = config;
         _clientFactory = clientFactory;
         _cancellationManager = cancellationManager;
@@ -44,81 +45,76 @@ internal class ContentBatchDownloadService : IHostedService, IDisposable
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _batchingTask = Task.Run(GatherBatches, CancellationToken.None).ContinueWith(
-            t =>
-            {
-                if (t.IsFaulted)
-                    throw t.Exception;
-            },
-            CancellationToken.None);
-
-        _downloadTask = Task.Run(DownloadBatches, CancellationToken.None).ContinueWith(
-            t =>
-            {
-                if (t.IsFaulted)
-                    throw t.Exception;
-            },
-            CancellationToken.None);
-
+        _batchingTask = Task.Run(GatherBatches, CancellationToken.None);
+        _downloadTask = Task.Run(DownloadBatches, CancellationToken.None);
         return Task.CompletedTask;
     }
 
     public async Task StopAsync(CancellationToken cancellationToken)
     {
+        _contentQueue.Complete();
         _taskCancellationTokenSource.Cancel();
 
         var batchingTask = _batchingTask ?? Task.CompletedTask;
         var downloadTask = _downloadTask ?? Task.CompletedTask;
 
-        await Task.WhenAll(batchingTask, downloadTask).ConfigureAwait(false);
+        await Task.WhenAll(batchingTask, downloadTask);
     }
 
     public void Dispose()
     {
-        _queue?.Dispose();
         _batchingTask?.Dispose();
         _taskCancellationTokenSource?.Dispose();
     }
 
-    private void GatherBatches()
+    private async Task GatherBatches()
     {
         while (!_taskCancellationTokenSource.IsCancellationRequested)
         {
             _logger.LogInformation("Waiting for work...");
 
-            using (var ctsTimeout = CancellationTokenSource.CreateLinkedTokenSource(_taskCancellationTokenSource.Token))
+            using var ctsBatchTimeout = CancellationTokenSource.CreateLinkedTokenSource(_taskCancellationTokenSource.Token);
+            ctsBatchTimeout.CancelAfter(_config.Value.InactivityTimeout);
+
+            var batch = new List<string>(_config.Value.BatchSize);
+
+            try
             {
-                ctsTimeout.CancelAfter(_config.Value.InactivityTimeout);
-
-                var batch = new List<string>();
-                while (batch.Count < _config.Value.BatchSize && !ctsTimeout.IsCancellationRequested)
+                await foreach (var contentId in _contentQueue.ReadAll(ctsBatchTimeout.Token))
                 {
-                    if (_queue.TryTake(out string contentId, _config.Value.InactivityTimeout))
-                        batch.Add(contentId);
-                }
-
-                if (ctsTimeout.IsCancellationRequested)
-                    _logger.LogInformation("Inactivity period elapsed");
-
-                if (batch.Count > 0)
-                {
-                    _logger.LogInformation("Got {BatchCount} content ids to download original", batch.Count);
-                    _batches.Add(batch.ToArray(), CancellationToken.None);
+                    batch.Add(contentId);
+                    if (batch.Count >= _config.Value.BatchSize)
+                        break;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // expected on inactivityTimeout
+            }
+
+            if (ctsBatchTimeout.IsCancellationRequested)
+                _logger.LogInformation("Inactivity period elapsed or shutdown requested");
+
+            if (batch.Count > 0)
+            {
+                _logger.LogInformation("Got {BatchCount} content ids to download original", batch.Count);
+                await _batches.Writer.WriteAsync(batch.ToArray(), CancellationToken.None);
+            }
         }
+
+        _batches.Writer.Complete();
     }
 
     private async Task DownloadBatches()
     {
         try
         {
-            while (_batches.TryTake(out var batch, -1, _taskCancellationTokenSource.Token))
+            await foreach (var batch in _batches.Reader.ReadAllAsync(CancellationToken.None))
             {
                 _logger.LogInformation("Downloading batch consisting of {BatchLength} items", batch.Length);
 
-                TranslatedStringDictionary GetTitle(string state) => new TranslatedStringDictionary { { "en", $"Content carbon copy {state}" } };
-                TranslatedStringDictionary GetProgress(int n) => new TranslatedStringDictionary { { "en", $"Downloaded {n}/{batch.Length} contents" } };
+                TranslatedStringDictionary GetTitle(string state) => new() { { "en", $"Content carbon copy {state}" } };
+                TranslatedStringDictionary GetProgress(int n) => new() { { "en", $"Downloaded {n}/{batch.Length} contents" } };
 
                 var client = _clientFactory();
 
@@ -133,7 +129,7 @@ internal class ContentBatchDownloadService : IHostedService, IDisposable
                             Title = GetTitle("in progress"),
                             Message = GetProgress(0)
                         }
-                    }).ConfigureAwait(false);
+                    });
 
                 if (!Directory.Exists(_config.Value.OutputDownloadDirectory))
                     Directory.CreateDirectory(_config.Value.OutputDownloadDirectory);
@@ -149,11 +145,11 @@ internal class ContentBatchDownloadService : IHostedService, IDisposable
                         break;
                     }
 
-                    var response = await client.Content.DownloadAsync(contentId, "Original").ConfigureAwait(false);
+                    var response = await client.Content.DownloadAsync(contentId, "Original");
 
                     await using (var fs = new FileStream(Path.Combine(_config.Value.OutputDownloadDirectory, contentId + $"{DateTime.Now:yy-MM-dd-HH-mm-ss}.jpg"), FileMode.CreateNew))
                     {
-                        await response.Stream.CopyToAsync(fs).ConfigureAwait(false);
+                        await response.Stream.CopyToAsync(fs);
                     }
 
                     await client.BusinessProcess.UpdateNotificationAsync(
@@ -163,9 +159,9 @@ internal class ContentBatchDownloadService : IHostedService, IDisposable
                             EventType = NotificationEventType.InProgress,
                             Title = GetTitle("in progress"),
                             Message = GetProgress(++done)
-                        }).ConfigureAwait(false);
+                        });
 
-                    await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false); // make task artificially slower to demonstrate cancellation in the UI
+                    await Task.Delay(TimeSpan.FromSeconds(1)); // make task artificially slower to demonstrate cancellation in the UI
                 }
 
                 await client.BusinessProcess.ChangeStateAsync(
@@ -181,12 +177,14 @@ internal class ContentBatchDownloadService : IHostedService, IDisposable
                             Message = GetProgress(done),
                             NavigationLink = "https://www.picturepark.com"
                         }
-                    }).ConfigureAwait(false);
+                    });
             }
         }
         catch (OperationCanceledException)
         {
             // ignored
         }
+
+        _logger.LogInformation("Shutdown completed");
     }
 }

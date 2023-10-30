@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Picturepark.SDK.V1.Contract;
@@ -20,7 +21,7 @@ internal class BusinessRuleFiredEventHandler : ApplicationEventHandlerBase<Busin
         _queue = queue;
     }
 
-    protected override void Handle(BusinessRuleFiredEvent applicationEvent)
+    protected async override Task Handle(BusinessRuleFiredEvent applicationEvent)
     {
         var triggeredFor = applicationEvent.Details.Where(d => d.DocumentType == "Content" && d.RuleIds.Contains(_config.Value.TriggeringBusinessRuleId))
             .Select(d => d.DocumentId).ToArray();
@@ -30,7 +31,7 @@ internal class BusinessRuleFiredEventHandler : ApplicationEventHandlerBase<Busin
             _logger.LogInformation("{NumberOfContents} new contents uploaded, will enqueue for batch operation", triggeredFor.Length);
 
             foreach (var contentId in triggeredFor)
-                _queue.Add(contentId);
+                await _queue.Enqueue(contentId);
         }
     }
 }
