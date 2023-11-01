@@ -17,7 +17,7 @@ The service provider waits for a `BusinessRuleFired` event for a specific rule. 
 To create the service provider, run the following call against the CP management API:
 
 ```
-POST {{cloudmanager-url}}/service/serviceProvider:
+POST {{orchestratorHost}}/api/serviceProvider:
 {
     "name": "bpedemo",
     "description": "Business Process Engine Provider (POC)",
