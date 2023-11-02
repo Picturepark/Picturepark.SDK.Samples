@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.8.27-rc-gdf01fcb194" />
+    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.10.3-alpha-g7a270ab47b" />
   </ItemGroup>
 
 </Project>
