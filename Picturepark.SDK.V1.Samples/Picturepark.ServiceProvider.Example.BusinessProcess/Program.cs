@@ -14,61 +14,60 @@ using Picturepark.ServiceProvider.Example.BusinessProcess.Config;
 using Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler;
 using Picturepark.ServiceProvider.Example.BusinessProcess.Util;
 
-namespace Picturepark.ServiceProvider.Example.BusinessProcess
+namespace Picturepark.ServiceProvider.Example.BusinessProcess;
+
+public static class Program
 {
-    public class Program
+    public async static Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
-        {
-            await new HostBuilder()
-                .ConfigureLogging(
-                    (ctx, logging) =>
-                    {
-                        logging.AddConsole();
-                        logging.AddDebug();
-                    })
-                .ConfigureAppConfiguration(
-                    (ctx, app) =>
-                    {
-                        app.SetBasePath(Directory.GetCurrentDirectory());
-                        app.AddJsonFile("appsettings.json", optional: true);
-                        app.AddCommandLine(args);
-                    })
-                .ConfigureServices(
-                    (ctx, services) =>
-                    {
-                        services.AddOptions();
-                        services.Configure<SampleConfiguration>(ctx.Configuration.GetSection("config"));
+        await new HostBuilder()
+            .ConfigureLogging(
+                (ctx, logging) =>
+                {
+                    logging.AddConsole();
+                    logging.AddDebug();
+                })
+            .ConfigureAppConfiguration(
+                (ctx, app) =>
+                {
+                    app.SetBasePath(Directory.GetCurrentDirectory());
+                    app.AddJsonFile("appsettings.json", optional: true);
+                    app.AddCommandLine(args);
+                })
+            .ConfigureServices(
+                (ctx, services) =>
+                {
+                    services.AddOptions();
+                    services.Configure<SampleConfiguration>(ctx.Configuration.GetSection("config"));
 
-                        services.AddLogging();
+                    services.AddLogging();
 
-                        services.AddHostedService<ContentBatchDownloadService>();
-                        services.AddHostedService<LiveStreamSubscriber>();
+                    services.AddHostedService<ContentBatchDownloadService>();
+                    services.AddHostedService<LiveStreamSubscriber>();
 
-                        services.AddSingleton<IApplicationEventHandlerFactory, ApplicationEventHandlerFactory>();
-                        services.AddTransient<IApplicationEventHandler, BusinessRuleFiredEventHandler>();
-                        services.AddTransient<IApplicationEventHandler, BusinessProcessCancellationRequestedEventHandler>();
+                    services.AddSingleton<IApplicationEventHandlerFactory, ApplicationEventHandlerFactory>();
+                    services.AddTransient<IApplicationEventHandler, BusinessRuleFiredEventHandler>();
+                    services.AddTransient<IApplicationEventHandler, BusinessProcessCancellationRequestedEventHandler>();
 
-                        services.AddSingleton<ContentIdQueue>();
+                    services.AddSingleton<ContentIdQueue>();
 
-                        services.AddSingleton<Func<IPictureparkService>>(
-                            s =>
+                    services.AddSingleton<Func<IPictureparkService>>(
+                        s =>
+                        {
+                            return () =>
                             {
-                                return () =>
-                                {
-                                    var config = s.GetRequiredService<IOptions<SampleConfiguration>>();
+                                var config = s.GetRequiredService<IOptions<SampleConfiguration>>();
 
-                                    var authClient = new AccessTokenAuthClient(config.Value.ApiUrl, config.Value.AccessToken, config.Value.CustomerAlias);
-                                    var client = new PictureparkService(new PictureparkServiceSettings(authClient));
+                                var authClient = new AccessTokenAuthClient(config.Value.ApiUrl, config.Value.AccessToken, config.Value.CustomerAlias);
+                                var client = new PictureparkService(new PictureparkServiceSettings(authClient));
 
-                                    return client;
-                                };
-                            });
+                                return client;
+                            };
+                        });
 
-                        services.AddSingleton<IBusinessProcessCancellationManager, BusinessProcessCancellationManager>();
-                    })
-                .UseConsoleLifetime()
-                .RunConsoleAsync().ConfigureAwait(false);
-        }
+                    services.AddSingleton<IBusinessProcessCancellationManager, BusinessProcessCancellationManager>();
+                })
+            .UseConsoleLifetime()
+            .RunConsoleAsync().ConfigureAwait(false);
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace Picturepark.ServiceProvider.Example.BusinessProcess.BusinessProcess
-{
-    internal interface IBusinessProcessCancellationManager
-    {
-        void MarkToBeCancelled(string businessProcessId);
+﻿namespace Picturepark.ServiceProvider.Example.BusinessProcess.BusinessProcess;
 
-        bool IsCancelled(string businessProcessId);
-    }
+internal interface IBusinessProcessCancellationManager
+{
+    void MarkToBeCancelled(string businessProcessId);
+
+    bool IsCancelled(string businessProcessId);
 }
