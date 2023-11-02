@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>Picturepark.ServiceProvider.Example.BusinessProcess</RootNamespace>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Picturepark.SDK.V1" Version="11.8.27-rc-gdf01fcb194" />
-    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.8.27-rc-gdf01fcb194" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="11.10.3-alpha-g7a270ab47b" />
+    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.10.3-alpha-g7a270ab47b" />
   </ItemGroup>
 
   <ItemGroup>

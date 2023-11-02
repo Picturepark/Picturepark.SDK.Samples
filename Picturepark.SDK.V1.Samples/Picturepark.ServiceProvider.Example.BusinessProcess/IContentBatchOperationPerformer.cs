@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Picturepark.ServiceProvider.Example.BusinessProcess
+namespace Picturepark.ServiceProvider.Example.BusinessProcess;
+
+internal interface IContentBatchOperationPerformer
 {
-    internal interface IContentBatchOperationPerformer
-    {
-        void EnqueueContentsById(IReadOnlyList<string> contentIds);
-    }
+    void EnqueueContentsById(IReadOnlyList<string> contentIds);
 }

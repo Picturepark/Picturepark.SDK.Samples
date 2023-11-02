@@ -10,65 +10,64 @@ using Picturepark.SDK.V1.ServiceProvider.Buffer;
 using Picturepark.ServiceProvider.Example.BusinessProcess.Config;
 using Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler;
 
-namespace Picturepark.ServiceProvider.Example.BusinessProcess
+namespace Picturepark.ServiceProvider.Example.BusinessProcess;
+
+public class LiveStreamSubscriber : IHostedService, IDisposable
 {
-    public class LiveStreamSubscriber : IHostedService, IDisposable
+    private readonly ILogger<LiveStreamSubscriber> _logger;
+    private readonly IApplicationEventHandlerFactory _eventHandlerFactory;
+    private readonly Configuration _serviceProviderConfiguration;
+
+    private ServiceProviderClient _client;
+    private IDisposable _subscription;
+
+    public LiveStreamSubscriber(ILogger<LiveStreamSubscriber> logger, IOptions<SampleConfiguration> config, IApplicationEventHandlerFactory eventHandlerFactory)
     {
-        private readonly ILogger<LiveStreamSubscriber> _logger;
-        private readonly IApplicationEventHandlerFactory _eventHandlerFactory;
-        private readonly Configuration _serviceProviderConfiguration;
+        _logger = logger;
+        _eventHandlerFactory = eventHandlerFactory;
 
-        private ServiceProviderClient _client;
-        private IDisposable _subscription;
-
-        public LiveStreamSubscriber(ILogger<LiveStreamSubscriber> logger, IOptions<SampleConfiguration> config, IApplicationEventHandlerFactory eventHandlerFactory)
+        _serviceProviderConfiguration = new Picturepark.SDK.V1.ServiceProvider.Configuration
         {
-            _logger = logger;
-            _eventHandlerFactory = eventHandlerFactory;
+            Host = config.Value.IntegrationHost,
+            Port = config.Value.IntegrationPort.ToString(),
+            NodeId = Environment.MachineName,
+            ServiceProviderId = config.Value.ServiceProviderId,
+            User = config.Value.ServiceProviderId,
+            Password = config.Value.Secret,
+            UseSsl = config.Value.UseSsl
+        };
+    }
 
-            _serviceProviderConfiguration = new Picturepark.SDK.V1.ServiceProvider.Configuration
-            {
-                Host = config.Value.IntegrationHost,
-                Port = config.Value.IntegrationPort.ToString(),
-                NodeId = Environment.MachineName,
-                ServiceProviderId = config.Value.ServiceProviderId,
-                User = config.Value.ServiceProviderId,
-                Password = config.Value.Secret,
-                UseSsl = config.Value.UseSsl
-            };
-        }
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Subscribing to live stream");
+        _client = new ServiceProviderClient(_serviceProviderConfiguration);
+        _subscription = _client.GetLiveStreamObserver().Subscribe(OnLiveStreamEvent);
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        return Task.CompletedTask;
+    }
+
+    private void OnLiveStreamEvent(EventPattern<EventArgsLiveStreamMessage> e)
+    {
+        var applicationEvent = e.EventArgs.Message.ApplicationEvent;
+
+        if (applicationEvent != null)
         {
-            _logger.LogInformation("Subscribing to live stream");
-            _client = new ServiceProviderClient(_serviceProviderConfiguration);
-            _subscription = _client.GetLiveStreamObserver().Subscribe(OnLiveStreamEvent);
+            var handler = _eventHandlerFactory.Get(applicationEvent);
+            handler?.Handle(applicationEvent);
 
-            return Task.CompletedTask;
+            e.EventArgs.Ack();
         }
+    }
 
-        private void OnLiveStreamEvent(EventPattern<EventArgsLiveStreamMessage> e)
-        {
-            var applicationEvent = e.EventArgs.Message.ApplicationEvent;
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 
-            if (applicationEvent != null)
-            {
-                var handler = _eventHandlerFactory.Get(applicationEvent);
-                handler?.Handle(applicationEvent);
-
-                e.EventArgs.Ack();
-            }
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
-
-        public void Dispose()
-        {
-            _client?.Dispose();
-            _subscription?.Dispose();
-        }
+    public void Dispose()
+    {
+        _client?.Dispose();
+        _subscription?.Dispose();
     }
 }
