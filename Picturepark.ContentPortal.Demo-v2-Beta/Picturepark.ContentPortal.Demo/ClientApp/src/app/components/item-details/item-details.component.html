@@ -1,27 +1,31 @@
-<ng-container *ngIf="state() as s">
-  <mat-progress-bar mode="indeterminate" *ngIf="s.loading"></mat-progress-bar>
+@if (state(); as s) {
+  @if (s.loading) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  }
   <div class="item-container" [class.item-container-mobile]="mobileQuery.matches">
-    <div *ngIf="!s.loading" class="item mat-typography" [class.item-mobile]="mobileQuery.matches">
-      <mat-card appearance="raised" class="custom-shadow">
-        <mat-card-title>
-          {{ s.content.displayValues!['name'] }}
-        </mat-card-title>
-      </mat-card>
-
-      <mat-card appearance="raised" class="custom-shadow preview-image" *ngIf="s.content.contentType !== 'Virtual'">
-        <div>
-          <pp-content-image-preview [content]="s.content"></pp-content-image-preview>
-        </div>
-      </mat-card>
-
-      <pp-layer-panels
-        [content]="s.content"
-        [schemas]="s.schemas"
-        [showContentSchema]="s.content.contentType === 'Virtual'"
-        [excludedLayerSchemaIds]="systemLayerSchemaIds"
-        (relationClick)="relationClick($event)"
-      >
-      </pp-layer-panels>
-    </div>
+    @if (!s.loading) {
+      <div class="item mat-typography" [class.item-mobile]="mobileQuery.matches">
+        <mat-card appearance="raised" class="custom-shadow">
+          <mat-card-title>
+            {{ s.content.displayValues!['name'] }}
+          </mat-card-title>
+        </mat-card>
+        @if (s.content.contentType !== 'Virtual') {
+          <mat-card appearance="raised" class="custom-shadow preview-image">
+            <div>
+              <pp-content-image-preview [content]="s.content"></pp-content-image-preview>
+            </div>
+          </mat-card>
+        }
+        <pp-layer-panels
+          [content]="s.content"
+          [schemas]="s.schemas"
+          [showContentSchema]="s.content.contentType === 'Virtual'"
+          [excludedLayerSchemaIds]="systemLayerSchemaIds"
+          (relationClick)="relationClick($event)"
+          >
+        </pp-layer-panels>
+      </div>
+    }
   </div>
-</ng-container>
+}

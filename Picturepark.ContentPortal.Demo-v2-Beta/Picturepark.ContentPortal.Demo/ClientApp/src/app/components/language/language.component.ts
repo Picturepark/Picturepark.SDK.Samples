@@ -1,4 +1,4 @@
-import { CommonModule, NgFor, NgIf, UpperCasePipe } from '@angular/common';
+import { CommonModule, UpperCasePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';

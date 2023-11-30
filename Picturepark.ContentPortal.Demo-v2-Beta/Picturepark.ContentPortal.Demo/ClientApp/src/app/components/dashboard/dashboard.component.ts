@@ -25,7 +25,6 @@ import { ProfileComponent } from '../profile/profile.component';
 import { LanguageComponent } from '../language/language.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,14 +33,12 @@ import { NgIf, NgFor } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     MatToolbarModule,
     RouterLink,
     MatButtonModule,
     LanguageComponent,
     ProfileComponent,
     InfoComponent,
-    NgFor,
     MatCardModule,
     TranslatePipe,
     SearchBoxComponent,
@@ -50,7 +47,11 @@ import { NgIf, NgFor } from '@angular/common';
 export class DashboardComponent extends PageBase {
   items = toSignal(this.load());
 
-  constructor(private contentService: ContentService, private sanitizer: DomSanitizer, private router: Router) {
+  constructor(
+    private contentService: ContentService,
+    private sanitizer: DomSanitizer,
+    private router: Router
+  ) {
     super();
   }
 
@@ -86,7 +87,7 @@ export class DashboardComponent extends PageBase {
                       title: TranslatedStringDictionary.fromJS(i.content['headline']),
                       description: TranslatedStringDictionary.fromJS(i.content['abstract']),
                       path: i.content['resourceLink'],
-                    } as DashboardItem)
+                    }) as DashboardItem
                 )
               )
             );

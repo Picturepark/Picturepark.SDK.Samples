@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
 import { SessionService } from '@picturepark/sdk-v2-angular-ui';
 import { RouterOutlet } from '@angular/router';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'app-root',
-    template: '<ng-container *ngIf="sessionService.initialized$ | async as initialized"><router-outlet *ngIf="initialized"></router-outlet></ng-container>',
-    standalone: true,
-    imports: [
-        NgIf,
-        RouterOutlet,
-        AsyncPipe,
-    ],
+  selector: 'app-root',
+  template:
+    '@if (sessionService.initialized$ | async; as initialized) {@if (initialized) {<router-outlet></router-outlet>}}',
+  standalone: true,
+  imports: [RouterOutlet, AsyncPipe],
 })
 export class AppComponent {
   title = 'Microsite.ContentPortal';

@@ -6,25 +6,22 @@ import { ClientConfiguration } from '../../models/client-configuration.model';
 import { TranslatePipe } from '@picturepark/sdk-v2-angular-ui';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    standalone: true,
-    imports: [
-        NgIf,
-        MatButtonModule,
-        MatMenuModule,
-        TranslatePipe,
-    ],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  standalone: true,
+  imports: [MatButtonModule, MatMenuModule, TranslatePipe],
 })
 export class ProfileComponent implements OnInit {
   public config: ClientConfiguration;
 
   public profile$: Observable<UserProfile>;
 
-  constructor(private configService: ConfigService, private profileService: ProfileService) {
+  constructor(
+    private configService: ConfigService,
+    private profileService: ProfileService
+  ) {
     this.config = this.configService.config;
   }
 
