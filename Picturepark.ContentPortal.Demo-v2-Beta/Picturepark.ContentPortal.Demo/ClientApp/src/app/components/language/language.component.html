@@ -1,11 +1,16 @@
 <button mat-button [matMenuTriggerFor]="langMenu">{{ selectedLanguageCode | uppercase }}</button>
 <mat-menu #langMenu="matMenu">
-  <button mat-menu-item *ngFor="let language of languages" (click)="changeLanguage(language.ietf)">
-    <div class="menu-item">
-      {{ language.name | pptranslate }}
-      <mat-icon *ngIf="language.ietf === selectedLanguageCode" attr.aria-label="{{ 'Language.Selected' | pptranslate }}"
-        >check</mat-icon
-      >
-    </div>
-  </button>
-</mat-menu>
+  @for (language of languages; track language) {
+    <button mat-menu-item (click)="changeLanguage(language.ietf)">
+      <div class="menu-item">
+        {{ language.name | pptranslate }}
+        @if (language.ietf === selectedLanguageCode) {
+          <mat-icon attr.aria-label="{{ 'Language.Selected' | pptranslate }}"
+            >check</mat-icon
+            >
+          }
+        </div>
+      </button>
+    }
+  </mat-menu>
+  

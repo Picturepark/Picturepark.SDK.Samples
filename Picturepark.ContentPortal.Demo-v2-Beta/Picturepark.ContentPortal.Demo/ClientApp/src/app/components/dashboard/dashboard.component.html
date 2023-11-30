@@ -1,22 +1,19 @@
-<mat-toolbar *ngIf="!mobileQuery.matches; else mobileToolbar" color="primary" class="header">
-  <div class="logo" routerLink="/items"></div>
-
-  <div class="spacer"></div>
-
-  <h3>{{ 'Dashboard.Title' | pptranslate }}</h3>
-
-  <div class="spacer"></div>
-
-  <div class="button-wrap">
-    <button mat-button class="demo-button" (click)="openDialog($event)">
-      {{ 'Dashboard.DemoInfo' | pptranslate }}
-    </button>
-    <app-language></app-language>
-    <app-profile></app-profile>
-    <app-info></app-info>
-  </div>
-</mat-toolbar>
-<ng-template #mobileToolbar>
+@if (!mobileQuery.matches) {
+  <mat-toolbar color="primary" class="header">
+    <div class="logo" routerLink="/items"></div>
+    <div class="spacer"></div>
+    <h3>{{ 'Dashboard.Title' | pptranslate }}</h3>
+    <div class="spacer"></div>
+    <div class="button-wrap">
+      <button mat-button class="demo-button" (click)="openDialog($event)">
+        {{ 'Dashboard.DemoInfo' | pptranslate }}
+      </button>
+      <app-language></app-language>
+      <app-profile></app-profile>
+      <app-info></app-info>
+    </div>
+  </mat-toolbar>
+} @else {
   <mat-toolbar color="primary" class="header">
     <div class="logo logo--mobile" routerLink="/items"></div>
     <div class="button-wrap-mobile">
@@ -25,31 +22,35 @@
       <app-info></app-info>
     </div>
   </mat-toolbar>
-</ng-template>
+}
 <div class="content-wrap">
   <div class="content" [class.content-mobile]="mobileQuery.matches">
-    <p *ngIf="mobileQuery.matches" class="title-mobile">{{ 'Dashboard.Title' | pptranslate }}</p>
-
-    <p *ngIf="!mobileQuery.matches">&nbsp;</p>
-
+    @if (mobileQuery.matches) {
+      <p class="title-mobile">{{ 'Dashboard.Title' | pptranslate }}</p>
+    }
+    @if (!mobileQuery.matches) {
+      <p>&nbsp;</p>
+    }
     <p>{{ 'Dashboard.Content' | pptranslate }}</p>
-
     <div class="search-box-wrap">
       <pp-search-box style="font-size: 16px" (searchStringChange)="changeSearchQuery($event)"></pp-search-box>
     </div>
-
     <div class="container">
-      <mat-card appearance="raised" *ngFor="let item of items(); trackBy: trackByItem" (click)="navigate(item.path)">
-        <img *ngIf="item.imageUrl" [src]="item.imageUrl" mat-card-image alt="" />
-        <mat-card-title>{{ item.title | pptranslate }}</mat-card-title>
-        <mat-card-content>{{ item.description | pptranslate }}</mat-card-content>
-      </mat-card>
+      @for (item of items(); track trackByItem($index, item)) {
+        <mat-card appearance="raised" (click)="navigate(item.path)">
+          @if (item.imageUrl) {
+            <img [src]="item.imageUrl" mat-card-image alt="" />
+          }
+          <mat-card-title>{{ item.title | pptranslate }}</mat-card-title>
+          <mat-card-content>{{ item.description | pptranslate }}</mat-card-content>
+        </mat-card>
+      }
     </div>
-
     <p>
       {{ 'Dashboard.Contact1' | pptranslate }}
       <a href="mailto:marketing@picturepark.com">{{ 'Dashboard.Contact2' | pptranslate }}</a
-      >.
-    </p>
+        >.
+      </p>
+    </div>
   </div>
-</div>
+  

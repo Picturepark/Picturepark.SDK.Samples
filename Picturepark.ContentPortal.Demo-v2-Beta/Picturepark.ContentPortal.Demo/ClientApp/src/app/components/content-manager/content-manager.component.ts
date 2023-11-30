@@ -49,7 +49,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -60,7 +60,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   standalone: true,
   imports: [
     MatToolbarModule,
-    NgIf,
     MatButtonModule,
     MatBadgeModule,
     MatIconModule,

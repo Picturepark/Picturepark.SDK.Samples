@@ -18,7 +18,7 @@ import { PageBase } from '../page-base';
 import { map, mergeMap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-item-details',
@@ -26,7 +26,7 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./item-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, MatProgressBarModule, MatCardModule, ContentImagePreviewComponent, LayerPanelsComponent],
+  imports: [MatProgressBarModule, MatCardModule, ContentImagePreviewComponent, LayerPanelsComponent],
 })
 export class ItemDetailsComponent extends PageBase implements OnInit {
   @Input() itemId: string;
