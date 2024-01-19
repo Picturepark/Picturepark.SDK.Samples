@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Security;
@@ -15,6 +14,7 @@ using Picturepark.ContentUploader.Views;
 using Picturepark.ContentUploader.Views.OidcClient;
 using Picturepark.SDK.V1;
 using Picturepark.SDK.V1.Authentication;
+using Picturepark.SDK.V1.AzureBlob;
 using Picturepark.SDK.V1.Contract;
 
 namespace Picturepark.ContentUploader.ViewModels
@@ -122,26 +122,13 @@ namespace Picturepark.ContentUploader.ViewModels
             {
                 if (File.Exists(FilePath))
                 {
-                    var fileName = Path.GetFileName(FilePath);
-                    var timeout = TimeSpan.FromMinutes(2);
-
                     var accessToken = await GetAccessTokenAsync();
                     var authClient = new AccessTokenAuthClient(ApiServer.TrimEnd('/'), accessToken, CustomerAlias);
                     using (var client = new PictureparkService(new PictureparkServiceSettings(authClient)))
                     {
                         try
                         {
-                            var createTransferResult = await client.Transfer.UploadFilesAsync(fileName, new[] { (FileLocations) FilePath },
-                                new UploadOptions {});
-                            var importRequest = new ImportTransferRequest
-                            {
-                                ContentPermissionSetIds = new List<string>(),
-                                Metadata = null,
-                                LayerSchemaIds = new List<string>()
-                            };
-
-                            await client.Transfer.ImportAndWaitForCompletionAsync(createTransferResult.Transfer, importRequest, timeout).ConfigureAwait(false);
-
+                            await client.Ingest.UploadAndImportFilesAsync(new[] { FilePath }, timeout: TimeSpan.FromMinutes(2));
                             MessageBox.Show("The image has been successfully uploaded and imported.", "Image uploaded");
                         }
                         catch (Exception)
@@ -217,7 +204,7 @@ namespace Picturepark.ContentUploader.ViewModels
                     key.SetValue("", "\"" + Assembly.GetEntryAssembly().Location + "\" %1");
 
                 MessageBox.Show("Context menu successfully registered.", "Picturepark SDK ContentUploader", MessageBoxButton.OK, MessageBoxImage.Information);
-            }); 
+            });
         }
 
         private async Task UnregisterContextMenuAsync()
