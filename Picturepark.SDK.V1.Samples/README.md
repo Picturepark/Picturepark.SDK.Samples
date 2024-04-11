@@ -1,9 +1,5 @@
 # Picturepark SDK Samples
 
-## Picturepark.ContentUploader
-
-WPF Application to show a simple upload of a content into a Picturepark instance.
-
 ## Picturepark.ServiceProvider.Example
 
 Example service provider listening on livestream.
