@@ -19,23 +19,6 @@ fetch-azure-registry-info:
   tags:
     - build-docker-linux
 
-content-portal-v2:build:
-  stage: build
-  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
-  services:
-    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
-      alias: docker
-  tags:
-    - build-docker-image
-  script:
-    - export DOCKER_CONFIG=$(mktemp -d)
-    - export CONTAINER_IMAGE=picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
-    - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.ContentPortal.Demo-v2-Beta/Picturepark.ContentPortal.Demo/Dockerfile --build-arg PICTUREPARK_SCOPE_NPM_AUTH_TOKEN=$PICTUREPARK_SCOPE_NPM_AUTH_TOKEN
-    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
-    - docker tag $CONTAINER_IMAGE $HARBOR_URL/$CONTAINER_IMAGE
-    - docker push $HARBOR_URL/$CONTAINER_IMAGE
-    - !reference [.push-image-to-azure, script]
-
 press-portal:build:
   stage: build
   image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
@@ -52,26 +35,6 @@ press-portal:build:
     - docker tag $CONTAINER_IMAGE $HARBOR_URL/$CONTAINER_IMAGE
     - docker push $HARBOR_URL/$CONTAINER_IMAGE
     - !reference [.push-image-to-azure, script]
-
-content-portal-v2:publish-helm-chart:
-  stage: publish
-  image:
-    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
-  tags:
-    - build-docker-linux
-  script:
-    - cd Picturepark.ContentPortal.Demo-v2-Beta/helm
-    - helm-set.sh
-      --set image.service="picturepark/picturepark.sdk.samples/content-portal-v2/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
-      ./sample-content-portal
-    - helm package
-      --app-version "$CP_VERSION-$CI_COMMIT_REF_SLUG"
-      --version "$CP_VERSION.0+$CI_COMMIT_REF_SLUG"
-      ./sample-content-portal
-    - mv *.tgz ../..
-  artifacts:
-    paths:
-      - ./*.tgz
 
 press-portal:publish-helm-chart:
   stage: publish

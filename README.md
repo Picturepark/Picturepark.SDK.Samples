@@ -5,11 +5,6 @@ A Picturepark Microsite pulls content from the [Picturepark Content Platform](ht
 
 Microsites can be static, always displaying the same content, or they can be dynamic, in which the content can differ based on rules, metadata filter definitions, or user search queries.
 
-## Content Portal
-The Content Portal enables those browsing publically to easily navigate and find guidance through a variety of content via both filters and a powerful search. Content Portal users can examine thumbnails or other previews of content, which they can additionally choose to download in a range of formats and image resolutions. It is an excellent publication end-point within a wider [headless](https://picturepark.com/solutions/headless-content-management) workflow.
-
-Get hands-on experience with our [demo version](https://demo-contentportal.picturepark.com/).
-
 ### Who needs this?
 Organizations with many different types of content to communicate with the public, employees, partners or other groups, e.g., as
 - Image Gallery

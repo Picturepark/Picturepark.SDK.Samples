@@ -1,1 +1,0 @@
-dotnet Picturepark.ContentPortal.Demo.dll
