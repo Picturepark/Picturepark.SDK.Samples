@@ -59,7 +59,7 @@ public static class Program
                                 var config = s.GetRequiredService<IOptions<SampleConfiguration>>();
 
                                 var authClient = new AccessTokenAuthClient(config.Value.ApiUrl, config.Value.AccessToken, config.Value.CustomerAlias);
-                                var client = new PictureparkService(new PictureparkServiceSettings(authClient));
+                                var client = new PictureparkService(new PictureparkServiceSettings(authClient, "ServiceProvider.Example"));
 
                                 return client;
                             };

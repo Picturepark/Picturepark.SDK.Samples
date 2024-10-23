@@ -24,7 +24,8 @@ namespace Picturepark.PressPortal.Demo.Services
 			CustomerAlias = config.CustomerAlias;
 			HttpTimeout = TimeSpan.FromMinutes(10);
 		    DisplayLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-        }
+		    IntegrationName = "PressPortal.Demo";
+		}
 
 		public string BaseUrl { get; }
 
@@ -35,5 +36,7 @@ namespace Picturepark.PressPortal.Demo.Services
 		public string CustomerAlias { get; }
 
 	    public string DisplayLanguage { get; }
+
+	    public string IntegrationName { get; }
 	}
 }
