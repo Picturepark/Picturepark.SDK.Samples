@@ -6,7 +6,7 @@ using Picturepark.SDK.V1.Contract.Authentication;
 
 namespace Picturepark.PressPortal.Demo.Services
 {
-	public class PictureparkAccessTokenServiceSettings: IPictureparkAccessTokenServiceSettings
+	public class PictureparkAccessTokenServiceSettings : IPictureparkAccessTokenServiceSettings
 	{
 		public PictureparkAccessTokenServiceSettings(PictureparkConfiguration config)
 		{
@@ -16,6 +16,7 @@ namespace Picturepark.PressPortal.Demo.Services
 			CustomerAlias = config.CustomerAlias;
 			HttpTimeout = TimeSpan.FromMinutes(10);
 		    DisplayLanguage = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+		    IntegrationName = "PressPortal.Demo";
 		}
 
 		public string BaseUrl { get; }
@@ -27,5 +28,7 @@ namespace Picturepark.PressPortal.Demo.Services
 		public string CustomerAlias { get; }
 
 	    public string DisplayLanguage { get; }
+
+	    public string IntegrationName { get; }
 	}
 }
