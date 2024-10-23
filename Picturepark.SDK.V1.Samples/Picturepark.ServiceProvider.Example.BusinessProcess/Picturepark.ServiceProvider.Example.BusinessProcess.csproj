@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Picturepark.SDK.V1" Version="11.12.38-rc-g0c244ac30e" />
-    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.12.38-rc-g0c244ac30e" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="11.13.31-rc-gb954617cd7" />
+    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.13.31-rc-gb954617cd7" />
   </ItemGroup>
 
   <ItemGroup>
