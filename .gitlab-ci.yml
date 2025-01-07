@@ -31,9 +31,6 @@ press-portal:build:
     - export DOCKER_CONFIG=$(mktemp -d)
     - export CONTAINER_IMAGE=picturepark/picturepark.sdk.samples/press-portal/$CP_VERSION:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA
     - docker build --pull -t $CONTAINER_IMAGE . -f Picturepark.PressPortal.Demo/Picturepark.PressPortal.Demo/Dockerfile
-    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_URL
-    - docker tag $CONTAINER_IMAGE $HARBOR_URL/$CONTAINER_IMAGE
-    - docker push $HARBOR_URL/$CONTAINER_IMAGE
     - !reference [.push-image-to-azure, script]
 
 press-portal:publish-helm-chart:
