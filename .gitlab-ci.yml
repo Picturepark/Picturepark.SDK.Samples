@@ -21,9 +21,9 @@ fetch-azure-registry-info:
 
 press-portal:build:
   stage: build
-  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
+  image: library/docker:20.10.22
   services:
-    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
+    - name: library/docker:20.10.22-dind
       alias: docker
   tags:
     - build-docker-image
