@@ -6,7 +6,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
-  CP_VERSION: "11.6"
+  CP_VERSION: "11.14"
 
 include:
   - project: 'deploy/azure/registry'
@@ -36,7 +36,7 @@ press-portal:build:
 press-portal:publish-helm-chart:
   stage: publish
   image:
-    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/v1.4.0
   tags:
     - build-docker-linux
   script:
