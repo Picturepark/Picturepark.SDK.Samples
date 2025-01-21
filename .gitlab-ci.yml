@@ -6,7 +6,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
-  CP_VERSION: "11.6"
+  CP_VERSION: "11.14"
 
 include:
   - project: 'deploy/azure/registry'
@@ -21,9 +21,9 @@ fetch-azure-registry-info:
 
 press-portal:build:
   stage: build
-  image: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12
+  image: library/docker:20.10.22
   services:
-    - name: gitlab-registry.vit.ch/picturepark/docker-images/docker:19.03.12-dind
+    - name: library/docker:20.10.22-dind
       alias: docker
   tags:
     - build-docker-image
@@ -36,7 +36,7 @@ press-portal:build:
 press-portal:publish-helm-chart:
   stage: publish
   image:
-    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/$CP_VERSION
+    name: gitlab-registry.vit.ch/picturepark/ci-containers/helm-helper/v1.4.0
   tags:
     - build-docker-linux
   script:

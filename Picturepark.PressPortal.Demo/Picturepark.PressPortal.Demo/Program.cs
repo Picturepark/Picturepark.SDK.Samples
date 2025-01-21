@@ -35,7 +35,7 @@ namespace Picturepark.PressPortal.Demo
 
 			var host = WebHost.CreateDefaultBuilder(args)
 				.UseConfiguration(configuration)
-				.UseSerilog(logger, dispose: true)
+				.ConfigureLogging(l => l.AddSerilog(logger, dispose: true))
 				.UseStartup<Startup>();
 
 			return host;
