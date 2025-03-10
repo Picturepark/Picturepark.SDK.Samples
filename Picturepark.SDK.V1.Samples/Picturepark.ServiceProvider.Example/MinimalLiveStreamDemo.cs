@@ -1,23 +1,24 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Picturepark.SDK.V1.ServiceProvider;
 
 namespace Picturepark.ServiceProvider.Example
 {
-	public class MinimalLiveStreamDemo : IDisposable
+	public class MinimalLiveStreamDemo : IAsyncDisposable
 	{
 		private ServiceProviderClient _client;
 
-		public void Dispose()
+		public async ValueTask DisposeAsync()
 		{
-			_client.Dispose();
+			await _client.DisposeAsync();
 		}
 
-		public IDisposable Run(Configuration configuration)
+		public async Task<IAsyncDisposable> Run(Configuration configuration)
 		{
 			_client = new ServiceProviderClient(configuration);
 
 			// using a buffer of 1s and a buffer hold back delay of 5s
-			var observer = _client.GetLiveStreamObserver(500, 5000);
+			var observer = await _client.GetLiveStreamObserver(500, 5000);
 
 			// all handler
 			observer.Subscribe(a =>
