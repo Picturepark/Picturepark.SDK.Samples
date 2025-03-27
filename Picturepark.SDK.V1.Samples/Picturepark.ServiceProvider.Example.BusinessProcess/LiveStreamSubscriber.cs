@@ -12,7 +12,7 @@ using Picturepark.ServiceProvider.Example.BusinessProcess.MessageHandler;
 
 namespace Picturepark.ServiceProvider.Example.BusinessProcess;
 
-public class LiveStreamSubscriber : IHostedService, IDisposable
+public class LiveStreamSubscriber : IHostedService, IAsyncDisposable
 {
     private readonly ILogger<LiveStreamSubscriber> _logger;
     private readonly IApplicationEventHandlerFactory _eventHandlerFactory;
@@ -38,13 +38,11 @@ public class LiveStreamSubscriber : IHostedService, IDisposable
         };
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Subscribing to live stream");
         _client = new ServiceProviderClient(_serviceProviderConfiguration);
-        _subscription = _client.GetLiveStreamObserver().Subscribe(OnLiveStreamEvent);
-
-        return Task.CompletedTask;
+        _subscription = (await _client.GetLiveStreamObserver(cancellationToken: cancellationToken)).Subscribe(OnLiveStreamEvent);
     }
 
     private void OnLiveStreamEvent(EventPattern<EventArgsLiveStreamMessage> e)
@@ -65,9 +63,10 @@ public class LiveStreamSubscriber : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
-        _client?.Dispose();
+        if(_client is not null)
+            await _client.DisposeAsync();
         _subscription?.Dispose();
     }
 }
