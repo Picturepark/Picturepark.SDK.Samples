@@ -15,8 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
-    <PackageReference Include="Picturepark.SDK.V1" Version="11.16.1-alpha-gbc08615cb5" />
-    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.16.1-alpha-gbc08615cb5" />
+    <PackageReference Include="Picturepark.SDK.V1" Version="11.16.2-alpha-gf2fe920d53" />
+    <PackageReference Include="Picturepark.SDK.V1.ServiceProvider" Version="11.16.2-alpha-gf2fe920d53" />
   </ItemGroup>
 
 </Project>
