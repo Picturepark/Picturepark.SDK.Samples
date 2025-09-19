@@ -1,4 +1,7 @@
 # Fotoware Alto Microsite SDK Samples
+
+> **Note:** The platform has been renamed from Picturepark Content Platform to **Fotoware Alto**, but the project name remains **Picturepark**. You may encounter both names in documentation, code, and resources.
+
 Microsites are single or collections of web pages which are integrated within larger websites or online portals, or provided stand-alone. Microsites complement other online premises with purpose-specific content and functionality, often targeting specific audiences.
 
 A Fotoware Alto Microsite pulls content from the [Fotoware Alto](https://picturepark.com/software/), where content authorities manage the material, e.g., metadata, taxonomy, semantics, permissions. Editors make content available using distribution channels, query filters, or permissions without having to manually copy between systems, aka [headless content management](https://picturepark.com/solutions/headless-content-management).
