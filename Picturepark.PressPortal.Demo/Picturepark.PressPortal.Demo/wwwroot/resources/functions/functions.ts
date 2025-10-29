@@ -110,8 +110,8 @@ function languageChange() {
         case "En":
             language.clickHereDemoLink.setAttribute("href", "https://picturepark.com/try-picturepark-now/finefoods/");
             language.moreInfoBtnLink.setAttribute("href", "https://picturepark.com/try-picturepark-now/finefoods/");
-            language.privacyLink.setAttribute("href", "https://picturepark.com/terms/privacy/");
-            language.aupLink.setAttribute("href", "https://picturepark.com/terms/aup/");
+            language.privacyLink.setAttribute("href", "https://go.fotoware.com/go/?l=AltoPP");
+            language.aupLink.setAttribute("href", "https://go.fotoware.com/go/?l=AltoAUP");
             language.companyWebsite.setAttribute("href", "https://picturepark.com");
             language.supportLink.setAttribute("href", "https://picturepark.com/company/picturepark-customer-support/");
             break;
@@ -119,8 +119,8 @@ function languageChange() {
         case "De":
             language.clickHereDemoLink.setAttribute("href", "https://picturepark.com/de/picturepark-jetzt-testen/finefoods/");
             language.moreInfoBtnLink.setAttribute("href", "https://picturepark.com/de/picturepark-jetzt-testen/finefoods/");
-            language.privacyLink.setAttribute("href", "https://picturepark.com/de/terms/privacy/");
-            language.aupLink.setAttribute("href", "https://picturepark.com/de/terms/aup/");
+            language.privacyLink.setAttribute("href", "https://go.fotoware.com/go/?l=AltoPP-de");
+            language.aupLink.setAttribute("href", "https://go.fotoware.com/go/?l=AltoAUP-de");
             language.companyWebsite.setAttribute("href", "https://picturepark.com/de/");
             language.supportLink.setAttribute("href", "https://picturepark.com/de/unternehmen/picturepark-kundensupport/");
             break;

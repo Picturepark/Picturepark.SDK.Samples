@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Contact Picturepark" xml:space="preserve">
-    <value>Picturepark kontaktieren</value>
+  <data name="Contact Fotoware" xml:space="preserve">
+    <value>Fotoware kontaktieren</value>
   </data>
   <data name="Last page" xml:space="preserve">
     <value>Zurück</value>

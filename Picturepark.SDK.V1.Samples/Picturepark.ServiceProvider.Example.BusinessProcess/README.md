@@ -1,20 +1,20 @@
 ﻿# Business process service provider sample
-This sample shows the usage of a service provider to react on the execution of a business rule in the CP backend,
-creating a notification about a then triggered long-running task for the user. The user is able to cancel that task from the CP UI.
+This sample shows the usage of a service provider to react on the execution of a business rule in the Fotoware Alto backend,
+creating a notification about a then triggered long-running task for the user. The user is able to cancel that task from the Fotoware Alto UI.
 
 ## Description
 The service provider waits for a `BusinessRuleFired` event for a specific rule. The following steps are then performed:
 
 1. Gather created content ids into batches
 2. After an inactivity timeout elapsed or a batch is complete, a business process is created
-3. For each content, the original is downloaded into a local folder. After every content, the notification shown to the user in the CP UI is updated to reflect the progress
+3. For each content, the original is downloaded into a local folder. After every content, the notification shown to the user in the Fotoware Alto UI is updated to reflect the progress
 4. As long as the business process is not cancelled, this is repeated for each content
 5. On cancellation by the user, the process is stopped
 6. At the end, the business process is marked as finished (or cancelled)
 
 ## Configuration
 ### Create service provider
-To create the service provider, run the following call against the CP management API:
+To create the service provider, run the following call against the Fotoware Alto management API:
 
 ```
 POST {{orchestratorHost}}/api/serviceProvider:
@@ -27,7 +27,7 @@ POST {{orchestratorHost}}/api/serviceProvider:
 
 *Note: The `externalId` must match the `serviceProviderId` setting in the application configuration.*
 
-To register the service provider for a customer, run the following call against the CP management API:
+To register the service provider for a customer, run the following call against the Fotoware Alto management API:
 
 ```
 POST {{cloudmanager-url}}/service/customer/serviceProvider:
@@ -50,7 +50,7 @@ POST {{cloudmanager-url}}/service/customer/serviceProvider:
 *Note: The `externalId` in the registration request must match the `externalId` in the creation request above.*
 
 ### Create the business rule
-Create a business rule either using the API or the CP UI with the `id` matching the `ruleId` specified when registering the service provider for the customer.
+Create a business rule either using the API or the Fotoware Alto UI with the `id` matching the `ruleId` specified when registering the service provider for the customer.
 
 Use the example rule that triggers whenever a new image has been uploaded as a starting point:
 
@@ -88,9 +88,9 @@ Copy the `appsettings_template.json` file to `appsettings.json` and adjust it to
 
 Below follows a description of all settings in the `config` section of `appsettings.json`:
 
-* `apiUrl`: URL to the API of your CP instance
+* `apiUrl`: URL to the API of your Fotoware Alto instance
 * `customerAlias`: the customer alias of your customer
-* `accessToken`: your access token for the CP API
+* `accessToken`: your access token for the Fotoware Alto API
 * `serviceProviderId`: ID your created the service provider with
 * `integrationHost`: Hostname/address of the integration bus host
 * `integrationPort`: Port of the integration bus
@@ -104,7 +104,7 @@ Below follows a description of all settings in the `config` section of `appsetti
 ## Running
 
 1. Run the application
-2. Upload images to CP
+2. Upload images to Fotoware Alto
 3. The service provider will download the images, creating a notification in the UI
 
 ## Structure

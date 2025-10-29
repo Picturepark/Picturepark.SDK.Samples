@@ -1,7 +1,10 @@
-# Picturepark Microsite SDK Samples
+# Fotoware Alto Microsite SDK Samples
+
+> **Note:** The platform has been renamed from Picturepark Content Platform to **Fotoware Alto**, but the project name remains **Picturepark**. You may encounter both names in documentation, code, and resources.
+
 Microsites are single or collections of web pages which are integrated within larger websites or online portals, or provided stand-alone. Microsites complement other online premises with purpose-specific content and functionality, often targeting specific audiences.
 
-A Picturepark Microsite pulls content from the [Picturepark Content Platform](https://picturepark.com/software/), where content authorities manage the material, e.g., metadata, taxonomy, semantics, permissions. Editors make content available using distribution channels, query filters, or permissions without having to manually copy between systems, aka [headless content management](https://picturepark.com/solutions/headless-content-management).
+A Fotoware Alto Microsite pulls content from the [Fotoware Alto](https://picturepark.com/software/), where content authorities manage the material, e.g., metadata, taxonomy, semantics, permissions. Editors make content available using distribution channels, query filters, or permissions without having to manually copy between systems, aka [headless content management](https://picturepark.com/solutions/headless-content-management).
 
 Microsites can be static, always displaying the same content, or they can be dynamic, in which the content can differ based on rules, metadata filter definitions, or user search queries.
 
@@ -23,7 +26,7 @@ Organizations with many different types of content to communicate with the publi
 ## Press Portal
 The Press Portal is a fully functional press-centric [microsite](https://picturepark.com/software/picturepark-content-platform-microsites-embed-code/) SDK sample.
 
-Visit the live [FOFA demo](https://demo-pressportal.picturepark.com/), to experience what it is like for the public to access selected press-ready content delivered from Picturepark Content Platform to the Press Portal.
+Visit the live [FOFA demo](https://demo-pressportal.picturepark.com/), to experience what it is like for the public to access selected press-ready content delivered from Fotoware Alto to the Press Portal.
 
 ### Who needs this?
 Organizations that operate multiple brands or sub-groups; or Organizations that publish similar news regularly to different channels. Works, e.g., like:
