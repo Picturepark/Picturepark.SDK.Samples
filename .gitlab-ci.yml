@@ -6,7 +6,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0 # required for Nerdbank.Gitversioning support
-  CP_VERSION: "11.14"
+  CP_VERSION: "11.17"
 
 include:
   - project: 'deploy/azure/registry'
