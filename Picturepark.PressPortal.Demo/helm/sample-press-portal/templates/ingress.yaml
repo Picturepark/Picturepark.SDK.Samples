@@ -5,6 +5,7 @@ metadata:
     haproxy.org/ingress.class: "{{ .Values.ingress.class }}"
   name: {{ include "sample-press-portal.fullname" . }}
 spec:
+  ingressClassName: "{{ .Values.ingress.class }}"
   rules:
     - host: "{{ .Values.ingress.host }}"
       http:
